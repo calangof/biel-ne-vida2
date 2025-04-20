@@ -2,8 +2,8 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V2🔥",
-	LoadingTitle = "BIEL BS - Creditos A Mim!",
+	Name = "🔥Menu Mini City BIEL BS🔥",
+	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "by BIEL BS",
 	ConfigurationSaving = {
 		Enabled = false
@@ -12,9 +12,9 @@ local Window = Rayfield:CreateWindow({
 
 local rev = Window:CreateTab("Revistar")
 local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "feito por BIEL BS"})
-local Section = rev:CreateSection("NECESSARIO")
+local Section = rev:CreateSection("NECESSÁRIO - ")
 local Button = rev:CreateButton({
-	Name = "puxa itens",
+	Name = "Puxa Itens",
 	Callback = function()
 		-- Função para deletar todas as NotifyGui
 		local function deletarNotifyGui()
@@ -27,7 +27,7 @@ local Button = rev:CreateButton({
 		end
 
 		-- Lista de itens para pegar
-		local itens = {"AK47", "Uzi", "Parafal", "Faca", "IA2", "G3", "IPhone 14", "Agua", "Hamburguer", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15"}
+		local itens = {"AK47", "Uzi", "Parafal", "Faca", "IA2", "G3", "IPhone 14", "Agua", "Hamburguer", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock17"}
 
 		-- Argumentos para a requisição
 		local args = {
@@ -61,7 +61,7 @@ local Button = rev:CreateButton({
 })
 local Section = rev:CreateSection("PC")
 local ww = rev:CreateToggle({
-	Name = "mandar revistar (TECLA E)",
+	Name = "Revistar (TECLA E | PC)",
 	CurrentValue = false,
 	Flag = "rvst",
 	Callback = function(Value)
@@ -70,7 +70,7 @@ local ww = rev:CreateToggle({
 })
 local Section = rev:CreateSection("MOBILE")
 local mob = rev:CreateButton({
-	Name = "mandar revistar UI",
+	Name = "Revistar (MOBILE)",
 	Callback = function()
 		local TextChatService = game:GetService("TextChatService")
 
