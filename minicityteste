@@ -129,61 +129,80 @@ local Button = rev:CreateButton({
 	end,
 })
 
-local Button1 = rev:CreateButton({
+local Button = rev:CreateButton({
 	Name = "ESP",
 	Callback = function()
 		local Players = game:GetService("Players")
 		local LocalPlayer = Players.LocalPlayer
 
-		-- Função que cria ou atualiza o Highlight
-		local function updateHighlight(player)
-			-- Remove Highlight antigo, se houver
-			if player.Character and player.Character:FindFirstChild("ESP_Highlight") then
-				player.Character:FindFirstChild("ESP_Highlight"):Destroy()
+		-- Cria ou atualiza o Highlight e o nome acima da cabeça
+		local function updateESP(player)
+			if not player.Character then return end
+
+			-- Highlight
+			local oldHighlight = player.Character:FindFirstChild("ESP_Highlight")
+			if oldHighlight then oldHighlight:Destroy() end
+
+			local highlight = Instance.new("Highlight")
+			highlight.Name = "ESP_Highlight"
+			highlight.FillTransparency = 0.4
+			highlight.OutlineTransparency = .3
+			highlight.FillColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
+			highlight.OutlineColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
+			highlight.Adornee = player.Character
+			highlight.Parent = player.Character
+
+			-- Nome (BillboardGui)
+			local head = player.Character:FindFirstChild("Head")
+			if head and not head:FindFirstChild("ESP_NameGui") then
+				local billboard = Instance.new("BillboardGui")
+				billboard.Name = "ESP_NameGui"
+				billboard.Size = UDim2.new(0, 200, 0, 50)
+				billboard.StudsOffset = Vector3.new(0, 2.5, 0)
+				billboard.AlwaysOnTop = true
+				billboard.Adornee = head
+				billboard.Parent = head
+
+				local textLabel = Instance.new("TextLabel")
+				textLabel.Size = UDim2.new(1, 0, 1, 0)
+				textLabel.BackgroundTransparency = 1
+				textLabel.TextColor3 = Color3.new(1, 1, 1)
+				textLabel.TextStrokeTransparency = 0
+				textLabel.Text = player.Name
+				textLabel.Font = Enum.Font.FredokaOne
+				textLabel.TextScaled = true
+				textLabel.Parent = billboard
 			end
+		end
+
+		-- Conecta eventos para manter tudo atualizado
+		local function setupPlayer(player)
+			if player == LocalPlayer then return end
+
+			player.CharacterAdded:Connect(function()
+				task.wait(0.5) -- Espera o personagem carregar
+				updateESP(player)
+			end)
 
 			if player.Character then
-				local highlight = Instance.new("Highlight")
-				highlight.Name = "ESP_Highlight"
-				highlight.FillTransparency = 0.2
-				highlight.OutlineTransparency = .6 -- Sem contorno
-				highlight.FillColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
-				highlight.OutlineColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
-				highlight.Adornee = player.Character
-				highlight.Parent = workspace.CurrentCamera
+				updateESP(player)
 			end
-		end
 
-		-- Atualiza todos os jogadores existentes
-		for _, player in ipairs(Players:GetPlayers()) do
-			if player ~= LocalPlayer then
-				player.CharacterAdded:Connect(function()
-					updateHighlight(player)
-				end)
-				if player.Character then
-					updateHighlight(player)
-				end
-
-				-- Atualiza quando trocar de time
-				player:GetPropertyChangedSignal("Team"):Connect(function()
-					updateHighlight(player)
-				end)
-			end
-		end
-
-		-- Quando novo jogador entrar
-		Players.PlayerAdded:Connect(function(player)
-			player.CharacterAdded:Connect(function()
-				updateHighlight(player)
-			end)
 			player:GetPropertyChangedSignal("Team"):Connect(function()
-				updateHighlight(player)
+				updateESP(player)
 			end)
-		end)
+		end
 
-		-- Quando jogador sair, não precisa remover porque o Character some automaticamente
+		-- Configura todos os players atuais
+		for _, player in ipairs(Players:GetPlayers()) do
+			setupPlayer(player)
+		end
+
+		-- Quando um novo jogador entrar
+		Players.PlayerAdded:Connect(setupPlayer)
 	end,
 })
+
 
 
 local Section = rev:CreateSection("RISCO DE BAN")
