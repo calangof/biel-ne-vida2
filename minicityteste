@@ -27,7 +27,7 @@ local Button = rev:CreateButton({
 		end
 
 		-- Lista de itens para pegar
-		local itens = {"AK47", "Uzi", "Parafal", "Faca", "IA2", "G3", "IPhone 14", "Agua", "Hamburguer", "Hi Power", "Natalina", "Bandage", "Ar-15", "AR-15"}
+		local itens = {"AK47", "Uzi", "Parafal", "Faca", "IA2", "G3", "IPhone 14", "Agua", "Hamburguer", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15"}
 
 		-- Argumentos para a requisição
 		local args = {
