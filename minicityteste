@@ -2,8 +2,8 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS🔥",
-	LoadingTitle = "BIEL BS",
+	Name = "🔥Menu Mini City BIEL BS | V2🔥",
+	LoadingTitle = "BIEL BS - Creditos A Mim!",
 	LoadingSubtitle = "by BIEL BS",
 	ConfigurationSaving = {
 		Enabled = false
