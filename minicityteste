@@ -27,7 +27,7 @@ local Button = rev:CreateButton({
 		end
 
 		-- Lista de itens para pegar
-		local itens = {"Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vázio", "Gasolina", "Colheita de Trigo", "Agua", "Hamburguer", "Pizza"}
+		local itens = {"AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Agua", "Hamburguer", "Pizza", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vázio", "Gasolina", "Escudo", "Colheita de Trigo"}
 
 		-- Argumentos para a requisição
 		local args = {
@@ -253,5 +253,5 @@ local mob = rev:CreateButton({
 local Section = rev:CreateSection("Info")
 rev:CreateParagraph({
 	Title = "Descrição",
-	Content = "Script feito por BIEL BS\nNOVA ATUALIZAÇÃO:\n1. Novo Auto Revistar, Revista Todos Mortos Perto De Você (5 Passos).\n2. Auto CL, Quita Sozinho Quanto Tiver Com Menos De 30 De Vida.\n3. Itens Que o Revistar Pegara. AK47, Uzi, Parafal, Faca, IA2, G3, IPhone 14, Agua, Hamburguer, Hi Power, Natalina, Tratamento, AR-15, Lockpick, Glock17, Planta Suja, Planta Limpa, Plástico Pronto, Plástico Vázio, Escudo.\n 4. To com Preguiça."
+	Content = "Script feito por BIEL BS\nNOVA ATUALIZAÇÃO:\n1. Novo Auto Revistar, Revista Todos Mortos Perto De Você (5 Passos).\n2. Auto CL, Quita Sozinho Quanto Tiver Com Menos De 30 De Vida.\n3. Itens Que o Revistar Pegara. AK47, Uzi, Parafal, Faca, IA2, G3, IPhone 14, Agua, Hamburguer, Hi Power, Natalina, Tratamento, AR-15, Lockpick, Glock17, Planta Suja, Planta Limpa, Plástico Pronto, Plástico Vázio.\n 4. To com Preguiça."
 })
