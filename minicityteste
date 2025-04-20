@@ -140,4 +140,4 @@ local mob = rev:CreateButton({
 		RevistarButton.Parent = Frame
 	end,
 })
-local Section = rev:CreateSection("Info")
+--local Section = rev:CreateSection("Info")
