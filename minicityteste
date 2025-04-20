@@ -145,7 +145,7 @@ local Button1 = rev:CreateButton({
 			if player.Character then
 				local highlight = Instance.new("Highlight")
 				highlight.Name = "ESP_Highlight"
-				highlight.FillTransparency = 0.5
+				highlight.FillTransparency = 0.2
 				highlight.OutlineTransparency = .6 -- Sem contorno
 				highlight.FillColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
 				highlight.OutlineColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
