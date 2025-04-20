@@ -2,17 +2,17 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V2.1🔥",
+	Name = "🔥Menu Mini City BIEL BS | V2.2🔥",
 	LoadingTitle = "BIEL BS",
-	LoadingSubtitle = "by BIEL BS",
+	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
 		Enabled = false
 	}
 })
 
 local rev = Window:CreateTab("Revistar")
-local Paragraph = rev:CreateParagraph({Title = "BL ON TOP", Content = "feito por BIEL BS"})
-local Section = rev:CreateSection("NECESSÁRIO - ")
+local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
+local Section = rev:CreateSection("NECESSÁRIO")
 local Button = rev:CreateButton({
 	Name = "Puxa Itens",
 	Callback = function()
@@ -39,7 +39,7 @@ local Button = rev:CreateButton({
 		-- Loop principal
 		while true do
 			-- Deletar todas as NotifyGui antes de pegar os itens
-			deletarNotifyGui()
+			--deletarNotifyGui()
 
 			-- Pegar itens
 			for i, item in ipairs(itens) do
@@ -59,6 +59,25 @@ local Button = rev:CreateButton({
 		end
 	end,
 })
+
+local Button = rev:CreateButton({
+	Name = "Remover Notificação",
+	Callback = function()
+		-- Função para deletar todas as NotifyGui
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy() -- Deleta a NotifyGui
+				end
+			end
+		end
+		
+		deletarNotifyGui()
+		
+end,
+})
+
 local Section = rev:CreateSection("PC")
 local ww = rev:CreateToggle({
 	Name = "Revistar (TECLA E | PC)",
