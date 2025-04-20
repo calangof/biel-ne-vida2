@@ -14,7 +14,7 @@ local rev = Window:CreateTab("Revistar")
 local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
 local Section = rev:CreateSection("NECESSÁRIO")
 local Button = rev:CreateButton({
-	Name = "Puxa Itens",
+	Name = "Puxa Itens - Com Comida",
 	Callback = function()
 		-- Função para deletar todas as NotifyGui
 		local function deletarNotifyGui()
@@ -28,6 +28,53 @@ local Button = rev:CreateButton({
 
 		-- Lista de itens para pegar
 		local itens = {"AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Agua", "Hamburguer", "Pizza", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vázio", "Gasolina", "Escudo", "Colheita de Trigo"}
+
+		-- Argumentos para a requisição
+		local args = {
+			[1] = "mudaInv",
+			[2] = "2",
+			[4] = "1"
+		}
+
+		-- Loop principal
+		while true do
+			-- Deletar todas as NotifyGui antes de pegar os itens
+			--deletarNotifyGui()
+
+			-- Pegar itens
+			for i, item in ipairs(itens) do
+				if i <= 16 then  -- Só tenta alocar até 16 slots
+					args[3] = item  -- Atualiza o item para o valor da vez
+					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
+
+					-- Usar task.spawn() para execução sem delay
+					task.spawn(function()
+						-- Envia a requisição para o servidor
+						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
+					end)
+				end
+			end
+
+			wait(0)  -- Espera um frame para evitar lag
+		end
+	end,
+})
+
+local Button = rev:CreateButton({
+	Name = "Puxa Itens - Sem Comida",
+	Callback = function()
+		-- Função para deletar todas as NotifyGui
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy() -- Deleta a NotifyGui
+				end
+			end
+		end
+
+		-- Lista de itens para pegar
+		local itens = {"AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vázio", "Gasolina", "Escudo", "Colheita de Trigo"}
 
 		-- Argumentos para a requisição
 		local args = {
