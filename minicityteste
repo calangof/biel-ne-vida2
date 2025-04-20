@@ -6,8 +6,17 @@ local Window = Rayfield:CreateWindow({
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
-		Enabled = false
+		Enabled = true,
+		FileName = "Save1"
+	},
+	KeySystem = true,
+	KeySettings = {
+		Title = "Mini City BR - @bielbs09_22",
+		Subtitle = "Sistema De Key",
+		Note = "Algum Bug Entre em Contato!",
+		Key = "BielScripts"
 	}
+	
 })
 
 local rev = Window:CreateTab("Revistar")
@@ -16,6 +25,14 @@ local Section = rev:CreateSection("NECESSÁRIO")
 local Button = rev:CreateButton({
 	Name = "Puxa Itens - Com Comida",
 	Callback = function()
+		
+		Rayfield:Notify({
+			Title = "Aviso",
+			Content = "Auto Puxar Itens Ativado, Não Pegara Comida!",
+			Duration = 6.5,
+			Image = 4483362458,
+		})
+		
 		-- Função para deletar todas as NotifyGui
 		local function deletarNotifyGui()
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -69,6 +86,13 @@ local Button = rev:CreateButton({
 local Button = rev:CreateButton({
 	Name = "Puxa Itens - Sem Comida",
 	Callback = function()
+		
+		Rayfield:Notify({
+			Title = "Aviso",
+			Content = "Auto Puxar Itens Ativado, Pegara Comida!",
+			Duration = 6.5,
+			Image = 4483362458,
+		})
 		-- Função para deletar todas as NotifyGui
 		local function deletarNotifyGui()
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -137,7 +161,7 @@ local Button = rev:CreateButton({
 	end,
 })
 
-local Button = rev:CreateButton({
+--[[local Button = rev:CreateButton({
 	Name = "ESP",
 	Callback = function()
 		local Players = game:GetService("Players")
@@ -209,7 +233,7 @@ local Button = rev:CreateButton({
 		-- Quando um novo jogador entrar
 		Players.PlayerAdded:Connect(setupPlayer)
 	end,
-})
+})]]
 
 
 
