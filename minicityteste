@@ -2,7 +2,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V2.2🔥",
+	Name = "🔥Menu Mini City BIEL BS | V2.3🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -59,6 +59,55 @@ local Button = rev:CreateButton({
 		end
 	end,
 })
+
+local Button = rev:CreateButton({
+	Name = "Auto Revistar (Para Desativar Precisa Sair) - Risco De Ban",
+	Callback = function()
+		local Players = game:GetService("Players")
+		local LocalPlayer = Players.LocalPlayer
+		local TextChatService = game:GetService("TextChatService")
+		local RunService = game:GetService("RunService")
+
+		-- Função para deletar todas as NotifyGui
+		local function deletarNotifyGui()
+			local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy()
+				end
+			end
+		end
+
+		local function sendRevistarMessage()
+			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+			channel:SendAsync("/revistar")
+		end
+
+		-- Loop principal
+		while true do
+			wait(1) -- Espera 1 segundo entre verificações
+
+			local character = LocalPlayer.Character
+			if character and character:FindFirstChild("HumanoidRootPart") then
+				local myPosition = character.HumanoidRootPart.Position
+
+				for _, player in pairs(Players:GetPlayers()) do
+					if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Humanoid") and player.Character:FindFirstChild("HumanoidRootPart") then
+						local humanoid = player.Character.Humanoid
+						local distance = (player.Character.HumanoidRootPart.Position - myPosition).Magnitude
+
+						if humanoid.Health <= 0 and distance <= 5 then
+							sendRevistarMessage()
+							--deletarNotifyGui()
+							break -- Evita múltiplos envios se mais de um morto estiver perto
+						end
+					end
+				end
+			end
+		end
+	end,
+})
+
 
 local Button = rev:CreateButton({
 	Name = "Remover Notificação",
