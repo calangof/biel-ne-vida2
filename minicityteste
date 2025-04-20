@@ -2,7 +2,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V2.3🔥",
+	Name = "🔥Menu Mini City BIEL BS | V2.4🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -27,7 +27,7 @@ local Button = rev:CreateButton({
 		end
 
 		-- Lista de itens para pegar
-		local itens = {"AK47", "Uzi", "Parafal", "Faca", "IA2", "G3", "IPhone 14", "Agua", "Hamburguer", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock17"}
+		local itens = {"AK47", "Uzi", "Parafal", "Faca", "IA2", "G3", "IPhone 14", "Agua", "Hamburguer", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vázio"}
 
 		-- Argumentos para a requisição
 		local args = {
@@ -208,4 +208,8 @@ local mob = rev:CreateButton({
 		RevistarButton.Parent = Frame
 	end,
 })
---local Section = rev:CreateSection("Info")
+local Section = rev:CreateSection("Info")
+rev:CreateParagraph({
+	Title = "Descrição",
+	Content = "Script feito por BIEL BS\nBotão de puxar itens coloca todos no inventário\nRevistar funciona tanto em PC quanto Mobile\nUse com responsabilidade!"
+})
