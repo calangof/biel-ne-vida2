@@ -2,7 +2,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS🔥",
+	Name = "🔥Menu Mini City BIEL BS | V2.1🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "by BIEL BS",
 	ConfigurationSaving = {
@@ -11,7 +11,7 @@ local Window = Rayfield:CreateWindow({
 })
 
 local rev = Window:CreateTab("Revistar")
-local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "feito por BIEL BS"})
+local Paragraph = rev:CreateParagraph({Title = "BL ON TOP", Content = "feito por BIEL BS"})
 local Section = rev:CreateSection("NECESSÁRIO - ")
 local Button = rev:CreateButton({
 	Name = "Puxa Itens",
