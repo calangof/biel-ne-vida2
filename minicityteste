@@ -2,7 +2,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V2.4🔥",
+	Name = "🔥Menu Mini City BIEL BS | V2.5🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -61,7 +61,27 @@ local Button = rev:CreateButton({
 })
 
 local Button = rev:CreateButton({
-	Name = "Auto Revistar (Para Desativar Precisa Sair) - Risco De Ban",
+	Name = "Remover Notificação",
+	Callback = function()
+		-- Função para deletar todas as NotifyGui
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy() -- Deleta a NotifyGui
+				end
+			end
+		end
+
+		deletarNotifyGui()
+
+	end,
+})
+
+local Section = rev:CreateSection("RISCO DE BAN")
+
+local Button = rev:CreateButton({
+	Name = "Auto Revistar (Para Desativar Precisa Sair)",
 	Callback = function()
 		local Players = game:GetService("Players")
 		local LocalPlayer = Players.LocalPlayer
@@ -109,25 +129,47 @@ local Button = rev:CreateButton({
 })
 
 
+
+
 local Button = rev:CreateButton({
-	Name = "Remover Notificação",
+	Name = "Auto CL - (-30 HP)",
 	Callback = function()
-		-- Função para deletar todas as NotifyGui
 		local function deletarNotifyGui()
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 			for _, gui in ipairs(playerGui:GetChildren()) do
 				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy() -- Deleta a NotifyGui
+					gui:Destroy()
 				end
 			end
 		end
-		
-		deletarNotifyGui()
-		
-end,
+
+		local TextChatService = game:GetService("TextChatService")
+		local Players = game:GetService("Players")
+		local LocalPlayer = Players.LocalPlayer
+
+		local function sendRejoinMessage()
+			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+			channel:SendAsync("/rejoin")
+		end
+
+		while true do
+			 -- pequeno delay para não sobrecarregar
+
+			local character = LocalPlayer.Character
+			if character then
+				local humanoid = character:FindFirstChildOfClass("Humanoid")
+				if humanoid and humanoid.Health < 30 then
+					sendRejoinMessage()
+					break -- para o loop após rejoin
+				end
+			end
+			task.wait(0)
+		end
+	end,
 })
 
-local Section = rev:CreateSection("PC")
+
+local Section = rev:CreateSection("REVISTAR")
 local ww = rev:CreateToggle({
 	Name = "Revistar (TECLA E | PC)",
 	CurrentValue = false,
@@ -136,7 +178,7 @@ local ww = rev:CreateToggle({
 		getgenv().Enabled = Value
 	end,
 })
-local Section = rev:CreateSection("MOBILE")
+
 local mob = rev:CreateButton({
 	Name = "Revistar (MOBILE)",
 	Callback = function()
@@ -192,7 +234,7 @@ local mob = rev:CreateButton({
 		RevistarButton.Size = UDim2.new(0.8, 0, 0.4, 0)
 		RevistarButton.Position = UDim2.new(0.1, 0, 0.5, -30)
 		RevistarButton.BackgroundColor3 = Color3.fromRGB(50, 150, 250)
-		RevistarButton.Text = "manda /revistar"
+		RevistarButton.Text = "Revistar"
 		RevistarButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 		RevistarButton.Font = Enum.Font.SourceSansBold
 		RevistarButton.TextSize = 20
@@ -211,5 +253,5 @@ local mob = rev:CreateButton({
 local Section = rev:CreateSection("Info")
 rev:CreateParagraph({
 	Title = "Descrição",
-	Content = "Script feito por BIEL BS\nBotão de puxar itens coloca todos no inventário\nRevistar funciona tanto em PC quanto Mobile\nUse com responsabilidade!"
+	Content = "Script feito por BIEL BS\nNOVA ATUALIZAÇÃO:\n1. Novo Auto Revistar, Revista Todos Mortos Perto De Você (5 Passos).\n2. Auto CL, Quita Sozinho Quanto Tiver Com Menos De 30 De Vida.\n 3. To com Preguiça"
 })
