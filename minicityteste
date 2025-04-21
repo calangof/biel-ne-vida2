@@ -327,6 +327,30 @@ local Button = rev:CreateButton({
 	end,
 })
 
+local Button = rev:CreateButton({
+	Name = "Auto CL v2 - (-30 HP)",
+	Callback = function()
+		local TeleportService = game:GetService("TeleportService")
+		local Players = game:GetService("Players")
+		local LocalPlayer = Players.LocalPlayer
+		local placeId = game.PlaceId
+
+		while true do
+			local character = LocalPlayer.Character
+			if character then
+				local humanoid = character:FindFirstChildOfClass("Humanoid")
+				if humanoid and humanoid.Health < 30 then
+					-- Teleporta para outro servidor aleatório do mesmo jogo
+					TeleportService:Teleport(placeId)
+					break
+				end
+			end
+			task.wait()
+		end
+	end,
+})
+
+
 
 local Section = rev:CreateSection("REVISTAR")
 local ww = rev:CreateToggle({
