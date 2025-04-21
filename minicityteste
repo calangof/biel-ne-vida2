@@ -1,481 +1,676 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+	local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
--- Criando a Janela da Interface
-local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V2.6🔥",
-	LoadingTitle = "BIEL BS",
-	LoadingSubtitle = "By BIEL BS",
-	ConfigurationSaving = {
-		Enabled = true,
-		FileName = "Save1"
-	},
-	KeySystem = true,
-	KeySettings = {
-		Title = "Mini City BR - @bielbs09_22",
-		Subtitle = "Sistema De Key",
-		Note = "Algum Bug Entre em Contato!",
-		Key = "BielScripts"
-	}
-	
-})
-
-
-
-local rev = Window:CreateTab("Revistar")
-local Section = rev:CreateSection("Section Example")
-local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
-local Section = rev:CreateSection("NECESSÁRIO")
-local Button = rev:CreateButton({
-	Name = "Puxa Itens - Com Comida",
-	Callback = function()
-		
-		Rayfield:Notify({
-			Title = "Aviso",
-			Content = "Auto Puxar Itens Ativado, Não Pegara Comida!",
-			Duration = 6.5,
-			Image = 4483362458,
-		})
-		
-		-- Função para deletar todas as NotifyGui
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy() -- Deleta a NotifyGui
-				end
-			end
-		end
-
-		-- Lista de itens para pegar
-		local itens = {"Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Agua", "Hamburguer", "Pizza", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vázio", "Gasolina", "Escudo", "Colheita de Trigo"}
-
-		-- Argumentos para a requisição
-		local args = {
-			[1] = "mudaInv",
-			[2] = "2",
-			[4] = "1"
+	-- Criando a Janela da Interface
+	local Window = Rayfield:CreateWindow({
+		Name = "🔥Menu Mini City BIEL BS | V2.6🔥",
+		LoadingTitle = "BIEL BS",
+		LoadingSubtitle = "By BIEL BS",
+		ConfigurationSaving = {
+			Enabled = true,
+			FileName = "Save1"
+		},
+		KeySystem = true,
+		KeySettings = {
+			Title = "Mini City BR - @bielbs09_22",
+			Subtitle = "Sistema De Key",
+			Note = "Algum Bug Entre em Contato!",
+			Key = "BielScripts"
 		}
-
-		-- Loop principal
-		while true do
-			-- Deletar todas as NotifyGui antes de pegar os itens
-			--deletarNotifyGui()
-
-			-- Pegar itens
-			for i, item in ipairs(itens) do
-				if i <= 16 then  -- Só tenta alocar até 16 slots
-					args[3] = item  -- Atualiza o item para o valor da vez
-					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
-
-					-- Usar task.spawn() para execução sem delay
-					task.spawn(function()
-						-- Envia a requisição para o servidor
-						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
-					end)
-				end
-			end
-
-			task.wait()  -- Espera um frame para evitar lag
-		end
-	end,
-})
-
-local Button = rev:CreateButton({
-	Name = "Puxa Itens - Sem Comida",
-	Callback = function()
 		
-		Rayfield:Notify({
-			Title = "Aviso",
-			Content = "Auto Puxar Itens Ativado, Pegara Comida!",
-			Duration = 6.5,
-			Image = 4483362458,
-		})
-		-- Função para deletar todas as NotifyGui
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy() -- Deleta a NotifyGui
-				end
-			end
-		end
+	})
 
-		-- Lista de itens para pegar
-		local itens = {"Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vazio", "Gasolina", "Escudo", "Colheita de Trigo"}
 
-		-- Argumentos para a requisição
-		local args = {
-			[1] = "mudaInv",
-			[2] = "2",
-			[4] = "1"
-		}
 
-		-- Loop principal
-		while true do
-			-- Deletar todas as NotifyGui antes de pegar os itens
-			--deletarNotifyGui()
-
-			-- Pegar itens
-			for i, item in ipairs(itens) do
-				if i <= 16 then  -- Só tenta alocar até 16 slots
-					args[3] = item  -- Atualiza o item para o valor da vez
-					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
-
-					-- Usar task.spawn() para execução sem delay
-					task.spawn(function()
-						-- Envia a requisição para o servidor
-						
-						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
-					end)
+	local rev = Window:CreateTab("Main")
+	local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
+	local Section = rev:CreateSection("NECESSÁRIO")
+	local Button = rev:CreateButton({
+		Name = "Puxa Itens - Com Comida",
+		Callback = function()
+			
+			Rayfield:Notify({
+				Title = "Aviso",
+				Content = "Auto Puxar Itens Ativado, Não Pegara Comida!",
+				Duration = 6.5,
+				Image = 4483362458,
+			})
+			
+			-- Função para deletar todas as NotifyGui
+			local function deletarNotifyGui()
+				local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+				for _, gui in ipairs(playerGui:GetChildren()) do
+					if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+						gui:Destroy() -- Deleta a NotifyGui
+					end
 				end
 			end
 
-			task.wait()  -- Espera um frame para evitar lag
-		end
-	end,
-})
+			-- Lista de itens para pegar
+			local itens = {"Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Agua", "Hamburguer", "Pizza", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vázio", "Gasolina", "Escudo", "Colheita de Trigo"}
 
-local Button = rev:CreateButton({
-	Name = "Remover Notificação",
-	Callback = function()
-		-- Função para deletar todas as NotifyGui
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy() -- Deleta a NotifyGui
+			-- Argumentos para a requisição
+			local args = {
+				[1] = "mudaInv",
+				[2] = "2",
+				[4] = "1"
+			}
+
+			-- Loop principal
+			while true do
+				-- Deletar todas as NotifyGui antes de pegar os itens
+				--deletarNotifyGui()
+
+				-- Pegar itens
+				for i, item in ipairs(itens) do
+					if i <= 16 then  -- Só tenta alocar até 16 slots
+						args[3] = item  -- Atualiza o item para o valor da vez
+						args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
+
+						-- Usar task.spawn() para execução sem delay
+						task.spawn(function()
+							-- Envia a requisição para o servidor
+							game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
+						end)
+					end
+				end
+
+				task.wait()  -- Espera um frame para evitar lag
+			end
+		end,
+	})
+
+	local Button = rev:CreateButton({
+		Name = "Puxa Itens - Sem Comida",
+		Callback = function()
+			
+			Rayfield:Notify({
+				Title = "Aviso",
+				Content = "Auto Puxar Itens Ativado, Pegara Comida!",
+				Duration = 6.5,
+				Image = 4483362458,
+			})
+			-- Função para deletar todas as NotifyGui
+			local function deletarNotifyGui()
+				local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+				for _, gui in ipairs(playerGui:GetChildren()) do
+					if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+						gui:Destroy() -- Deleta a NotifyGui
+					end
 				end
 			end
-		end
 
-		deletarNotifyGui()
+			-- Lista de itens para pegar
+			local itens = {"Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vazio", "Gasolina", "Escudo", "Colheita de Trigo"}
 
-	end,
-})
+			-- Argumentos para a requisição
+			local args = {
+				[1] = "mudaInv",
+				[2] = "2",
+				[4] = "1"
+			}
 
---[[local Button = rev:CreateButton({
-	Name = "ESP",
-	Callback = function()
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
+			-- Loop principal
+			while true do
+				-- Deletar todas as NotifyGui antes de pegar os itens
+				--deletarNotifyGui()
 
-		-- Cria ou atualiza o Highlight e o nome acima da cabeça
-		local function updateESP(player)
-			if not player.Character then return end
+				-- Pegar itens
+				for i, item in ipairs(itens) do
+					if i <= 16 then  -- Só tenta alocar até 16 slots
+						args[3] = item  -- Atualiza o item para o valor da vez
+						args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
 
-			-- Highlight
-			local oldHighlight = player.Character:FindFirstChild("ESP_Highlight")
-			if oldHighlight then oldHighlight:Destroy() end
+						-- Usar task.spawn() para execução sem delay
+						task.spawn(function()
+							-- Envia a requisição para o servidor
+							
+							game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
+						end)
+					end
+				end
 
-			local highlight = Instance.new("Highlight")
-			highlight.Name = "ESP_Highlight"
-			highlight.FillTransparency = 0.4
-			highlight.OutlineTransparency = .3
-			highlight.FillColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
-			highlight.OutlineColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
-			highlight.Adornee = player.Character
-			highlight.Parent = player.Character
-
-			-- Nome (BillboardGui)
-			local head = player.Character:FindFirstChild("Head")
-			if head and not head:FindFirstChild("ESP_NameGui") then
-				local billboard = Instance.new("BillboardGui")
-				billboard.Name = "ESP_NameGui"
-				billboard.Size = UDim2.new(0, 200, 0, 50)
-				billboard.StudsOffset = Vector3.new(0, 2.5, 0)
-				billboard.AlwaysOnTop = true
-				billboard.Adornee = head
-				billboard.Parent = head
-
-				local textLabel = Instance.new("TextLabel")
-				textLabel.Size = UDim2.new(1, 0, 1, 0)
-				textLabel.BackgroundTransparency = 1
-				textLabel.TextColor3 = Color3.new(1, 1, 1)
-				textLabel.TextStrokeTransparency = 0
-				textLabel.Text = player.Name
-				textLabel.Font = Enum.Font.FredokaOne
-				textLabel.TextScaled = true
-				textLabel.Parent = billboard
+				task.wait()  -- Espera um frame para evitar lag
 			end
-		end
+		end,
+	})
 
-		-- Conecta eventos para manter tudo atualizado
-		local function setupPlayer(player)
-			if player == LocalPlayer then return end
-
-			player.CharacterAdded:Connect(function()
-				task.wait(0.5) -- Espera o personagem carregar
-				updateESP(player)
-			end)
-
-			if player.Character then
-				updateESP(player)
-			end
-
-			player:GetPropertyChangedSignal("Team"):Connect(function()
-				updateESP(player)
-			end)
-		end
-
-		-- Configura todos os players atuais
-		for _, player in ipairs(Players:GetPlayers()) do
-			setupPlayer(player)
-		end
-
-		-- Quando um novo jogador entrar
-		Players.PlayerAdded:Connect(setupPlayer)
-	end,
-})]]
-
-
-
-local Section = rev:CreateSection("RISCO DE BAN")
-
-local Button = rev:CreateButton({
-	Name = "Auto Revistar (Para Desativar Precisa Sair)",
-	Callback = function()
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-		local TextChatService = game:GetService("TextChatService")
-		local RunService = game:GetService("RunService")
-
-		-- Função para deletar todas as NotifyGui
-		local function deletarNotifyGui()
-			local playerGui = LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
+	local Button = rev:CreateButton({
+		Name = "Remover Notificação",
+		Callback = function()
+			-- Função para deletar todas as NotifyGui
+			local function deletarNotifyGui()
+				local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+				for _, gui in ipairs(playerGui:GetChildren()) do
+					if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+						gui:Destroy() -- Deleta a NotifyGui
+					end
 				end
 			end
-		end
 
-		local function sendRevistarMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/revistar")
-		end
+			deletarNotifyGui()
 
-		-- Loop principal
-		while true do
-			wait(1) -- Espera 1 segundo entre verificações
+		end,
+	})
 
-			local character = LocalPlayer.Character
-			if character and character:FindFirstChild("HumanoidRootPart") then
-				local myPosition = character.HumanoidRootPart.Position
+	--[[local Button = rev:CreateButton({
+		Name = "ESP",
+		Callback = function()
+			local Players = game:GetService("Players")
+			local LocalPlayer = Players.LocalPlayer
 
-				for _, player in pairs(Players:GetPlayers()) do
-					if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Humanoid") and player.Character:FindFirstChild("HumanoidRootPart") then
-						local humanoid = player.Character.Humanoid
-						local distance = (player.Character.HumanoidRootPart.Position - myPosition).Magnitude
+			-- Cria ou atualiza o Highlight e o nome acima da cabeça
+			local function updateESP(player)
+				if not player.Character then return end
 
-						if humanoid.Health <= 0 and distance <= 5 then
-							sendRevistarMessage()
-							--deletarNotifyGui()
-							break -- Evita múltiplos envios se mais de um morto estiver perto
+				-- Highlight
+				local oldHighlight = player.Character:FindFirstChild("ESP_Highlight")
+				if oldHighlight then oldHighlight:Destroy() end
+
+				local highlight = Instance.new("Highlight")
+				highlight.Name = "ESP_Highlight"
+				highlight.FillTransparency = 0.4
+				highlight.OutlineTransparency = .3
+				highlight.FillColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
+				highlight.OutlineColor = player.Team and player.Team.TeamColor.Color or Color3.new(1, 1, 1)
+				highlight.Adornee = player.Character
+				highlight.Parent = player.Character
+
+				-- Nome (BillboardGui)
+				local head = player.Character:FindFirstChild("Head")
+				if head and not head:FindFirstChild("ESP_NameGui") then
+					local billboard = Instance.new("BillboardGui")
+					billboard.Name = "ESP_NameGui"
+					billboard.Size = UDim2.new(0, 200, 0, 50)
+					billboard.StudsOffset = Vector3.new(0, 2.5, 0)
+					billboard.AlwaysOnTop = true
+					billboard.Adornee = head
+					billboard.Parent = head
+
+					local textLabel = Instance.new("TextLabel")
+					textLabel.Size = UDim2.new(1, 0, 1, 0)
+					textLabel.BackgroundTransparency = 1
+					textLabel.TextColor3 = Color3.new(1, 1, 1)
+					textLabel.TextStrokeTransparency = 0
+					textLabel.Text = player.Name
+					textLabel.Font = Enum.Font.FredokaOne
+					textLabel.TextScaled = true
+					textLabel.Parent = billboard
+				end
+			end
+
+			-- Conecta eventos para manter tudo atualizado
+			local function setupPlayer(player)
+				if player == LocalPlayer then return end
+
+				player.CharacterAdded:Connect(function()
+					task.wait(0.5) -- Espera o personagem carregar
+					updateESP(player)
+				end)
+
+				if player.Character then
+					updateESP(player)
+				end
+
+				player:GetPropertyChangedSignal("Team"):Connect(function()
+					updateESP(player)
+				end)
+			end
+
+			-- Configura todos os players atuais
+			for _, player in ipairs(Players:GetPlayers()) do
+				setupPlayer(player)
+			end
+
+			-- Quando um novo jogador entrar
+			Players.PlayerAdded:Connect(setupPlayer)
+		end,
+	})]]
+
+
+
+	local Section = rev:CreateSection("RISCO DE BAN")
+
+	local Button = rev:CreateButton({
+		Name = "Auto Revistar (Para Desativar Precisa Sair)",
+		Callback = function()
+			local Players = game:GetService("Players")
+			local LocalPlayer = Players.LocalPlayer
+			local TextChatService = game:GetService("TextChatService")
+			local RunService = game:GetService("RunService")
+
+			-- Função para deletar todas as NotifyGui
+			local function deletarNotifyGui()
+				local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+				for _, gui in ipairs(playerGui:GetChildren()) do
+					if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+						gui:Destroy()
+					end
+				end
+			end
+
+			local function sendRevistarMessage()
+				local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+				channel:SendAsync("/revistar")
+			end
+
+			-- Loop principal
+			while true do
+				wait(1) -- Espera 1 segundo entre verificações
+
+				local character = LocalPlayer.Character
+				if character and character:FindFirstChild("HumanoidRootPart") then
+					local myPosition = character.HumanoidRootPart.Position
+
+					for _, player in pairs(Players:GetPlayers()) do
+						if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Humanoid") and player.Character:FindFirstChild("HumanoidRootPart") then
+							local humanoid = player.Character.Humanoid
+							local distance = (player.Character.HumanoidRootPart.Position - myPosition).Magnitude
+
+							if humanoid.Health <= 0 and distance <= 5 then
+								sendRevistarMessage()
+								--deletarNotifyGui()
+								break -- Evita múltiplos envios se mais de um morto estiver perto
+							end
 						end
 					end
 				end
 			end
-		end
-	end,
-})
+		end,
+	})
 
-local Button = rev:CreateButton({
-	Name = "Auto CL - 50",
+	local Button = rev:CreateButton({
+		Name = "Auto CL - 50",
+		Callback = function()
+			local function deletarNotifyGui()
+				local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+				for _, gui in ipairs(playerGui:GetChildren()) do
+					if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+						gui:Destroy()
+					end
+				end
+			end
+
+			local TextChatService = game:GetService("TextChatService")
+			local Players = game:GetService("Players")
+			local LocalPlayer = Players.LocalPlayer
+
+			local function sendRejoinMessage()
+				local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+				channel:SendAsync("/rejoin")
+			end
+
+			while true do
+				 -- pequeno delay para não sobrecarregar
+
+				local character = LocalPlayer.Character
+				if character then
+					local humanoid = character:FindFirstChildOfClass("Humanoid")
+					if humanoid and humanoid.Health < 50 then
+						LocalPlayer:Kick("BANIDO!")
+						break -- para o loop após rejoin
+					end
+				end
+				task.wait()
+			end
+		end,
+	})
+
+	local Button = rev:CreateButton({
+		Name = "Auto CL - 35",
+		Callback = function()
+			local function deletarNotifyGui()
+				local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+				for _, gui in ipairs(playerGui:GetChildren()) do
+					if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+						gui:Destroy()
+					end
+				end
+			end
+
+			local TextChatService = game:GetService("TextChatService")
+			local Players = game:GetService("Players")
+			local LocalPlayer = Players.LocalPlayer
+
+			local function sendRejoinMessage()
+				local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+				channel:SendAsync("/rejoin")
+			end
+
+			while true do
+				-- pequeno delay para não sobrecarregar
+
+				local character = LocalPlayer.Character
+				if character then
+					local humanoid = character:FindFirstChildOfClass("Humanoid")
+					if humanoid and humanoid.Health < 35 then
+						LocalPlayer:Kick("BANIDO!")
+						break -- para o loop após rejoin
+					end
+				end
+				task.wait()
+			end
+		end,
+	})
+
+	--[[local Button = rev:CreateButton({
+		Name = "Auto CL v2 - (-30 HP)",
+		Callback = function()
+			local TeleportService = game:GetService("TeleportService")
+			local Players = game:GetService("Players")
+			local LocalPlayer = Players.LocalPlayer
+			local placeId = game.PlaceId
+
+			while true do
+				local character = LocalPlayer.Character
+				if character then
+					local humanoid = character:FindFirstChildOfClass("Humanoid")
+					if humanoid and humanoid.Health < 30 then
+						-- Teleporta para outro servidor aleatório do mesmo jogo
+						TeleportService:Teleport(placeId)
+						break
+					end
+				end
+				task.wait()
+			end
+		end,
+	})]]
+
+
+
+	local Section = rev:CreateSection("REVISTAR")
+	local ww = rev:CreateToggle({
+		Name = "Revistar (TECLA E | PC)",
+		CurrentValue = false,
+		Flag = "rvst",
+		Callback = function(Value)
+			getgenv().Enabled = Value
+		end,
+	})
+
+	local mob = rev:CreateButton({
+		Name = "Revistar (MOBILE)",
+		Callback = function()
+			local TextChatService = game:GetService("TextChatService")
+
+			-- Função para enviar a mensagem /revistar morto
+			local function sendRevistarMessage()
+				local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+				channel:SendAsync("/revistar")
+			end
+
+			-- Cria a interface
+			local ScreenGui = Instance.new("ScreenGui")
+			local Frame = Instance.new("CanvasGroup")
+			local CloseButton = Instance.new("TextButton")
+			local RevistarButton = Instance.new("TextButton")
+			local Ui1 = Instance.new("UIStroke")
+			local Ui2 = Instance.new("UIStroke")
+			local Title = Instance.new("TextLabel")
+
+			ScreenGui.Name = "RevistarUI"
+			ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+
+			Ui2.Color = Color3.fromRGB(30, 30, 30)
+			Ui2.Parent = Frame
+			Ui2.LineJoinMode = Enum.LineJoinMode.Miter
+			Ui2.Thickness = 2
+
+			Ui1.Color = Color3.fromRGB(30, 30, 30)
+			Ui1.Parent = RevistarButton
+			Ui1.LineJoinMode = Enum.LineJoinMode.Miter
+			Ui1.Thickness = 2
+			Ui1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+			-- Estilo do Frame
+			Frame.Size = UDim2.new(0, 300, 0, 100)
+			Frame.Position = UDim2.new(0.5, -150, 0.5, -75)
+			Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+			Frame.BorderSizePixel = 0
+			Frame.BackgroundTransparency = 0.6
+			Frame.Active = true
+			Frame.Draggable = true
+
+			-- Título
+			Title.Size = UDim2.new(1, 0, 0, 30)
+			Title.Position = UDim2.new(0, 0, 0, 0)
+			Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+			Title.Text = "BIEL BS"
+			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Title.Font = Enum.Font.MontserratBold
+			Title.TextSize = 18
+
+			-- Botão Fechar
+			CloseButton.Size = UDim2.new(0, 30, 0, 30)
+			CloseButton.Position = UDim2.new(1, -30, 0, 0)
+			CloseButton.BackgroundTransparency = 1
+			CloseButton.Text = "–"
+			CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+			CloseButton.Font = Enum.Font.MontserratBold
+			CloseButton.TextSize = 25
+			CloseButton.MouseButton1Click:Connect(function()
+				ScreenGui:Destroy()
+			end)
+
+			-- Botão Revistar
+			RevistarButton.Size = UDim2.new(0.8, 0, 0.4, 0)
+			RevistarButton.Position = UDim2.new(0.1, 0, 0.75, -30)
+			RevistarButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+			RevistarButton.Text = "REVISTAR"
+			RevistarButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+			RevistarButton.Font = Enum.Font.MontserratBold
+			RevistarButton.BackgroundTransparency = 0.6
+			RevistarButton.TextSize = 20
+			RevistarButton.AutoButtonColor = true
+			RevistarButton.MouseButton1Click:Connect(function()
+				sendRevistarMessage()
+			end)
+
+			-- Adiciona os elementos ao frame
+			Frame.Parent = ScreenGui
+			Title.Parent = Frame
+			CloseButton.Parent = Frame
+			RevistarButton.Parent = Frame
+		end,
+	})
+	local Section = rev:CreateSection("Info")
+	rev:CreateParagraph({
+		Title = "Descrição",
+		Content = "Script feito por BIEL BS\nNOVA ATUALIZAÇÃO:\n1. Novo Auto Revistar, Revista Todos Mortos Perto De Você (5 Passos).\n2. Auto CL, Quita Sozinho Quanto Tiver Com Menos De 30 De Vida.\n3. Itens Que o Revistar Pegara. AK47, Uzi, Parafal, Faca, IA2, G3, IPhone 14, Agua, Hamburguer, Hi Power, Natalina, Tratamento, AR-15, Lockpick, Glock17, Planta Suja, Planta Limpa, Plástico Pronto, Plástico Vázio.\n 4. To com Preguiça."
+	})
+	
+local cam = Window:CreateTab("Combate")
+
+local Paragraph = cam:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
+local Section = cam:CreateSection("NECESSÁRIO")
+
+local Button = cam:CreateButton({
+	Name = "AimBot",
 	Callback = function()
+
+
+		Rayfield:Notify({
+			Title = "Aviso",
+			Content = "Aimbot Ativado, LA ELE!",
+			Duration = 6.5,
+			Image = 4483362458,
+		})
+
+		-- Função para deletar todas as NotifyGui
 		local function deletarNotifyGui()
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 			for _, gui in ipairs(playerGui:GetChildren()) do
 				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
+					gui:Destroy() -- Deleta a NotifyGui
 				end
 			end
 		end
 
-		local TextChatService = game:GetService("TextChatService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
+		local gui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
+		gui.Name = "aaaaaaaaa"
+		local fov = Instance.new("Frame", gui)
+		fov.Name = "GG"
+		fov.Size = UDim2.new(0,300,0,300)
+		fov.BackgroundTransparency = 1
+		local a = Instance.new("UICorner", fov)
+		a.CornerRadius = UDim2.new(1,0)
+		local aa = Instance.new("UIStroke", fov)
+		aa.Thickness = 2
+		aa.Color = Color3.fromRGB(85, 255, 255)
+	
+		
+		local function getClosestTarget()
+			if not fov.Visible then return nil end -- Se a mira não estiver visível, não faz nada.
 
-		local function sendRejoinMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/rejoin")
-		end
+			local closestTarget = nil
+			local closestDistance = 400
 
-		while true do
-			 -- pequeno delay para não sobrecarregar
+			-- Posição e tamanho da mira na tela
+			local aimDotPosition = fov.AbsolutePosition
+			local aimDotSize = fov.AbsoluteSize
+			local circleCenter = aimDotPosition + aimDotSize / 2
+			local circleRadius = math.min(aimDotSize.X, aimDotSize.Y) / 2
 
-			local character = LocalPlayer.Character
-			if character then
-				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 50 then
-					LocalPlayer:Kick("BANIDO!")
-					break -- para o loop após rejoin
+			for _, obj in ipairs(workspace:GetDescendants()) do
+				if obj:IsA("Model") and obj ~= game.Players.LocalPlayer.Character and obj:FindFirstChild("Humanoid") and obj:FindFirstChild("Head") then
+					local humanoid = obj:FindFirstChild("Humanoid")
+					local isAlive = humanoid and humanoid.Health > 0
+
+					-- Se false for falso, gruda apenas nos vivos. Se for verdadeiro, gruda nos vivos e mortos.
+					if false or isAlive then
+						local targetPart = obj["Head"]
+						local targetPosition, onScreen = workspace.Currentworkspace.CurrentCamera:WorldToViewportPoint(targetPart.Position)
+
+						if onScreen and targetPosition.Z > 0 then
+							local targetScreenPos = Vector2.new(targetPosition.X, targetPosition.Y)
+							local distance = (targetScreenPos - circleCenter).Magnitude
+
+							if distance <= circleRadius and distance < closestDistance then
+								closestDistance = distance
+								closestTarget = targetPart
+							end
+						end
+					end
 				end
 			end
-			task.wait()
+			return closestTarget
 		end
+
+		-- Loop contínuo para manter a câmera travada no alvo com suavização
+		task.spawn(function()
+			while true do
+				local target = getClosestTarget() -- Sempre atualiza o alvo
+
+				while game.Players.LocalPlayer:GetAttribute("ArmaEquipada") and target do
+					local humanoid = target.Parent and target.Parent:FindFirstChild("Humanoid")
+
+					-- Atualiza o alvo constantemente, mesmo se a arma estiver equipada
+					local newTarget = getClosestTarget()
+					if newTarget then
+						target = newTarget
+					end
+
+					-- Se o alvo foi removido ou não se encaixa mais nos critérios, interrompe
+					if not humanoid then
+						break
+					end
+
+					local targetPosition, onScreen = workspace.CurrentCamera:WorldToViewportPoint(target.Position)
+					local aimDotPosition = fov.AbsolutePosition
+					local aimDotSize = fov.AbsoluteSize
+					local circleCenter = aimDotPosition + aimDotSize / 2
+					local circleRadius = math.min(aimDotSize.X, aimDotSize.Y) / 2
+
+					-- Verifica se o alvo ainda está dentro do círculo antes de continuar mirando
+					if not onScreen or (Vector2.new(targetPosition.X, targetPosition.Y) - circleCenter).Magnitude > circleRadius then
+						break
+					end
+
+					-- Suavização do aimbot com Lerp
+					local newCFrame = CFrame.new(workspace.CurrentCamera.CFrame.Position, target.Position)
+					workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(newCFrame, 10)
+
+					task.wait()
+				end
+
+				task.wait(0.1) -- Pequena pausa para evitar uso excessivo de processamento
+			end
+		end)
+		
+
 	end,
 })
 
-local Button = rev:CreateButton({
-	Name = "Auto CL - 35",
+local Button = cam:CreateButton({
+	Name = "Cabeção - Medio",
 	Callback = function()
+		
+
+		Rayfield:Notify({
+			Title = "Aviso",
+			Content = "Todos Jogadores Tão Cabeçudo, LA ELE!",
+			Duration = 6.5,
+			Image = 4483362458,
+		})
+
+		-- Função para deletar todas as NotifyGui
 		local function deletarNotifyGui()
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 			for _, gui in ipairs(playerGui:GetChildren()) do
 				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
+					gui:Destroy() -- Deleta a NotifyGui
 				end
 			end
 		end
 
-		local TextChatService = game:GetService("TextChatService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-
-		local function sendRejoinMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/rejoin")
-		end
-
-		while true do
-			-- pequeno delay para não sobrecarregar
-
-			local character = LocalPlayer.Character
-			if character then
-				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 35 then
-					LocalPlayer:Kick("BANIDO!")
-					break -- para o loop após rejoin
+		for _, npc in ipairs(workspace:GetChildren()) do
+			local humanoid = npc:FindFirstChildOfClass("Humanoid")
+			if humanoid and npc ~= game.Players.LocalPlayer.Character then
+				local head = npc:FindFirstChild("Head")
+				if head and head:IsA("Part") then
+					head.CanCollide = false
+					head.Size = Vector3.new(6, 6, 6)
+					head.Transparency = .8
 				end
 			end
-			task.wait()
 		end
+		
 	end,
 })
 
---[[local Button = rev:CreateButton({
-	Name = "Auto CL v2 - (-30 HP)",
+local Button = cam:CreateButton({
+	Name = "Cabeção - Grande",
 	Callback = function()
-		local TeleportService = game:GetService("TeleportService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-		local placeId = game.PlaceId
 
-		while true do
-			local character = LocalPlayer.Character
-			if character then
-				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 30 then
-					-- Teleporta para outro servidor aleatório do mesmo jogo
-					TeleportService:Teleport(placeId)
-					break
+
+		Rayfield:Notify({
+			Title = "Aviso",
+			Content = "Todos Jogadores Tão Cabeçudo, LA ELE!",
+			Duration = 6.5,
+			Image = 4483362458,
+		})
+
+		-- Função para deletar todas as NotifyGui
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy() -- Deleta a NotifyGui
 				end
 			end
-			task.wait()
-		end
-	end,
-})]]
-
-
-
-local Section = rev:CreateSection("REVISTAR")
-local ww = rev:CreateToggle({
-	Name = "Revistar (TECLA E | PC)",
-	CurrentValue = false,
-	Flag = "rvst",
-	Callback = function(Value)
-		getgenv().Enabled = Value
-	end,
-})
-
-local mob = rev:CreateButton({
-	Name = "Revistar (MOBILE)",
-	Callback = function()
-		local TextChatService = game:GetService("TextChatService")
-
-		-- Função para enviar a mensagem /revistar morto
-		local function sendRevistarMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/revistar")
 		end
 
-		-- Cria a interface
-		local ScreenGui = Instance.new("ScreenGui")
-		local Frame = Instance.new("CanvasGroup")
-		local CloseButton = Instance.new("TextButton")
-		local RevistarButton = Instance.new("TextButton")
-		local Ui1 = Instance.new("UIStroke")
-		local Ui2 = Instance.new("UIStroke")
-		local Title = Instance.new("TextLabel")
+		for _, npc in ipairs(workspace:GetChildren()) do
+			local humanoid = npc:FindFirstChildOfClass("Humanoid")
+			if humanoid and npc ~= game.Players.LocalPlayer.Character then
+				local head = npc:FindFirstChild("Head")
+				if head and head:IsA("Part") then
+					head.CanCollide = false
+					head.Size = Vector3.new(10, 10, 10)
+					head.Transparency = .8
+				end
+			end
+		end
 
-		ScreenGui.Name = "RevistarUI"
-		ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
-
-		Ui2.Color = Color3.fromRGB(30, 30, 30)
-		Ui2.Parent = Frame
-		Ui2.LineJoinMode = Enum.LineJoinMode.Miter
-		Ui2.Thickness = 2
-
-		Ui1.Color = Color3.fromRGB(30, 30, 30)
-		Ui1.Parent = RevistarButton
-		Ui1.LineJoinMode = Enum.LineJoinMode.Miter
-		Ui1.Thickness = 2
-		Ui1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-
-		-- Estilo do Frame
-		Frame.Size = UDim2.new(0, 300, 0, 100)
-		Frame.Position = UDim2.new(0.5, -150, 0.5, -75)
-		Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-		Frame.BorderSizePixel = 0
-		Frame.BackgroundTransparency = 0.6
-		Frame.Active = true
-		Frame.Draggable = true
-
-		-- Título
-		Title.Size = UDim2.new(1, 0, 0, 30)
-		Title.Position = UDim2.new(0, 0, 0, 0)
-		Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-		Title.Text = "BIEL BS"
-		Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-		Title.Font = Enum.Font.MontserratBold
-		Title.TextSize = 18
-
-		-- Botão Fechar
-		CloseButton.Size = UDim2.new(0, 30, 0, 30)
-		CloseButton.Position = UDim2.new(1, -30, 0, 0)
-		CloseButton.BackgroundTransparency = 1
-		CloseButton.Text = "–"
-		CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-		CloseButton.Font = Enum.Font.MontserratBold
-		CloseButton.TextSize = 25
-		CloseButton.MouseButton1Click:Connect(function()
-			ScreenGui:Destroy()
-		end)
-
-		-- Botão Revistar
-		RevistarButton.Size = UDim2.new(0.8, 0, 0.4, 0)
-		RevistarButton.Position = UDim2.new(0.1, 0, 0.75, -30)
-		RevistarButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-		RevistarButton.Text = "REVISTAR"
-		RevistarButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-		RevistarButton.Font = Enum.Font.MontserratBold
-		RevistarButton.BackgroundTransparency = 0.6
-		RevistarButton.TextSize = 20
-		RevistarButton.AutoButtonColor = true
-		RevistarButton.MouseButton1Click:Connect(function()
-			sendRevistarMessage()
-		end)
-
-		-- Adiciona os elementos ao frame
-		Frame.Parent = ScreenGui
-		Title.Parent = Frame
-		CloseButton.Parent = Frame
-		RevistarButton.Parent = Frame
 	end,
-})
-local Section = rev:CreateSection("Info")
-rev:CreateParagraph({
-	Title = "Descrição",
-	Content = "Script feito por BIEL BS\nNOVA ATUALIZAÇÃO:\n1. Novo Auto Revistar, Revista Todos Mortos Perto De Você (5 Passos).\n2. Auto CL, Quita Sozinho Quanto Tiver Com Menos De 30 De Vida.\n3. Itens Que o Revistar Pegara. AK47, Uzi, Parafal, Faca, IA2, G3, IPhone 14, Agua, Hamburguer, Hi Power, Natalina, Tratamento, AR-15, Lockpick, Glock17, Planta Suja, Planta Limpa, Plástico Pronto, Plástico Vázio.\n 4. To com Preguiça."
 })
