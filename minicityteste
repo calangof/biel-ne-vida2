@@ -279,7 +279,7 @@ local Button = rev:CreateButton({
 })
 
 local Button = rev:CreateButton({
-	Name = "Auto CL",
+	Name = "Auto CL - 50",
 	Callback = function()
 		local function deletarNotifyGui()
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -315,18 +315,40 @@ local Button = rev:CreateButton({
 	end,
 })
 
+local Button = rev:CreateButton({
+	Name = "Auto CL - 35",
+	Callback = function()
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy()
+				end
+			end
+		end
 
+		local TextChatService = game:GetService("TextChatService")
+		local Players = game:GetService("Players")
+		local LocalPlayer = Players.LocalPlayer
 
-local Slider = Window:CreateSlider({
-	Name = "VIDA PARA DAR CL",
-	Range = {0, 100},
-	Increment = 10,
-	Suffix = "Vida",
-	CurrentValue = 30,
-	Flag = "Slider1",
-	Callback = function(Value)
-		clVida = Value
+		local function sendRejoinMessage()
+			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+			channel:SendAsync("/rejoin")
+		end
 
+		while true do
+			-- pequeno delay para não sobrecarregar
+
+			local character = LocalPlayer.Character
+			if character then
+				local humanoid = character:FindFirstChildOfClass("Humanoid")
+				if humanoid and humanoid.Health < 35 then
+					LocalPlayer:Kick("BANIDO!")
+					break -- para o loop após rejoin
+				end
+			end
+			task.wait()
+		end
 	end,
 })
 
