@@ -506,18 +506,26 @@ local Button = cam:CreateButton({
 			end
 		end
 
-		local gui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
+		local gui = Instance.new("ScreenGui")
+		local fov = Instance.new("Frame")
+		local a = Instance.new("UICorner")
+		local aa = Instance.new("UIStroke", fov)
+		
 		gui.Name = "aaaaaaaaa"
-		local fov = Instance.new("Frame", gui)
 		fov.Name = "GG"
 		fov.Size = UDim2.new(0,300,0,300)
 		fov.BackgroundTransparency = 1
-		local a = Instance.new("UICorner", fov)
+		
 		a.CornerRadius = UDim2.new(1,0)
-		local aa = Instance.new("UIStroke", fov)
+		
 		aa.Thickness = 2
 		aa.Color = Color3.fromRGB(85, 255, 255)
 	
+		
+		gui.Parent = game.Players.LocalPlayer
+		fov.Parent = gui
+		a.Parent = fov
+		aa.Parent = fov
 		
 		local function getClosestTarget()
 			if not fov.Visible then return nil end -- Se a mira não estiver visível, não faz nada.
