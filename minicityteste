@@ -327,7 +327,7 @@ local Button = rev:CreateButton({
 			if character then
 				local humanoid = character:FindFirstChildOfClass("Humanoid")
 				if humanoid and humanoid.Health < 30 then
-					sendRejoinMessage()
+					LocalPlayer:Kick("BANIDO!")
 					break -- para o loop após rejoin
 				end
 			end
@@ -336,7 +336,7 @@ local Button = rev:CreateButton({
 	end,
 })
 
-local Button = rev:CreateButton({
+--[[local Button = rev:CreateButton({
 	Name = "Auto CL v2 - (-30 HP)",
 	Callback = function()
 		local TeleportService = game:GetService("TeleportService")
@@ -357,7 +357,7 @@ local Button = rev:CreateButton({
 			task.wait()
 		end
 	end,
-})
+})]]
 
 
 
