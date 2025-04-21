@@ -19,6 +19,8 @@ local Window = Rayfield:CreateWindow({
 	
 })
 
+local clVida = 30
+
 local rev = Window:CreateTab("Revistar")
 local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
 local Section = rev:CreateSection("NECESSÁRIO")
@@ -248,7 +250,7 @@ local Button = rev:CreateButton({
 
 		local function sendRevistarMessage()
 			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/revistar")
+			channel:SendAsync("/revistar morto")
 		end
 
 		-- Loop principal
@@ -277,7 +279,7 @@ local Button = rev:CreateButton({
 })
 
 local Button = rev:CreateButton({
-	Name = "Auto CL - (-30 HP)",
+	Name = "Auto CL",
 	Callback = function()
 		local function deletarNotifyGui()
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -303,13 +305,28 @@ local Button = rev:CreateButton({
 			local character = LocalPlayer.Character
 			if character then
 				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 45 then
+				if humanoid and humanoid.Health < clVida then
 					LocalPlayer:Kick("BANIDO!")
 					break -- para o loop após rejoin
 				end
 			end
 			task.wait()
 		end
+	end,
+})
+
+
+
+local Slider = Window:CreateSlider({
+	Name = "VIDA PARA DAR CL",
+	Range = {0, 100},
+	Increment = 10,
+	Suffix = "Vida",
+	CurrentValue = 30,
+	Flag = "Slider1",
+	Callback = function(Value)
+		clVida = Value
+
 	end,
 })
 
@@ -356,7 +373,7 @@ local mob = rev:CreateButton({
 		-- Função para enviar a mensagem /revistar morto
 		local function sendRevistarMessage()
 			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/revistar")
+			channel:SendAsync("/revistar morto")
 		end
 
 		-- Cria a interface
