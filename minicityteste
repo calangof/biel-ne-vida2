@@ -305,7 +305,7 @@ local Button = rev:CreateButton({
 			local character = LocalPlayer.Character
 			if character then
 				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < clVida then
+				if humanoid and humanoid.Health < 50 then
 					LocalPlayer:Kick("BANIDO!")
 					break -- para o loop após rejoin
 				end
