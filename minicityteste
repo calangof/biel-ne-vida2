@@ -20,6 +20,8 @@ local Window = Rayfield:CreateWindow({
 })
 
 
+local Tab = Window:CreateTab("Main", 4483362458) -- Title, Image
+
 local rev = Window:CreateTab("Revistar")
 local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
 local Section = rev:CreateSection("NECESSÁRIO")
