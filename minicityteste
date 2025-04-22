@@ -529,7 +529,7 @@ local Button = cam:CreateButton({
 })
 
 local Button = cam:CreateButton({
-	Name = "Cabeção - Grande",
+	Name = "Cabeção - Enorme",
 	Callback = function()
 
 
@@ -556,7 +556,7 @@ local Button = cam:CreateButton({
 				local head = npc:FindFirstChild("Head")
 				if head and head:IsA("Part") then
 					head.CanCollide = false
-					head.Size = Vector3.new(10, 10, 10)
+					head.Size = Vector3.new(20, 20, 20)
 					head.Transparency = .8
 				end
 			end
