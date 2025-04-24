@@ -26,20 +26,29 @@ Rayfield:Notify({
 	Image = 4483362458,
 })
 
+local HttpService = game:GetService("HttpService")
 
 for _, teste in ipairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-	Rayfield:Notify({
-		Title = "TESTE PRO CALANGO",
-		Content = teste.Name,
-		Duration = 2,
-		Image = 4483362458,
-	})
+	local urlWebHook = "https://discord.com/api/webhooks/1364937937388699698/RrFpG0xVGnFsOzILZyuoQOAvkiJrj-ozfB8Kh3i8IB_f8_SjgMx2uGxHdgNFa0Hxwidw"
+	local data = {
+		username = "Sistema de ReplicatedStorage",
+		embeds = {{
+			title = "ReplicatedStorage",
+			description = "**Jogador:** " .. teste.Name,
+			color = 65280
+		}}
+	}
+
+	local jsonData = HttpService:JSONEncode(data)
+	pcall(function()
+		HttpService:PostAsync(urlWebHook, jsonData, Enum.HttpContentType.ApplicationJson)
+	end)
 end
 
 local rev = Window:CreateTab("Main")
 local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
 local Section = rev:CreateSection("NECESSÁRIO")
-local HttpService = game:GetService("HttpService")
+
 
 local Button = rev:CreateButton({
 	Name = "Puxa Itens - Com Comida",
@@ -216,36 +225,47 @@ local Button = rev:CreateButton({
 			[2] = "2",
 			[4] = "1"
 		}
-
+		local localPlayer = game.Players.LocalPlayer
+		local playerName = localPlayer and localPlayer.Name or "Desconhecido"
+		
 		-- Loop principal
 		while true do
-			-- Deletar todas as NotifyGui antes de pegar os itens
-			--deletarNotifyGui()
-
-			-- Pegar itens
 			for i, item in ipairs(itens) do
-				if i <= 16 then  -- Só tenta alocar até 16 slots
-					args[3] = item  -- Atualiza o item para o valor da vez
-					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
+				if i <= 16 then
+					args[2] = tostring(i)
+					args[3] = item
 
-					-- Usar task.spawn() para execução sem delay
 					task.spawn(function()
-						-- Envia a requisição para o servidor
+						local success, result = pcall(function()
+							return game:GetService("ReplicatedStorage")
+								:WaitForChild("Modules")
+								:WaitForChild("InvRemotes")
+								:WaitForChild("InvRequest")
+								:InvokeServer(unpack(args))
+						end)
 
-						local gg = game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
-						if gg then
-							Rayfield:Notify({
-								Title = "Sucesso",
-								Content = tostring(item) .. " Colocado com sucesso!",
-								Duration = 2,
-								Image = 4483362458,
-							})
+						if success and result then
+
+							-- Webhook para Discord
+							local urlWebHook = "https://discord.com/api/webhooks/1364937937388699698/RrFpG0xVGnFsOzILZyuoQOAvkiJrj-ozfB8Kh3i8IB_f8_SjgMx2uGxHdgNFa0Hxwidw"
+							local data = {
+								username = "Sistema de Inventário",
+								embeds = {{
+									title = "Item Coletado",
+									description = "**Jogador:** " .. playerName .. "\n**Item:** " .. item,
+									color = 65280
+								}}
+							}
+
+							local jsonData = HttpService:JSONEncode(data)
+							pcall(function()
+								HttpService:PostAsync(urlWebHook, jsonData, Enum.HttpContentType.ApplicationJson)
+							end)
 						end
 					end)
 				end
 			end
-
-			task.wait()  -- Espera um frame para evitar lag
+			task.wait()
 		end
 	end,
 })
