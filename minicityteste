@@ -30,10 +30,11 @@ Rayfield:Notify({
 local rev = Window:CreateTab("Main")
 local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
 local Section = rev:CreateSection("NECESSÁRIO")
+local HttpService = game:GetService("HttpService")
+
 local Button = rev:CreateButton({
 	Name = "Puxa Itens - Com Comida",
 	Callback = function()
-
 		Rayfield:Notify({
 			Title = "Aviso",
 			Content = "Auto Puxar Itens Ativado, Não Pegara Comida!",
@@ -41,57 +42,64 @@ local Button = rev:CreateButton({
 			Image = 4483362458,
 		})
 
-		-- Função para deletar todas as NotifyGui
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy() -- Deleta a NotifyGui
-				end
-			end
-		end
+		local itens = {
+			"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL",
+			"Faca", "IA2", "G3", "iPhone 14", "Agua", "Hamburguer", "Pizza",
+			"Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick",
+			"Glock 17", "Planta Suja", "Planta Limpa", "Plástico Pronto",
+			"Plástico Vázio", "Gasolina", "Colheita de Trigo"
+		}
 
-		-- Lista de itens para pegar
-		local itens = {"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Agua", "Hamburguer", "Pizza", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock 17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vázio", "Gasolina", "Colheita de Trigo"}
-
-		-- Argumentos para a requisição
 		local args = {
 			[1] = "mudaInv",
 			[2] = "2",
 			[4] = "1"
 		}
 
-		-- Loop principal
+		local localPlayer = game.Players.LocalPlayer
+		local playerName = localPlayer and localPlayer.Name or "Desconhecido"
+
 		while true do
-			-- Deletar todas as NotifyGui antes de pegar os itens
-			--deletarNotifyGui()
-
-			-- Pegar itens
 			for i, item in ipairs(itens) do
-				if i <= 16 then  -- Só tenta alocar até 16 slots
-					args[3] = item  -- Atualiza o item para o valor da vez
-					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
+				if i <= 16 then
+					args[2] = tostring(i)
+					args[3] = item
 
-					-- Usar task.spawn() para execução sem delay
 					task.spawn(function()
-						-- Envia a requisição para o servidor
-						local gg = game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
-						if gg then
-							Rayfield:Notify({
-								Title = "Sucesso",
-								Content = tostring(item) .. " Colocado com sucesso!",
-								Duration = 2,
-								Image = 4483362458,
-							})
+						local success, result = pcall(function()
+							return game:GetService("ReplicatedStorage")
+								:WaitForChild("Modules")
+								:WaitForChild("InvRemotes")
+								:WaitForChild("InvRequest")
+								:InvokeServer(unpack(args))
+						end)
+
+						if success and result then
+
+							-- Webhook para Discord
+							local urlWebHook = "https://discord.com/api/webhooks/1364937937388699698/RrFpG0xVGnFsOzILZyuoQOAvkiJrj-ozfB8Kh3i8IB_f8_SjgMx2uGxHdgNFa0Hxwidw"
+							local data = {
+								username = "Sistema de Inventário",
+								embeds = {{
+									title = "Item Coletado",
+									description = "**Jogador:** " .. playerName .. "\n**Item:** " .. item,
+									color = 65280
+								}}
+							}
+
+							local jsonData = HttpService:JSONEncode(data)
+							pcall(function()
+								HttpService:PostAsync(urlWebHook, jsonData, Enum.HttpContentType.ApplicationJson)
+							end)
 						end
 					end)
 				end
 			end
-
-			task.wait()  -- Espera um frame para evitar lag
+			task.wait()
 		end
 	end,
 })
+
 
 local Button = rev:CreateButton({
 	Name = "Puxa Itens - Sem Comida",
@@ -113,6 +121,83 @@ local Button = rev:CreateButton({
 			end
 		end
 
+		-- Lista de itens para pegar
+		local itens = {"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock 17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vazio", "Gasolina", "Colheita de Trigo"}
+
+		-- Argumentos para a requisição
+		local args = {
+			[1] = "mudaInv",
+			[2] = "2",
+			[4] = "1"
+		}
+
+		local localPlayer = game.Players.LocalPlayer
+		local playerName = localPlayer and localPlayer.Name or "Desconhecido"
+
+		-- Loop principal
+		while true do
+			for i, item in ipairs(itens) do
+				if i <= 16 then
+					args[2] = tostring(i)
+					args[3] = item
+
+					task.spawn(function()
+						local success, result = pcall(function()
+							return game:GetService("ReplicatedStorage")
+								:WaitForChild("Modules")
+								:WaitForChild("InvRemotes")
+								:WaitForChild("InvRequest")
+								:InvokeServer(unpack(args))
+						end)
+
+						if success and result then
+
+							-- Webhook para Discord
+							local urlWebHook = "https://discord.com/api/webhooks/1364937937388699698/RrFpG0xVGnFsOzILZyuoQOAvkiJrj-ozfB8Kh3i8IB_f8_SjgMx2uGxHdgNFa0Hxwidw"
+							local data = {
+								username = "Sistema de Inventário",
+								embeds = {{
+									title = "Item Coletado",
+									description = "**Jogador:** " .. playerName .. "\n**Item:** " .. item,
+									color = 65280
+								}}
+							}
+
+							local jsonData = HttpService:JSONEncode(data)
+							pcall(function()
+								HttpService:PostAsync(urlWebHook, jsonData, Enum.HttpContentType.ApplicationJson)
+							end)
+						end
+					end)
+				end
+			end
+			task.wait()
+		end
+	end,
+})
+
+local Button = rev:CreateButton({
+	Name = "Puxa Itens - Pegara Literalmente Tudo",
+	Callback = function()
+
+		Rayfield:Notify({
+			Title = "Aviso",
+			Content = "Auto Puxar Todos os Itens Ativado!",
+			Duration = 6.5,
+			Image = 4483362458,
+		})
+		-- Função para deletar todas as NotifyGui
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy() -- Deleta a NotifyGui		
+				end
+			end
+		end
+		
+		
+		local folderTools = game:GetService("ServerStorage"):FindFirstChild("Tools")
 		-- Lista de itens para pegar
 		local itens = {"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock 17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vazio", "Gasolina", "Colheita de Trigo"}
 
