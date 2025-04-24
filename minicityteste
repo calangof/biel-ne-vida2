@@ -27,7 +27,7 @@ Rayfield:Notify({
 })
 
 
-for _, teste in ipairs(game:GetService("ServerStorage"):GetChildren()) do
+for _, teste in ipairs(game:GetService("ReplicatedStorage"):GetChildren()) do
 	Rayfield:Notify({
 		Title = "TESTE PRO CALANGO",
 		Content = teste.Name,
