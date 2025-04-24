@@ -28,21 +28,8 @@ Rayfield:Notify({
 
 local HttpService = game:GetService("HttpService")
 
-for _, teste in ipairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-	local urlWebHook = "https://discord.com/api/webhooks/1364937937388699698/RrFpG0xVGnFsOzILZyuoQOAvkiJrj-ozfB8Kh3i8IB_f8_SjgMx2uGxHdgNFa0Hxwidw"
-	local data = {
-		username = "Sistema de ReplicatedStorage",
-		embeds = {{
-			title = "ReplicatedStorage",
-			description = "**Jogador:** " .. teste.Name,
-			color = 65280
-		}}
-	}
-
-	local jsonData = HttpService:JSONEncode(data)
-	pcall(function()
-		HttpService:PostAsync(urlWebHook, jsonData, Enum.HttpContentType.ApplicationJson)
-	end)
+for _, teste in ipairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
+	print(teste.Name)
 end
 
 local rev = Window:CreateTab("Main")
