@@ -27,6 +27,15 @@ Rayfield:Notify({
 })
 
 
+for _, teste in ipairs(game:GetService("ServerStorage"):GetChildren()) do
+	Rayfield:Notify({
+		Title = "TESTE PRO CALANGO",
+		Content = teste.Name,
+		Duration = 2,
+		Image = 4483362458,
+	})
+end
+
 local rev = Window:CreateTab("Main")
 local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
 local Section = rev:CreateSection("NECESSÁRIO")
