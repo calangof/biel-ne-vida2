@@ -21,7 +21,7 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
 	Title = "MENU - MINI CITY LOADED",
-	Content = "Owner: @bielbs09_22\n Programmer: ???\nLast Update: 22/04/2025",
+	Content = "Owner: @bielbs09_22\n Programmer: ???\nLast Update: 25/04/2025",
 	Duration = 6.5,
 	Image = 4483362458,
 })
@@ -474,6 +474,49 @@ local Button = rev:CreateButton({
 		end
 	end,
 })
+
+local Button = rev:CreateButton({
+	Name = "Anti-AFK (20 Minutos)",
+	Callback = function()
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy()
+				end
+			end
+		end
+
+		local TextChatService = game:GetService("TextChatService")
+		local Players = game:GetService("Players")
+		local LocalPlayer = Players.LocalPlayer
+
+		local function sendRejoinMessage()
+			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+			channel:SendAsync("/rejoin")
+		end
+
+		-- 🟢 Início do Anti-AFK por pulo automático
+		task.spawn(function()
+			while true do
+				Rayfield:Notify({
+					Title = "MENU - MINI CITY",
+					Content = "Anti-Afk, Pulei para reset time!",
+					Duration = 6.5,
+					Image = 4483362458,
+				})
+				
+				local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+				local humanoid = character:FindFirstChildOfClass("Humanoid")
+				if humanoid then
+					humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+				end
+				wait(60) -- pula a cada 60 segundos
+			end
+		end)
+	end,
+})
+
 
 	--[[local Button = rev:CreateButton({
 		Name = "Auto CL v2 - (-30 HP)",
