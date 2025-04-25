@@ -607,6 +607,34 @@ local cam = Window:CreateTab("Combate")
 local Paragraph = cam:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
 local Section = cam:CreateSection("NECESSÁRIO")
 
+local Button = cam:CreateButton({
+	Name = "???",
+	Callback = function()
+
+
+		Rayfield:Notify({
+			Title = "Aviso",
+			Content = "Aimbot Ativado!",
+			Duration = 6.5,
+			Image = 4483362458,
+		})
+
+		-- Função para deletar todas as NotifyGui
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy() -- Deleta a NotifyGui
+				end
+			end
+		end
+
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/yzeedw/Mortalv2-main/main/universal%20silent%20aim%20by%20Mortalexploits'))()
+			
+			
+		Button:Destroy()
+	end,
+})
 
 local Button = cam:CreateButton({
 	Name = "Cabeção - Medio",
