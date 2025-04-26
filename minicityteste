@@ -2,7 +2,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V2.6🔥",
+	Name = "🔥Menu Mini City BIEL BS | V3c🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -65,42 +65,24 @@ local Button = rev:CreateButton({
 		local playerName = localPlayer and localPlayer.Name or "Desconhecido"
 
 		while true do
+			-- Deletar todas as NotifyGui antes de pegar os itens
+			--deletarNotifyGui()
+
+			-- Pegar itens
 			for i, item in ipairs(itens) do
-				if i <= 16 then
-					args[2] = tostring(i)
-					args[3] = item
+				if i <= 16 then  -- Só tenta alocar até 16 slots
+					args[3] = item  -- Atualiza o item para o valor da vez
+					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
 
+					-- Usar task.spawn() para execução sem delay
 					task.spawn(function()
-						local success, result = pcall(function()
-							return game:GetService("ReplicatedStorage")
-								:WaitForChild("Modules")
-								:WaitForChild("InvRemotes")
-								:WaitForChild("InvRequest")
-								:InvokeServer(unpack(args))
-						end)
-
-						if success and result then
-
-							-- Webhook para Discord
-							local urlWebHook = "https://discord.com/api/webhooks/1364937937388699698/RrFpG0xVGnFsOzILZyuoQOAvkiJrj-ozfB8Kh3i8IB_f8_SjgMx2uGxHdgNFa0Hxwidw"
-							local data = {
-								username = "Sistema de Inventário",
-								embeds = {{
-									title = "Item Coletado",
-									description = "**Jogador:** " .. playerName .. "\n**Item:** " .. item,
-									color = 65280
-								}}
-							}
-
-							local jsonData = HttpService:JSONEncode(data)
-							pcall(function()
-								HttpService:PostAsync(urlWebHook, jsonData, Enum.HttpContentType.ApplicationJson)
-							end)
-						end
+						-- Envia a requisição para o servidor
+						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
 					end)
 				end
 			end
-			task.wait()
+
+			task.wait()  -- Espera um frame para evitar lag
 		end
 	end,
 })
@@ -141,42 +123,24 @@ local Button = rev:CreateButton({
 
 		-- Loop principal
 		while true do
+			-- Deletar todas as NotifyGui antes de pegar os itens
+			--deletarNotifyGui()
+
+			-- Pegar itens
 			for i, item in ipairs(itens) do
-				if i <= 16 then
-					args[2] = tostring(i)
-					args[3] = item
+				if i <= 16 then  -- Só tenta alocar até 16 slots
+					args[3] = item  -- Atualiza o item para o valor da vez
+					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
 
+					-- Usar task.spawn() para execução sem delay
 					task.spawn(function()
-						local success, result = pcall(function()
-							return game:GetService("ReplicatedStorage")
-								:WaitForChild("Modules")
-								:WaitForChild("InvRemotes")
-								:WaitForChild("InvRequest")
-								:InvokeServer(unpack(args))
-						end)
-
-						if success and result then
-
-							-- Webhook para Discord
-							local urlWebHook = "https://discord.com/api/webhooks/1364937937388699698/RrFpG0xVGnFsOzILZyuoQOAvkiJrj-ozfB8Kh3i8IB_f8_SjgMx2uGxHdgNFa0Hxwidw"
-							local data = {
-								username = "Sistema de Inventário",
-								embeds = {{
-									title = "Item Coletado",
-									description = "**Jogador:** " .. playerName .. "\n**Item:** " .. item,
-									color = 65280
-								}}
-							}
-
-							local jsonData = HttpService:JSONEncode(data)
-							pcall(function()
-								HttpService:PostAsync(urlWebHook, jsonData, Enum.HttpContentType.ApplicationJson)
-							end)
-						end
+						-- Envia a requisição para o servidor
+						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
 					end)
 				end
 			end
-			task.wait()
+
+			task.wait()  -- Espera um frame para evitar lag
 		end
 	end,
 })
@@ -200,8 +164,8 @@ local Button = rev:CreateButton({
 				end
 			end
 		end
-		
-		
+
+
 		local folderTools = game:GetService("ServerStorage"):FindFirstChild("Tools")
 		-- Lista de itens para pegar
 		local itens = {"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock 17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vazio", "Gasolina", "Colheita de Trigo"}
@@ -214,45 +178,27 @@ local Button = rev:CreateButton({
 		}
 		local localPlayer = game.Players.LocalPlayer
 		local playerName = localPlayer and localPlayer.Name or "Desconhecido"
-		
+
 		-- Loop principal
 		while true do
+			-- Deletar todas as NotifyGui antes de pegar os itens
+			--deletarNotifyGui()
+
+			-- Pegar itens
 			for i, item in ipairs(itens) do
-				if i <= 16 then
-					args[2] = tostring(i)
-					args[3] = item
+				if i <= 16 then  -- Só tenta alocar até 16 slots
+					args[3] = item  -- Atualiza o item para o valor da vez
+					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
 
+					-- Usar task.spawn() para execução sem delay
 					task.spawn(function()
-						local success, result = pcall(function()
-							return game:GetService("ReplicatedStorage")
-								:WaitForChild("Modules")
-								:WaitForChild("InvRemotes")
-								:WaitForChild("InvRequest")
-								:InvokeServer(unpack(args))
-						end)
-
-						if success and result then
-
-							-- Webhook para Discord
-							local urlWebHook = "https://discord.com/api/webhooks/1364937937388699698/RrFpG0xVGnFsOzILZyuoQOAvkiJrj-ozfB8Kh3i8IB_f8_SjgMx2uGxHdgNFa0Hxwidw"
-							local data = {
-								username = "Sistema de Inventário",
-								embeds = {{
-									title = "Item Coletado",
-									description = "**Jogador:** " .. playerName .. "\n**Item:** " .. item,
-									color = 65280
-								}}
-							}
-
-							local jsonData = HttpService:JSONEncode(data)
-							pcall(function()
-								HttpService:PostAsync(urlWebHook, jsonData, Enum.HttpContentType.ApplicationJson)
-							end)
-						end
+						-- Envia a requisição para o servidor
+						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
 					end)
 				end
 			end
-			task.wait()
+
+			task.wait()  -- Espera um frame para evitar lag
 		end
 	end,
 })
@@ -505,7 +451,7 @@ local Button = rev:CreateButton({
 					Duration = 6.5,
 					Image = 4483362458,
 				})
-				
+
 				local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 				local humanoid = character:FindFirstChildOfClass("Humanoid")
 				if humanoid then
@@ -673,9 +619,8 @@ local Button = cam:CreateButton({
 		end
 
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/yzeedw/Mortalv2-main/main/universal%20silent%20aim%20by%20Mortalexploits'))()
-			
-			
-		Button:Destroy()
+
+
 	end,
 })
 
