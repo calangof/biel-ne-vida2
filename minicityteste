@@ -98,7 +98,11 @@ local Button = rev:CreateButton({
 				local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 				for _, gui in ipairs(playerGui:GetChildren()) do
 					if gui.Name == "BackpackNova" and gui:IsA("ScreenGui") then
-						gui.Enabled = false
+					for _, frame in ipairs(gui:GetChildren()) do
+						if frame.Name == "Inventario" and frame:IsA("Frame") then
+							frame.Visible = false
+						end
+					end
 					end
 				end
 			
