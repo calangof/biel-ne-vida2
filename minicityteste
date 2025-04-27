@@ -85,7 +85,7 @@ end
 	})
 	
 local Button = rev:CreateButton({
-	Name = "Puxa Itens - Com Comida",
+	Name = "Remover Inventario",
 	Callback = function()
 		Rayfield:Notify({
 			Title = "Aviso",
