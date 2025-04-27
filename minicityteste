@@ -240,12 +240,12 @@ local ww2 = rev:CreateToggle({
 				for _, gui in ipairs(playerGui:GetChildren()) do
 					if gui.Name == "BackpackNova" and gui:IsA("ScreenGui") then
 						for _, frame in ipairs(gui:GetChildren()) do
+							warn(frame.Name)
 							if frame.Name == "Inventario" and frame:IsA("Frame") then
 								frame.Visible = false
 							elseif frame.Name == "CantoDireito" and frame:IsA("Frame") then
 								frame.Visible = true
-							else
-								warn(frame.Name)
+					
 							end
 						
 						end
