@@ -220,36 +220,8 @@ end
 		end,
 	})
 	
-local hahaha = false
 
-while true do
-	if not hahaha then
-		else
-	
-	local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-	for _, gui in ipairs(playerGui:GetChildren()) do
-		if gui.Name == "BackpackNova" and gui:IsA("ScreenGui") then
-			for _, frame in ipairs(gui:GetChildren()) do
-				if frame.Name == "Inventario" and frame:IsA("Frame") then
-					frame.Visible = false
-				elseif frame.Name == "CantoDireito" and frame:IsA("Frame") then
-					frame.Visible = true
-				end
-			end
-
-
-		end
-	end
-
-	for _, b in ipairs(game.Lighting:GetDescendants()) do
-		if b:IsA("BlurEffect") then
-			b:Destroy()
-		end
-	end
-	end
-
-	task.wait()  -- Espera um frame para evitar lag
-end
+a = false
 
 local ww2 = rev:CreateToggle({
 	Name = "Remover Inventario2",
@@ -260,8 +232,37 @@ local ww2 = rev:CreateToggle({
 	
 	Callback = function(Value)
 		getgenv().Enabled = Value
-		hahaha = Value
+		
 		warn(Value)
+		
+		while true do
+			if not a then
+			else
+
+				local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+				for _, gui in ipairs(playerGui:GetChildren()) do
+					if gui.Name == "BackpackNova" and gui:IsA("ScreenGui") then
+						for _, frame in ipairs(gui:GetChildren()) do
+							if frame.Name == "Inventario" and frame:IsA("Frame") then
+								frame.Visible = false
+							elseif frame.Name == "CantoDireito" and frame:IsA("Frame") then
+								frame.Visible = true
+							end
+						end
+
+
+					end
+				end
+
+				for _, b in ipairs(game.Lighting:GetDescendants()) do
+					if b:IsA("BlurEffect") then
+						b:Destroy()
+					end
+				end
+			end
+
+			task.wait()  -- Espera um frame para evitar lag
+		end
 		
 	end,
 
