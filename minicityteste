@@ -244,7 +244,10 @@ local ww2 = rev:CreateToggle({
 								frame.Visible = false
 							elseif frame.Name == "CantoDireito" and frame:IsA("Frame") then
 								frame.Visible = true
+							else
+								warn(frame.Name)
 							end
+						
 						end
 
 
