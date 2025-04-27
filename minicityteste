@@ -220,9 +220,6 @@ end
 		end,
 	})
 	
-
-a = false
-
 local ww2 = rev:CreateToggle({
 	Name = "Remover Inventario2",
 	CurrentValue = false,
@@ -233,10 +230,10 @@ local ww2 = rev:CreateToggle({
 	Callback = function(Value)
 		getgenv().Enabled = Value
 		
-		warn(Value)
+		--warn(Value)
 		
 		while true do
-			if not a then
+			if not Value then
 			else
 
 				local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
