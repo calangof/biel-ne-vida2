@@ -485,7 +485,7 @@
 
 	local Section = rev:CreateSection("REVISTAR")
 local ww = rev:CreateToggle({
-	Name = "Revistar (TECLA Q | PC)",
+	Name = "Revistar (TECLA T | PC)",
 	CurrentValue = false,
 	Flag = "rvst",
 	Callback = function(Value)
@@ -502,7 +502,7 @@ local ww = rev:CreateToggle({
 
 		game.UserInputService.InputBegan:Connect(function(input, gameProcessed)
 			if gameProcessed then return end
-			if input.KeyCode == Enum.KeyCode.Q then
+			if input.KeyCode == Enum.KeyCode.T then
 				if Value then
 					sendMessage()
 				end
