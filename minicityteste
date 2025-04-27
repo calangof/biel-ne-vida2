@@ -220,12 +220,12 @@ end
 		end,
 	})
 	
-local ww = rev:CreateToggle({
-	Name = "Remover Inventario",
+local ww2 = rev:CreateToggle({
+	Name = "Remover Inventario2",
 	CurrentValue = false,
 	Flag = "ada",
 	Callback = function(Value)
-		
+		getgenv().Enabled = Value
 		while Value do
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 			for _, gui in ipairs(playerGui:GetChildren()) do
