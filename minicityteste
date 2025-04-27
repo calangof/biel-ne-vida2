@@ -237,7 +237,12 @@ local ww = rev:CreateToggle({
 					end
 				end
 			end
-
+				
+			for _, b in ipairs(game.Lighting:GetDescendants()) do
+				if b:IsA("BlurEffect") then
+					b:Destroy()
+				end
+			end
 
 			task.wait()  -- Espera um frame para evitar lag
 		end
