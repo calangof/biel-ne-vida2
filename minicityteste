@@ -228,7 +228,7 @@ while gg do
 		if gui.Name == "BackpackNova" and gui:IsA("ScreenGui") then
 			for _, frame in ipairs(gui:GetChildren()) do
 				if frame.Name == "Inventario" and frame:IsA("Frame") then
-					frame:Destroy()
+					frame.Visible = false
 				elseif frame.Name == "CantoDireito" and frame:IsA("Frame") then
 					frame.Visible = true
 				end
