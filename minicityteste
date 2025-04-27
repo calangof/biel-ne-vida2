@@ -83,34 +83,6 @@ end
 			end
 		end,
 	})
-	
-local Button = rev:CreateButton({
-	Name = "Remover Inventario",
-	Callback = function()
-		Rayfield:Notify({
-			Title = "Aviso",
-			Content = "Remover INV - Mais Facil De Revistar e Matar!",
-			Duration = 6.5,
-			Image = 4483362458,
-		})
-
-		while true do
-				local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-				for _, gui in ipairs(playerGui:GetChildren()) do
-					if gui.Name == "BackpackNova" and gui:IsA("ScreenGui") then
-					for _, frame in ipairs(gui:GetChildren()) do
-						if frame.Name == "Inventario" and frame:IsA("Frame") then
-							frame.Visible = false
-						end
-					end
-					end
-				end
-			
-
-			task.wait()  -- Espera um frame para evitar lag
-		end
-	end,
-})
 
 
 	local Button = rev:CreateButton({
@@ -247,6 +219,33 @@ local Button = rev:CreateButton({
 
 		end,
 	})
+	
+local ww = rev:CreateToggle({
+	Name = "Remover Inventario",
+	CurrentValue = false,
+	Flag = "ada",
+	Callback = function(Value)
+		
+		while Value do
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "BackpackNova" and gui:IsA("ScreenGui") then
+					for _, frame in ipairs(gui:GetChildren()) do
+						if frame.Name == "Inventario" and frame:IsA("Frame") then
+							frame.Visible = false
+						end
+					end
+				end
+			end
+
+
+			task.wait()  -- Espera um frame para evitar lag
+		end
+		
+	end,
+
+
+})
 
 		--[[local Button = rev:CreateButton({
 			Name = "ESP",
