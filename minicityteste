@@ -2,7 +2,7 @@
 
 	-- Criando a Janela da Interface
 	local Window = Rayfield:CreateWindow({
-		Name = "🔥Menu Mini City BIEL BS | V3.2c🔥",
+		Name = "🔥Menu Mini City BIEL BS | V3c🔥",
 		LoadingTitle = "BIEL BS",
 		LoadingSubtitle = "By BIEL BS",
 		ConfigurationSaving = {
@@ -48,7 +48,7 @@
 			})
 
 		
-		local itens = {"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock 17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio", "Gasolina", "Colheita de Trigo", "Agua", "Hamburguer", "Drink", "Pizza"}
+		local itens = {"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock 17", "Planta Suja", "Planta_Suja", "Planta suja", "planta suja", "planta_suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio", "Gasolina", "Colheita de Trigo", "Agua", "Hamburguer", "Drink", "Pizza"}
 			local args = {
 				[1] = "mudaInv",
 				[2] = "2",
@@ -105,7 +105,7 @@
 			-- Lista de itens para pegar
 		
 
-		local itens = {"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock 17", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plástico Vazio", "Gasolina", "Colheita de Trigo"}
+		local itens = {"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "Ar-15", "AR-15", "Lockpick", "Glock 17", "Planta Suja", "Planta_Suja", "Planta suja", "planta suja", "planta_suja", "Planta Limpa", "Plástico Pronto", "Plástico Vazio", "Gasolina", "Colheita de Trigo"}
 
 			-- Argumentos para a requisição
 			local args = {
