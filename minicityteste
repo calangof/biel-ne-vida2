@@ -232,7 +232,7 @@ local ww2 = rev:CreateToggle({
 				if gui.Name == "BackpackNova" and gui:IsA("ScreenGui") then
 					for _, frame in ipairs(gui:GetChildren()) do
 						if frame.Name == "Inventario" and frame:IsA("Frame") then
-							frame.Visible = false
+							frame:Destroy()
 						end
 					end
 				end
