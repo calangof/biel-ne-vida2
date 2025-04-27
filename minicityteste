@@ -30,8 +30,12 @@
 
 local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 for _, gui in ipairs(playerGui:GetChildren()) do
-	if gui:IsA("ScreenGui") then
-		warn(gui.Name)
+	for _, gui in ipairs(playerGui:GetChildren()) do
+		if gui.Name == "BackpackNova" and gui:IsA("ScreenGui") then
+			for _, frame in ipairs(gui:GetChildren()) do
+				
+				warn(frame.Name)
+			end
 	end
 end
 
