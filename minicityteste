@@ -257,6 +257,7 @@ local ww2 = rev:CreateToggle({
 	Callback = function(Value)
 		getgenv().Enabled = Value
 		gg = Value
+		warn(Value)
 		
 	end,
 
