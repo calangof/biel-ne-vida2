@@ -144,6 +144,65 @@ end
 			end
 		end,
 	})
+	
+local Button = rev:CreateButton({
+	Name = "Puxa Itens - Apenas Armas",
+	Callback = function()
+
+		Rayfield:Notify({
+			Title = "Aviso",
+			Content = "Auto Puxar Itens Ativado, Não Pegara Comida!",
+			Duration = 6.5,
+			Image = 4483362458,
+		})
+		-- Função para deletar todas as NotifyGui
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy() -- Deleta a NotifyGui		
+				end
+			end
+		end
+
+		-- Lista de itens para pegar
+
+
+		local itens = {"Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "Hi Power", "Natalina", "AR-15", "Lockpick"}
+
+		-- Argumentos para a requisição
+		local args = {
+			[1] = "mudaInv",
+			[2] = "2",
+			[4] = "1"
+		}
+
+		local localPlayer = game.Players.LocalPlayer
+		local playerName = localPlayer and localPlayer.Name or "Desconhecido"
+
+		-- Loop principal
+		while true do
+			-- Deletar todas as NotifyGui antes de pegar os itens
+			--deletarNotifyGui()
+
+			-- Pegar itens
+			for i, item in ipairs(itens) do
+				if i <= 16 then  -- Só tenta alocar até 16 slots
+					args[3] = item  -- Atualiza o item para o valor da vez
+					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
+
+					-- Usar task.spawn() para execução sem delay
+					task.spawn(function()
+						-- Envia a requisição para o servidor
+						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
+					end)
+				end
+			end
+
+			task.wait()  -- Espera um frame para evitar lag
+		end
+	end,
+})
 
 	local Button = rev:CreateButton({
 		Name = "Puxa Itens - DESATIVADO",
