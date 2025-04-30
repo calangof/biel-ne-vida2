@@ -1,6 +1,5 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local TweenService = game:GetService("TweenService")
 
 local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -20,28 +19,42 @@ local totalPromptsActivated = 0
 local lastTeleportTime = 0
 local originalPosition = nil
 local lastHealth = humanoid.Health
-local cooldownUntil = 0
+
 local tweenF = false
 
--- Teleporte com Tween
 local function Tp(pos)
 	tweenF = true
+	local TweenService = game:GetService("TweenService")
+
+	-- Destino desejado
 	local destino = pos
-	local VELOCIDADE = 300
+
+	-- Velocidade desejada
+	local VELOCIDADE = 300  -- studs por segundo
+
+	-- Calcular distância e duração
 	local distancia = (destino - humanoidRootPart.Position).Magnitude
 	local duracao = distancia / VELOCIDADE
+
+	-- Criar TweenInfo
 	local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
 	local goal = {Position = destino}
+
+	-- Ancorar antes de mover
 	humanoidRootPart.Anchored = true
+
+	-- Criar e tocar o tween
 	local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
 	tween:Play()
+
+	-- Desancorar quando terminar
 	tween.Completed:Connect(function()
 		tweenF = false
 		humanoidRootPart.Anchored = false
 	end)
 end
 
--- GUI do tempo
+-- Cria e configura o botão da GUI
 local function setupTimerGui()
 	if not player.PlayerGui:FindFirstChild("TimeC") then
 		local guiT = Instance.new("ScreenGui")
@@ -63,20 +76,22 @@ local function setupTimerGui()
 
 		t.MouseButton1Click:Connect(function()
 			if not started then
+				-- Primeira vez: iniciar o sistema
 				started = true
 				isRunning = true
 				startTime = tick()
 				t.Text = "Tempo: 00:00:00 | Tps: 0 | Clique Para Pausar"
 			else
+				-- Depois: alterna entre pausa e execução
 				toggleSystem()
 			end
 		end)
 	end
 end
 
--- Alternar pausa
+-- Alterna entre pausado e executando
 function toggleSystem()
-	if isInDanger then return end
+	if isInDanger then return end -- não alternar se em risco
 	isRunning = not isRunning
 	local button = player.PlayerGui.TimeC.Tempo
 	if isRunning then
@@ -86,12 +101,13 @@ function toggleSystem()
 		if not tweenF then
 			Tp(Vector3.new(11987, 45, 12761))
 		end
+
 		pauseStart = tick()
 		button.Text = "PAUSADO | Clique Para Continuar"
 	end
 end
 
--- Atualizar GUI
+-- Atualiza o tempo na GUI
 local function updateTimerGui()
 	local gui = player.PlayerGui:FindFirstChild("TimeC")
 	if gui then
@@ -104,34 +120,44 @@ local function updateTimerGui()
 				local h = math.floor(elapsed / 3600)
 				local m = math.floor((elapsed % 3600) / 60)
 				local s = elapsed % 60
+
 				label.Text = string.format("Tempo: %02d:%02d:%02d | Plantas Sujas: %d | Clique Para Pausar", h, m, s, totalPromptsActivated)
 			end
 		end
 	end
 end
 
--- Achar o prompt
+-- Acha o prompt mais próximo
 local function getNearestPrompt()
+	local nearestPrompt = nil
+
 	for _, prompt in workspace:GetDescendants() do
 		if prompt:IsA("ProximityPrompt") and prompt.Enabled and prompt.ActionText == "Colher" then
-			return prompt
+			nearestPrompt = prompt
+			break -- Apenas retorna o primeiro prompt encontrado
 		end
 	end
-	return nil
+
+	return nearestPrompt
 end
 
--- Ativar prompt
+
 local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 	local part = prompt.Parent:IsA("BasePart") and prompt.Parent or prompt.Parent:FindFirstChildWhichIsA("BasePart")
 	if part then
 		isActivating = true
 		lastTeleportTime = tick()
 
-		Tp(part.Position + Vector3.new(0, 3, 0))
-		repeat task.wait() until not tweenF
+		-- Teleporta com tween
+		Tp(part.Position + Vector3.new(0, 3, 0)) -- adiciona um pequeno offset para não colidir com o chão
 
+		-- Aguarda tween terminar
+		repeat task.wait() until tweenF == false
+
+		-- Começa a ativação
 		prompt:InputHoldBegin()
 
+		-- Aguarda o tempo de ativação
 		task.delay(prompt.HoldDuration + 0.2, function()
 			if not isRunning or isInDanger then
 				prompt:InputHoldEnd()
@@ -143,10 +169,12 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 
 			if isActivating and prompt.Enabled == false then
 				task.wait(0.1)
-				Tp(part.Position - Vector3.new(0, 10, 0))
-				repeat task.wait() until not tweenF
+				humanoidRootPart.CFrame = part.CFrame - Vector3.new(0, 8, 0)
+				task.wait(.2)
+				humanoidRootPart.Anchored = true
+				
+				task.wait(15)
 				totalPromptsActivated += 1
-				cooldownUntil = tick() + 15
 			end
 
 			isActivating = false
@@ -154,7 +182,10 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 	end
 end
 
--- Estado de risco
+
+
+
+-- Entra em estado de risco
 local function enterRiskState()
 	if isInDanger and isRunning then return end
 	isInDanger = true
@@ -166,10 +197,12 @@ local function enterRiskState()
 		button.Text = "EM RISCO! Aguarde 10s..."
 	end
 
+	-- Teleporta pra cima e ancora
 	humanoidRootPart.CFrame = humanoidRootPart.CFrame + Vector3.new(0, 150, 0)
 	humanoidRootPart.Anchored = true
 
 	task.delay(10, function()
+		-- Volta ao local original
 		humanoidRootPart.CFrame = originalPosition
 		humanoidRootPart.Anchored = false
 		isInDanger = false
@@ -181,7 +214,7 @@ local function enterRiskState()
 	end)
 end
 
--- Detectar dano
+-- Detecta dano
 humanoid.HealthChanged:Connect(function(currentHealth)
 	if currentHealth < lastHealth then
 		enterRiskState()
@@ -189,10 +222,10 @@ humanoid.HealthChanged:Connect(function(currentHealth)
 	lastHealth = currentHealth
 end)
 
--- Iniciar GUI
+-- Inicializa GUI
 setupTimerGui()
 
--- Atualizar tempo continuamente
+-- Atualiza tempo na tela
 task.spawn(function()
 	while true do
 		updateTimerGui()
@@ -200,20 +233,25 @@ task.spawn(function()
 	end
 end)
 
--- Loop principal
+-- Loop principal com delay de 0.5 segundos entre os teleportes
 RunService.RenderStepped:Connect(function()
 	if not started or not isRunning or isActivating or isInDanger then return end
+
 	if tick() - lastTeleportTime < 0.5 then return end
-	if tick() < cooldownUntil then return end
 
 	local prompt = getNearestPrompt()
 	if prompt then
-		if not tweenF then
+		if not humanoidRootPart.Anchored and not tweenF then
+
+
+			isActivating = true
+			prompt.HoldDuration = 0
+			--	lastTeleportTime = tick()
 			teleportAndActivatePrompt(prompt)
 		end
+
 	else
-		if not tweenF then
-			Tp(Vector3.new(11987, 45, 12761))
-		end
+		if tweenF then return end
+		Tp(Vector3.new(11987, 45, 12761))
 	end
 end)
