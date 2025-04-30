@@ -22,7 +22,7 @@ local lastHealth = humanoid.Health
 
 local tweenF = false
 
-local function Tp(pos)
+local function Tp(pos, unan)
 	tweenF = true
 	local TweenService = game:GetService("TweenService")
 
@@ -50,7 +50,10 @@ local function Tp(pos)
 	-- Desancorar quando terminar
 	tween.Completed:Connect(function()
 		tweenF = false
-		humanoidRootPart.Anchored = false
+		if unan then
+			humanoidRootPart.Anchored = false
+		end
+		
 	end)
 end
 
@@ -173,7 +176,9 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 			if isActivating and prompt.Enabled == false then
 				
 				task.wait(.1)
-				humanoidRootPart.CFrame = part.CFrame - Vector3.new(0, 10, 0)
+				
+				Tp(part.CFrame - Vector3.new(0, 10, 0), false)
+				
 				task.wait(15)
 				totalPromptsActivated = totalPromptsActivated + 1 
 			end
@@ -199,7 +204,7 @@ local function enterRiskState()
 	end
 
 	-- Teleporta pra cima e ancora
-	humanoidRootPart.CFrame = humanoidRootPart.CFrame + Vector3.new(0, 150, 0)
+	Tp(humanoidRootPart.CFrame + Vector3.new(0, 150, 0), false)
 	humanoidRootPart.Anchored = true
 
 	task.delay(10, function()
