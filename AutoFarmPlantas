@@ -203,8 +203,6 @@ local function enterRiskState()
 	if button then
 		button.Text = "EM RISCO! Aguarde 10s..."
 	end
-	
-
 
 	-- Teleporta pra cima e ancora
 	Tp(humanoidRootPart.CFrame + Vector3.new(0, 150, 0), false)
@@ -230,9 +228,6 @@ end
 humanoid.HealthChanged:Connect(function(currentHealth)
 	if currentHealth < lastHealth then
 		enterRiskState()
-		if lastHealth < 1 then
-			player:Kick(" - TENTARAM TE MATAR")
-		end
 	end
 	lastHealth = currentHealth
 end)
