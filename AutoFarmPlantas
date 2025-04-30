@@ -161,8 +161,8 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 		task.delay(prompt.HoldDuration + 0.2, function()
 			if not isRunning or isInDanger then
 				prompt:InputHoldEnd()
-				--isActivating = false
-			--	return
+				isActivating = false
+				return
 			end
 
 			prompt:InputHoldEnd()
