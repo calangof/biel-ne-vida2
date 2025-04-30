@@ -191,7 +191,7 @@ local function enterRiskState()
 	if isInDanger and isRunning then return end
 	isInDanger = true
 	isRunning = false
-	originalPosition = humanoidRootPart.CFrame
+
 
 	local button = player.PlayerGui.TimeC and player.PlayerGui.TimeC:FindFirstChild("Tempo")
 	if button then
@@ -203,12 +203,15 @@ local function enterRiskState()
 	humanoidRootPart.Anchored = true
 
 	task.delay(10, function()
-		-- Volta ao local original
-		humanoidRootPart.CFrame = originalPosition
+		
+		if lastHealth > 1 then
+		if not tweenF then
+			Tp(Vector3.new(11987, 45, 12761))
+		end
 		humanoidRootPart.Anchored = false
 		isInDanger = false
 		isRunning = true
-
+		end
 		if button then
 			button.Text = "Tempo Retomado | Clique Para Pausar"
 		end
