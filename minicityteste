@@ -779,7 +779,7 @@ local Button = cam:CreateButton({
 	end,
 })
 
-local cam2 = Window:CreateTab("TELE")
+--[[local cam2 = Window:CreateTab("TELE")
 
 local Paragraph = cam2:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
 local Section = cam2:CreateSection("NECESSÁRIO")
@@ -844,4 +844,4 @@ local Button = cam2:CreateButton({
 		end)
 
 	end,
-})
+})]]
