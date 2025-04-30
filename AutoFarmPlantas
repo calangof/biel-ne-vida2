@@ -25,12 +25,9 @@ local tween = false
 local function Tp(pos)
 	tween = true
 	local TweenService = game:GetService("TweenService")
-	local player = game.Players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
 	-- Destino desejado
-	local destino = Vector3.new(pos)
+	local destino = pos
 
 	-- Velocidade desejada
 	local VELOCIDADE = 300  -- studs por segundo
@@ -101,8 +98,10 @@ function toggleSystem()
 		pausedTime += tick() - pauseStart
 		button.Text = "Retomando..."
 	else
-		if tween then return end
-		Tp("11987, 45, 12761")
+		if not tween then
+			Tp(Vector3.new(11987, 45, 12761))
+		end
+		
 		pauseStart = tick()
 		button.Text = "PAUSADO | Clique Para Continuar"
 	end
@@ -247,7 +246,7 @@ RunService.RenderStepped:Connect(function()
 		teleportAndActivatePrompt(prompt)
 	else
 		if tween then return end
-		Tp("11987, 45, 12761")
+		Tp(Vector3.new(11987, 45, 12761))
 	end
 end)
 
