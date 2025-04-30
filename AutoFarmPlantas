@@ -1,6 +1,5 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local TweenService = game:GetService("TweenService")
 
 local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -23,16 +22,20 @@ local lastHealth = humanoid.Health
 
 local tweenF = false
 
--- Teleporte para a posição desejada com tween
 local function Tp(pos, unan)
 	tweenF = true
+	local TweenService = game:GetService("TweenService")
+
 	-- Destino desejado
 	local destino = pos
+
 	-- Velocidade desejada
 	local VELOCIDADE = 300  -- studs por segundo
+
 	-- Calcular distância e duração
 	local distancia = (destino - humanoidRootPart.Position).Magnitude
 	local duracao = distancia / VELOCIDADE
+
 	-- Criar TweenInfo
 	local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
 	local goal = {Position = destino}
@@ -50,10 +53,11 @@ local function Tp(pos, unan)
 		if unan then
 			humanoidRootPart.Anchored = false
 		end
+		
 	end)
 end
 
--- Configura o botão da GUI
+-- Cria e configura o botão da GUI
 local function setupTimerGui()
 	if not player.PlayerGui:FindFirstChild("TimeC") then
 		local guiT = Instance.new("ScreenGui")
@@ -98,8 +102,9 @@ function toggleSystem()
 		button.Text = "Retomando..."
 	else
 		if not tweenF then
-			Tp(Vector3.new(11987, 45, 12761), true, 300)
+			Tp(Vector3.new(11987, 45, 12761))
 		end
+		
 		pauseStart = tick()
 		button.Text = "PAUSADO | Clique Para Continuar"
 	end
@@ -139,14 +144,17 @@ local function getNearestPrompt()
 	return nearestPrompt
 end
 
--- Teleporta e ativa o prompt
+
 local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 	local part = prompt.Parent:IsA("BasePart") and prompt.Parent or prompt.Parent:FindFirstChildWhichIsA("BasePart")
 	if part then
 		isActivating = true
 		lastTeleportTime = tick()
 
-		humanoid.CFrame = part.CFrame
+		if not tweenF then
+			Tp(part.CFrame)
+		end
+			
 
 		-- Aguarda teleporte estabilizar
 		task.wait(0.1)
@@ -167,18 +175,22 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 
 			-- Só conta se não foi interrompido
 			if isActivating and prompt.Enabled == false then
-				task.wait(0.1)
-
-				Tp(part.CFrame - Vector3.new(0, 10, 0), false, 50)
-
+				
+				task.wait(.1)
+				
+				Tp(part.CFrame - Vector3.new(0, 10, 0), false)
+				
 				task.wait(15)
 				totalPromptsActivated = totalPromptsActivated + 1 
 			end
 
 			isActivating = false
 		end)
+
 	end
 end
+
+
 
 -- Entra em estado de risco
 local function enterRiskState()
@@ -186,23 +198,27 @@ local function enterRiskState()
 	isInDanger = true
 	isRunning = false
 
+
 	local button = player.PlayerGui.TimeC and player.PlayerGui.TimeC:FindFirstChild("Tempo")
 	if button then
 		button.Text = "EM RISCO! Aguarde 10s..."
 	end
+	
+
 
 	-- Teleporta pra cima e ancora
 	Tp(humanoidRootPart.CFrame + Vector3.new(0, 150, 0), false)
 	humanoidRootPart.Anchored = true
 
 	task.delay(10, function()
+		
 		if lastHealth > 1 then
-			if not tweenF then
-				Tp(Vector3.new(11987, 45, 12761))
-			end
-			--humanoidRootPart.Anchored = false
-			isInDanger = false
-			isRunning = true
+		if not tweenF then
+			Tp(Vector3.new(11987, 45, 12761))
+		end
+		--humanoidRootPart.Anchored = false
+		isInDanger = false
+		isRunning = true
 		end
 		if button then
 			button.Text = "Tempo Retomado | Clique Para Pausar"
@@ -215,7 +231,7 @@ humanoid.HealthChanged:Connect(function(currentHealth)
 	if currentHealth < lastHealth then
 		enterRiskState()
 		if lastHealth < 1 then
-			player:Kick("CL - TENTARAM TE MATAR")
+			player:Kick(" - TENTARAM TE MATAR")
 		end
 	end
 	lastHealth = currentHealth
@@ -241,12 +257,14 @@ RunService.RenderStepped:Connect(function()
 	local prompt = getNearestPrompt()
 	if prompt then
 		if not humanoidRootPart.Anchored then
-			isActivating = true
-			prompt.HoldDuration = 0
+		isActivating = true
+		prompt.HoldDuration = 0
+	--	lastTeleportTime = tick()
 			teleportAndActivatePrompt(prompt)
 		end
 	else
 		if tweenF then return end
-		Tp(Vector3.new(11987, 45, 12761), true, 300)
+		Tp(Vector3.new(11987, 45, 12761))
 	end
 end)
+
