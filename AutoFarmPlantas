@@ -20,10 +20,10 @@ local lastTeleportTime = 0
 local originalPosition = nil
 local lastHealth = humanoid.Health
 
-local tween = false
+local tweenF = false
 
 local function Tp(pos)
-	tween = true
+	tweenF = true
 	local TweenService = game:GetService("TweenService")
 
 	-- Destino desejado
@@ -49,7 +49,7 @@ local function Tp(pos)
 
 	-- Desancorar quando terminar
 	tween.Completed:Connect(function()
-		tween = false
+		tweenF = false
 		humanoidRootPart.Anchored = false
 	end)
 end
@@ -98,7 +98,7 @@ function toggleSystem()
 		pausedTime += tick() - pauseStart
 		button.Text = "Retomando..."
 	else
-		if not tween then
+		if not tweenF then
 			Tp(Vector3.new(11987, 45, 12761))
 		end
 		
@@ -171,9 +171,13 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 
 			-- Só conta se não foi interrompido
 			if isActivating and prompt.Enabled == false then
-				totalPromptsActivated += 1
+				
 				task.wait(.1)
 				humanoidRootPart.CFrame = part.CFrame - Vector3.new(0, 10, 0)
+				task.wait(15, function()
+					totalPromptsActivated += 1
+					
+				end)
 			end
 
 			isActivating = false
@@ -245,7 +249,7 @@ RunService.RenderStepped:Connect(function()
 	--	lastTeleportTime = tick()
 		teleportAndActivatePrompt(prompt)
 	else
-		if tween then return end
+		if tweenF then return end
 		Tp(Vector3.new(11987, 45, 12761))
 	end
 end)
