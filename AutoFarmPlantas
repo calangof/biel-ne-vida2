@@ -151,8 +151,9 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 		isActivating = true
 		lastTeleportTime = tick()
 
-		-- Teleporta
-		humanoidRootPart.CFrame = part.CFrame
+		if not tweenF then
+			Tp(part.CFrame)
+		end
 			
 
 		-- Aguarda teleporte estabilizar
