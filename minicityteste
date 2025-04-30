@@ -80,7 +80,7 @@ local Button = rev:CreateButton({
 				end
 			end
 
-			task.wait(.1)  -- Espera um frame para evitar lag
+			task.wait()  -- Espera um frame para evitar lag
 		end
 	end,
 })
@@ -778,70 +778,3 @@ local Button = cam:CreateButton({
 
 	end,
 })
-
---[[local cam2 = Window:CreateTab("TELE")
-
-local Paragraph = cam2:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
-local Section = cam2:CreateSection("NECESSÁRIO")
-
-local Button = cam2:CreateButton({
-	Name = "Plantação",
-	Callback = function()
-
-		local TweenService = game:GetService("TweenService")
-		local player = game.Players.LocalPlayer
-		local character = player.Character or player.CharacterAdded:Wait()
-		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-		local destino = Vector3.new(11987, 45, 12761)
-
-		local VELOCIDADE = 300
-
-		local distancia = (destino - humanoidRootPart.Position).Magnitude
-		local duracao = distancia / VELOCIDADE
-
-		local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-		local goal = {Position = destino}
-
-		humanoidRootPart.Anchored = true
-
-		local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
-		tween:Play()
-
-		tween.Completed:Connect(function()
-			humanoidRootPart.Anchored = false
-		end)
-
-	end,
-})
-
-local Button = cam2:CreateButton({
-	Name = "Praça",
-	Callback = function()
-
-		local TweenService = game:GetService("TweenService")
-		local player = game.Players.LocalPlayer
-		local character = player.Character or player.CharacterAdded:Wait()
-		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-		local destino = Vector3.new(-291, 5, 333)
-
-		local VELOCIDADE = 300
-
-		local distancia = (destino - humanoidRootPart.Position).Magnitude
-		local duracao = distancia / VELOCIDADE
-
-		local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-		local goal = {Position = destino}
-
-		humanoidRootPart.Anchored = true
-
-		local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
-		tween:Play()
-
-		tween.Completed:Connect(function()
-			humanoidRootPart.Anchored = false
-		end)
-
-	end,
-})]]
