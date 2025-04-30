@@ -174,10 +174,8 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 				
 				task.wait(.1)
 				humanoidRootPart.CFrame = part.CFrame - Vector3.new(0, 10, 0)
-				task.delay(15, function()
-					totalPromptsActivated += 1
-					
-				end)
+				task.wait(15)
+				totalPromptsActivated = totalPromptsActivated + 1 
 			end
 
 			isActivating = false
@@ -243,11 +241,13 @@ RunService.RenderStepped:Connect(function()
 	if tick() - lastTeleportTime < 0.5 then return end
 
 	local prompt = getNearestPrompt()
-	if prompt and not humanoidRootPart.Anchored then
+	if prompt then
+		if not humanoidRootPart.Anchored then
 		isActivating = true
 		prompt.HoldDuration = 0
 	--	lastTeleportTime = tick()
-		teleportAndActivatePrompt(prompt)
+			teleportAndActivatePrompt(prompt)
+		end
 	else
 		if tweenF then return end
 		Tp(Vector3.new(11987, 45, 12761))
