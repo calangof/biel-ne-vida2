@@ -208,7 +208,7 @@ local function enterRiskState()
 		if not tweenF then
 			Tp(Vector3.new(11987, 45, 12761))
 		end
-		humanoidRootPart.Anchored = false
+		--humanoidRootPart.Anchored = false
 		isInDanger = false
 		isRunning = true
 		end
