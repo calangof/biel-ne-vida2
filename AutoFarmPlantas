@@ -167,14 +167,13 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 
 			if isActivating and prompt.Enabled == false then
 				-- Afunda para dentro da terra
-				local destinoSubsolo = humanoidRootPart.Position - Vector3.new(0, 10, 0)
-				Tp(destinoSubsolo)
-				repeat task.wait() until tweenF == false
-
+				local destinoSubsolo = humanoidRootPart.CFrame - Vector3.new(0, 10, 0)
+				humanoidRootPart.CFrame = destinoSubsolo
+				task.wait(.5)
+				
 				humanoidRootPart.Anchored = true
 				task.wait(15)
 
-				humanoidRootPart.Anchored = false
 				totalPromptsActivated += 1
 				isActivating = false
 			else
