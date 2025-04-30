@@ -2,7 +2,7 @@
 
 	-- Criando a Janela da Interface
 	local Window = Rayfield:CreateWindow({
-		Name = "🔥Menu Mini City BIEL BS | V3.1🔥",
+		Name = "🔥Menu Mini City BIEL BS | V3.2🔥",
 		LoadingTitle = "BIEL BS",
 		LoadingSubtitle = "By BIEL BS",
 		ConfigurationSaving = {
@@ -51,7 +51,7 @@ end
 			})
 
 		
-			local itens = {"Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "AR-15", "Lockpick", "Gasolina", "Agua", "Hamburguer", "Drink", "Pizza", "Glock 17", "Colheita de Trigo", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio"}
+		local itens = {"Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "Armação de Arma", "Dinamite", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "AR-15", "Lockpick", "Gasolina", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio"}
 		
 			local args = {
 				[1] = "mudaInv",
