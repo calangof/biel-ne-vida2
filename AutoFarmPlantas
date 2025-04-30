@@ -161,23 +161,22 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 		task.delay(prompt.HoldDuration + 0.2, function()
 			if not isRunning or isInDanger then
 				prompt:InputHoldEnd()
-				isActivating = false
-				return
+				--isActivating = false
+			--	return
 			end
 
 			prompt:InputHoldEnd()
 
 			if isActivating and prompt.Enabled == false then
 				task.wait(0.1)
-				humanoidRootPart.CFrame = part.CFrame - Vector3.new(0, 8, 0)
-				task.wait(.2)
-				humanoidRootPart.Anchored = true
-				
+				Tp(Vector3.new(11290, 65, 13141))
+
 				task.wait(15)
 				totalPromptsActivated += 1
+				isActivating = false
 			end
 
-			isActivating = false
+			
 		end)
 	end
 end
