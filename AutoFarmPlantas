@@ -101,7 +101,7 @@ function toggleSystem()
 		if not tweenF then
 			Tp(Vector3.new(11987, 45, 12761))
 		end
-		
+
 		pauseStart = tick()
 		button.Text = "PAUSADO | Clique Para Continuar"
 	end
@@ -148,19 +148,17 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 		isActivating = true
 		lastTeleportTime = tick()
 
-		-- Teleporta
-		humanoidRootPart.CFrame = part.CFrame
-			
+		-- Teleporta com tween
+		Tp(part.Position + Vector3.new(0, 3, 0)) -- adiciona um pequeno offset para não colidir com o chão
 
-		-- Aguarda teleporte estabilizar
-		task.wait(0.1)
+		-- Aguarda tween terminar
+		repeat task.wait() until tweenF == false
 
 		-- Começa a ativação
 		prompt:InputHoldBegin()
 
 		-- Aguarda o tempo de ativação
 		task.delay(prompt.HoldDuration + 0.2, function()
-			-- Verifica se ainda pode continuar
 			if not isRunning or isInDanger then
 				prompt:InputHoldEnd()
 				isActivating = false
@@ -169,20 +167,19 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 
 			prompt:InputHoldEnd()
 
-			-- Só conta se não foi interrompido
 			if isActivating and prompt.Enabled == false then
-				
-				task.wait(.1)
-				humanoidRootPart.CFrame = part.CFrame - Vector3.new(0, 10, 0)
+				--task.wait(0.1)
+				Tp(part.Position - Vector3.new(0, 10, 0))
+				repeat task.wait() until tweenF == false
 				task.wait(15)
-				totalPromptsActivated = totalPromptsActivated + 1 
+				totalPromptsActivated += 1
 			end
 
 			isActivating = false
 		end)
-
 	end
 end
+
 
 
 
@@ -243,17 +240,16 @@ RunService.RenderStepped:Connect(function()
 	local prompt = getNearestPrompt()
 	if prompt then
 		if not humanoidRootPart.Anchored then
-			
-		
-		isActivating = true
-		prompt.HoldDuration = 0
-	--	lastTeleportTime = tick()
+
+
+			isActivating = true
+			prompt.HoldDuration = 0
+			--	lastTeleportTime = tick()
 			teleportAndActivatePrompt(prompt)
 		end
-		
+
 	else
 		if tweenF then return end
 		Tp(Vector3.new(11987, 45, 12761))
 	end
 end)
-
