@@ -191,7 +191,7 @@ local function enterRiskState()
 	if isInDanger and isRunning then return end
 	isInDanger = true
 	isRunning = false
-	player:Kick()
+	originalPosition = humanoidRootPart.CFrame
 
 	local button = player.PlayerGui.TimeC and player.PlayerGui.TimeC:FindFirstChild("Tempo")
 	if button then
@@ -203,15 +203,12 @@ local function enterRiskState()
 	humanoidRootPart.Anchored = true
 
 	task.delay(10, function()
-		
-		if lastHealth > 1 then
-		if not tweenF then
-			Tp(Vector3.new(11987, 45, 12761))
-		end
-		--humanoidRootPart.Anchored = false
+		-- Volta ao local original
+		humanoidRootPart.CFrame = originalPosition
+		humanoidRootPart.Anchored = false
 		isInDanger = false
 		isRunning = true
-		end
+
 		if button then
 			button.Text = "Tempo Retomado | Clique Para Pausar"
 		end
@@ -246,11 +243,14 @@ RunService.RenderStepped:Connect(function()
 	local prompt = getNearestPrompt()
 	if prompt then
 		if not humanoidRootPart.Anchored then
+			
+		
 		isActivating = true
 		prompt.HoldDuration = 0
 	--	lastTeleportTime = tick()
 			teleportAndActivatePrompt(prompt)
 		end
+		
 	else
 		if tweenF then return end
 		Tp(Vector3.new(11987, 45, 12761))
