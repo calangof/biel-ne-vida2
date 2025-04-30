@@ -98,7 +98,7 @@ function toggleSystem()
 		button.Text = "Retomando..."
 	else
 		if not tweenF then
-			Tp(Vector3.new(11987, 45, 12761))
+			Tp(Vector3.new(11987, 45, 12761), true, 300)
 		end
 		pauseStart = tick()
 		button.Text = "PAUSADO | Clique Para Continuar"
@@ -147,7 +147,7 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 		lastTeleportTime = tick()
 
 		if not tweenF then
-			Tp(part.CFrame)
+			Tp(part.CFrame, false, 50)
 		end
 
 		-- Aguarda teleporte estabilizar
@@ -171,7 +171,7 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 			if isActivating and prompt.Enabled == false then
 				task.wait(0.1)
 
-				Tp(part.CFrame - Vector3.new(0, 10, 0), false)
+				Tp(part.CFrame - Vector3.new(0, 10, 0), false, 50)
 
 				task.wait(15)
 				totalPromptsActivated = totalPromptsActivated + 1 
@@ -249,6 +249,6 @@ RunService.RenderStepped:Connect(function()
 		end
 	else
 		if tweenF then return end
-		Tp(Vector3.new(11987, 45, 12761))
+		Tp(Vector3.new(11987, 45, 12761), true, 300)
 	end
 end)
