@@ -174,7 +174,7 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 				
 				task.wait(.1)
 				humanoidRootPart.CFrame = part.CFrame - Vector3.new(0, 10, 0)
-				task.wait(15, function()
+				task.delay(15, function()
 					totalPromptsActivated += 1
 					
 				end)
