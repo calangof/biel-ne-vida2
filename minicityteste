@@ -705,7 +705,7 @@ local ww = rev:CreateToggle({
 		end,
 	})
 
-	local Button = cam:CreateButton({
+--[[	local Button = cam:CreateButton({
 		Name = "Cabeção - Medio",
 		Callback = function()
 
@@ -778,3 +778,4 @@ local ww = rev:CreateToggle({
 
 		end,
 	})
+]]
