@@ -241,7 +241,7 @@ RunService.RenderStepped:Connect(function()
 
 	local prompt = getNearestPrompt()
 	if prompt then
-		if not humanoidRootPart.Anchored and not tweenF then
+		if not humanoidRootPart.Anchored and tweenF then
 
 
 			isActivating = true
