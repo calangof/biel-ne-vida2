@@ -149,7 +149,8 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 		lastTeleportTime = tick()
 
 		-- Teleporta
-		humanoidRootPart.CFrame = part.CFrame
+		Tp(part.Position + Vector3.new(0, 3, 0))
+		repeat task.wait() until tweenF == false
 			
 
 		-- Aguarda teleporte estabilizar
