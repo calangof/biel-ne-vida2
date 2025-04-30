@@ -148,16 +148,14 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 		isActivating = true
 		lastTeleportTime = tick()
 
-		-- Teleporta com tween
-		Tp(part.Position + Vector3.new(0, 3, 0)) -- adiciona um pequeno offset para não colidir com o chão
-
-		-- Aguarda tween terminar
+		-- Teleporta suavemente até a planta
+		Tp(part.Position) -- um pouco acima
 		repeat task.wait() until tweenF == false
 
 		-- Começa a ativação
 		prompt:InputHoldBegin()
 
-		-- Aguarda o tempo de ativação
+		-- Aguarda tempo de ativação
 		task.delay(prompt.HoldDuration + 0.2, function()
 			if not isRunning or isInDanger then
 				prompt:InputHoldEnd()
@@ -168,14 +166,20 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 			prompt:InputHoldEnd()
 
 			if isActivating and prompt.Enabled == false then
-				--task.wait(0.1)
-				Tp(part.Position - Vector3.new(0, 10, 0))
+				-- Afunda para dentro da terra
+				local destinoSubsolo = humanoidRootPart.Position - Vector3.new(0, 10, 0)
+				Tp(destinoSubsolo)
 				repeat task.wait() until tweenF == false
-				task.wait(15)
-				totalPromptsActivated += 1
-			end
 
-			isActivating = false
+				humanoidRootPart.Anchored = true
+				task.wait(15)
+
+				humanoidRootPart.Anchored = false
+				totalPromptsActivated += 1
+				isActivating = false
+			else
+				isActivating = false
+			end
 		end)
 	end
 end
