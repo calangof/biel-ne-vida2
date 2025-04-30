@@ -22,7 +22,7 @@ local totalPromptsActivated = 0
 local lastTeleportTime = 0
 local originalPosition = nil
 local lastHealth = humanoid.Health
-local WAIT_POSITION = Vector3.new(1111, 20, 7600)
+local WAIT_POSITION = Vector3.new(11987, 45, 12761)
 local VELOCIDADE = 300
 
 -- GUI do temporizador
