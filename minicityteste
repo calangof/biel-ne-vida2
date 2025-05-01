@@ -19,19 +19,14 @@ local Window = Rayfield:CreateWindow({
 
 })
 
-Rayfield:Notify({
+--[[Rayfield:Notify({
 	Title = "MENU - MINI CITY LOADED",
 	Content = "Owner: @bielbs09_22\n Programmer: ???\nLast Update: 25/04/2025",
 	Duration = 6.5,
 	Image = 4483362458,
-})
+})]]
 
-local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-for _, gui in ipairs(playerGui:GetChildren()) do
-	if gui:IsA("ScreenGui") then
-		warn(gui.Name)
-	end
-end
+
 
 local rev = Window:CreateTab("Main")
 local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feito por BIEL BS"})
