@@ -173,7 +173,7 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 			-- Só conta se não foi interrompido
 			if isActivating and prompt.Enabled == false then
 
-				task.wait(.05)
+				task.wait(.2)
 				Tp(Vector3.new(11314, 55, 13717))
 				task.wait(15)
 				totalPromptsActivated = totalPromptsActivated + 1 
