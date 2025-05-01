@@ -2,7 +2,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V3.1🔥",
+	Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUGS🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -257,7 +257,7 @@ local Button = rev:CreateButton({
 				end
 			end
 
-			task.wait(.1)  -- Espera um frame para evitar lag
+			task.wait(.05)  -- Espera um frame para evitar lag
 		end
 	end,
 })
