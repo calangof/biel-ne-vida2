@@ -22,7 +22,7 @@ local lastHealth = humanoid.Health
 
 local tweenF = false
 
-local function Tp(pos)
+local function Tp(pos, speed)
 	tweenF = true
 	local TweenService = game:GetService("TweenService")
 
@@ -30,7 +30,7 @@ local function Tp(pos)
 	local destino = pos
 
 	-- Velocidade desejada
-	local VELOCIDADE = 300  -- studs por segundo
+	local VELOCIDADE = speed or 300  -- studs por segundo
 
 	-- Calcular distância e duração
 	local distancia = (destino - humanoidRootPart.Position).Magnitude
@@ -174,9 +174,11 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 			if isActivating and prompt.Enabled == false then
 
 				task.wait(.2)
-				Tp(Vector3.new(11314, 55, 13717))
-				task.wait(15)
-				totalPromptsActivated = totalPromptsActivated + 1 
+				Tp(Vector3.new(11314, 55, 13717), 1000)
+				task.delay(15, function()
+					totalPromptsActivated = totalPromptsActivated + 1 
+				end)
+				task.wait(10)
 			end
 
 			isActivating = false
