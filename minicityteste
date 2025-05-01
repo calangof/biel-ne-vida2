@@ -9,7 +9,7 @@
 			Enabled = true,
 			FileName = "Save1"
 		},
-		KeySystem = true,
+		KeySystem = false,
 		KeySettings = {
 			Title = "Mini City BR - @bielbs09_22",
 			Subtitle = "Sistema De Key",
