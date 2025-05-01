@@ -236,18 +236,6 @@ task.spawn(function()
 	end
 end)
 
-while true do
-	local character = player.Character
-	if character then
-		local humanoid = character:FindFirstChildOfClass("Humanoid")
-		if humanoid and humanoid.Health < 35 then
-			player:Kick("")
-			break
-		end
-	end
-	task.wait()
-end
-
 -- Loop principal com delay de 0.5 segundos entre os teleportes
 RunService.RenderStepped:Connect(function()
 	if not started or not isRunning or isActivating or isInDanger then return end
