@@ -429,7 +429,7 @@ local Button = rev:CreateButton({
 					break
 				end
 			end
-			task.wait(.1)
+			task.wait()
 		end
 	end,
 })
@@ -486,7 +486,7 @@ local Button = rev:CreateButton({
 					break
 				end
 			end
-			task.wait(.1)
+			task.wait()
 		end
 	end,
 })
@@ -894,6 +894,12 @@ end
 local mob = cam:CreateButton({
 	Name = "Atualizar Lista",
 	Callback = function()
+		local playerNames = {}
+		for _, player in ipairs(Players:GetPlayers()) do
+			table.insert(playerNames, player.Name)
+		end
+		Dropdown:Refresh(playerNames)
 		Dropdown:Set({""})
 	end,
 })
+
