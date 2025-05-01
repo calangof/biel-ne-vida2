@@ -149,7 +149,7 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 		lastTeleportTime = tick()
 
 		-- Teleporta
-		Tp(part.Position + Vector3.new(0, 3, 0))
+		Tp(part.Position + Vector3.new(0, 3, 0), 5000)
 		repeat task.wait() until tweenF == false
 
 
@@ -174,7 +174,7 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 			if isActivating and prompt.Enabled == false then
 
 				task.wait(.2)
-				Tp(Vector3.new(11314, 55, 13717), 1000)
+				Tp(Vector3.new(11314, 55, 13717), 5000)
 				task.delay(15, function()
 					totalPromptsActivated = totalPromptsActivated + 1 
 				end)
