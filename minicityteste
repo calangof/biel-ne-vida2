@@ -752,67 +752,6 @@ local Button = rev:CreateButton({
 		end,
 	})
 
-	local Button = rev:CreateButton({
-		Name = "Ir Ate Alguem",
-		Callback = function()
-
-			local TweenService = game:GetService("TweenService")
-			local Players = game:GetService("Players")
-
-			local player = Players.LocalPlayer
-			local character = player.Character or player.CharacterAdded:Wait()
-			local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-			-- Função para obter um player vivo aleatório (diferente de si mesmo)
-			local function getRandomAlivePlayer()
-				for i = 1, 10 do -- Tenta algumas vezes (caso tenha muitos mortos)
-					local otherPlayers = Players:GetPlayers()
-					local randomPlayer = otherPlayers[math.random(1, #otherPlayers)]
-					if randomPlayer ~= player and randomPlayer.Character and randomPlayer.Character:FindFirstChild("Humanoid") then
-						local humanoid = randomPlayer.Character:FindFirstChild("Humanoid")
-						if humanoid and humanoid.Health > 0 then
-							return randomPlayer
-						end
-					end
-				end
-				return nil
-			end
-
-			local targetPlayer = getRandomAlivePlayer()
-
-			if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-				local targetHRP = targetPlayer.Character.HumanoidRootPart
-				local destino = targetHRP.Position
-
-				-- Velocidade desejada
-				local VELOCIDADE = 1500  -- studs por segundo
-
-				-- Calcular distância e duração
-				local distancia = (destino - humanoidRootPart.Position).Magnitude
-				local duracao = distancia / VELOCIDADE
-
-				-- Criar TweenInfo
-				local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-				local goal = {Position = destino}
-
-				-- Ancorar antes de mover
-				humanoidRootPart.Anchored = true
-
-				-- Criar e tocar o tween
-				local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
-				tween:Play()
-
-				-- Desancorar quando terminar
-				tween.Completed:Connect(function()
-					humanoidRootPart.Anchored = false
-				end)
-			else
-				warn("Nenhum player vivo encontrado.")
-			end
-
-		
-		end,
-	})
 	
 local mob = cam:CreateButton({
 	Name = "TP",
