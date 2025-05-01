@@ -2,7 +2,7 @@
 
 	-- Criando a Janela da Interface
 	local Window = Rayfield:CreateWindow({
-		Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUGS + NEW SYSTEM 2🔥",
+		Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUGS + NEW SYSTEM🔥",
 		LoadingTitle = "BIEL BS",
 		LoadingSubtitle = "By BIEL BS",
 		ConfigurationSaving = {
@@ -921,6 +921,12 @@ local Dropdown = cam:CreateDropdown({
 
 function tp(targetPlayer)
 	Dropdown:Set({""})
+	local playerNames = {}
+	for _, player in ipairs(Players:GetPlayers()) do
+		table.insert(playerNames, player.Name)
+	end
+	Dropdown:Refresh(playerNames)
+	
 	local localPlayer = Players.LocalPlayer
 	local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
 	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
