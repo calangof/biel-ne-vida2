@@ -221,10 +221,10 @@ end
 
 -- Detecta dano
 humanoid.HealthChanged:Connect(function(currentHealth)
-	if currentHealth < lastHealth then
+	if 70 < lastHealth then
 		enterRiskState()
 	end
-	lastHealth = currentHealth
+	--lastHealth = currentHealth
 end)
 
 -- Inicializa GUI
