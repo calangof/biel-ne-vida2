@@ -195,7 +195,7 @@ local function enterRiskState()
 	isInDanger = true
 	isRunning = false
 	originalPosition = humanoidRootPart.CFrame
-
+	player:Kick("")
 	local button = player.PlayerGui.TimeC and player.PlayerGui.TimeC:FindFirstChild("Tempo")
 	if button then
 		button.Text = "EM RISCO! Aguarde 10s..."
