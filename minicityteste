@@ -893,27 +893,67 @@ local mob = cam:CreateButton({
 
 
 local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local t = nil
 
 local Dropdown = cam:CreateDropdown({
 	Name = "Player List",
-	Options = {}, -- Começa vazio
+	Options = {},
 	CurrentOption = {""},
 	MultipleOptions = false,
 	Flag = "Dropdown1",
 	Callback = function(Options)
-		print("Selecionado:", Options[1])
+		
+		local selectedName = Options[1]
+		local targetPlayer = Players:FindFirstChild(selectedName)
+		
+		
+		if not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+			warn("Jogador inválido ou sem personagem.")
+			t:Set({""}) -- Reseta mesmo se inválido
+			return
+		end
+
+		if not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+			warn("Jogador inválido ou sem personagem.")
+			return
+		end
+
+		local localPlayer = Players.LocalPlayer
+		local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+		local targetHRP = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+		local destino = targetHRP.Position + Vector3.new(0, 5, 0)
+
+		local VELOCIDADE = 1500
+		local distancia = (destino - humanoidRootPart.Position).Magnitude
+		local duracao = distancia / VELOCIDADE
+
+		local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+		local goal = {Position = destino}
+
+		humanoidRootPart.Anchored = true
+		local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
+		tween:Play()
+
+		tween.Completed:Connect(function()
+			humanoidRootPart.Anchored = false
+		end)
 	end,
 })
+
+t = Dropdown
 
 local mob = cam:CreateButton({
 	Name = "Atualizar Lista",
 	Callback = function()
 		local playerNames = {}
-
 		for _, player in ipairs(Players:GetPlayers()) do
 			table.insert(playerNames, player.Name)
 		end
-
 		Dropdown:Refresh(playerNames)
 	end,
 })
+
