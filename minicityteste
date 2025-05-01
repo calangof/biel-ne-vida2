@@ -897,9 +897,3 @@ local mob = cam:CreateButton({
 		Dropdown:Set({""})
 	end,
 })
-
-local playerNames = {}
-for _, player in ipairs(Players:GetPlayers()) do
-	table.insert(playerNames, player.Name)
-end
-Dropdown:Refresh(playerNames)
