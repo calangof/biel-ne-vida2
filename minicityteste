@@ -487,7 +487,7 @@ local Button = rev:CreateButton({
 			local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
 			-- Destino desejado
-			local destino = humanoidRootPart.CFrame - Vector3.new(0, -10, 0)
+			local destino = humanoidRootPart.CFrame - Vector3.new(0, 10, 0)
 
 			-- Velocidade desejada
 			local VELOCIDADE = 1500  -- studs por segundo
@@ -787,7 +787,7 @@ local mob = cam:CreateButton({
 				local destino = targetHRP.Position + Vector3.new(0, 5, 0)
 
 				-- Velocidade desejada
-				local VELOCIDADE = 1000  -- studs por segundo
+				local VELOCIDADE = 1500  -- studs por segundo
 
 				-- Calcular distância e duração
 				local distancia = (destino - humanoidRootPart.Position).Magnitude
