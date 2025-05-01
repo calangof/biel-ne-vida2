@@ -1,9 +1,9 @@
---
+
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUG TP🔥",
+	Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUG TP + NEW SYSTEM 2🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -785,7 +785,7 @@ local mob = cam:CreateButton({
 
 			if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
 				local targetHRP = targetPlayer.Character.HumanoidRootPart
-				local destino = targetHRP.Position + Vector3.new(0, 5, 0)
+				local destino = targetHRP.Position + Vector3.new(0, 10, 0)
 
 				-- Velocidade desejada
 				local VELOCIDADE = 1500  -- studs por segundo
@@ -934,7 +934,7 @@ function tp(targetPlayer)
 	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
 	local targetHRP = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
-	local destino = targetHRP.Position + Vector3.new(0, 5, 0)
+	local destino = targetHRP.Position + Vector3.new(0, 10, 0)
 
 	local VELOCIDADE = 1500
 	local distancia = (destino - humanoidRootPart.Position).Magnitude
