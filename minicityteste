@@ -784,7 +784,7 @@ local mob = cam:CreateButton({
 
 			if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
 				local targetHRP = targetPlayer.Character.HumanoidRootPart
-				local destino = targetHRP.Position
+				local destino = targetHRP.Position + Vector3.new(0, 5, 0)
 
 				-- Velocidade desejada
 				local VELOCIDADE = 1000  -- studs por segundo
