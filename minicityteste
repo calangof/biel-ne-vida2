@@ -2,7 +2,7 @@
 
 	-- Criando a Janela da Interface
 	local Window = Rayfield:CreateWindow({
-		Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUGS + NEW SYSTEM🔥",
+		Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUGS + NEW SYSTEM 2🔥",
 		LoadingTitle = "BIEL BS",
 		LoadingSubtitle = "By BIEL BS",
 		ConfigurationSaving = {
@@ -895,7 +895,6 @@ local mob = cam:CreateButton({
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
-local t = nil
 
 local Dropdown = cam:CreateDropdown({
 	Name = "Player List",
@@ -908,43 +907,42 @@ local Dropdown = cam:CreateDropdown({
 		local selectedName = Options[1]
 		local targetPlayer = Players:FindFirstChild(selectedName)
 		
+	
+
+		if not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+			warn("Jogador inválido ou sem personagem.")
+			return
+		end
+
+		tp(targetPlayer)
 		
-		if not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-			warn("Jogador inválido ou sem personagem.")
-			t:Set({""}) -- Reseta mesmo se inválido
-			return
-		end
-
-		if not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-			warn("Jogador inválido ou sem personagem.")
-			return
-		end
-
-		local localPlayer = Players.LocalPlayer
-		local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
-		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-		local targetHRP = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
-		local destino = targetHRP.Position + Vector3.new(0, 5, 0)
-
-		local VELOCIDADE = 1500
-		local distancia = (destino - humanoidRootPart.Position).Magnitude
-		local duracao = distancia / VELOCIDADE
-
-		local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-		local goal = {Position = destino}
-
-		humanoidRootPart.Anchored = true
-		local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
-		tween:Play()
-
-		tween.Completed:Connect(function()
-			humanoidRootPart.Anchored = false
-		end)
 	end,
 })
 
-t = Dropdown
+function tp(targetPlayer)
+	Dropdown:Set({""})
+	local localPlayer = Players.LocalPlayer
+	local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+	local targetHRP = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+	local destino = targetHRP.Position + Vector3.new(0, 5, 0)
+
+	local VELOCIDADE = 1500
+	local distancia = (destino - humanoidRootPart.Position).Magnitude
+	local duracao = distancia / VELOCIDADE
+
+	local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+	local goal = {Position = destino}
+
+	humanoidRootPart.Anchored = true
+	local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
+	tween:Play()
+
+	tween.Completed:Connect(function()
+		humanoidRootPart.Anchored = false
+	end)
+end
 
 local mob = cam:CreateButton({
 	Name = "Atualizar Lista",
@@ -954,6 +952,7 @@ local mob = cam:CreateButton({
 			table.insert(playerNames, player.Name)
 		end
 		Dropdown:Refresh(playerNames)
+		Dropdown:Set({""})
 	end,
 })
 
