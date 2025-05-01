@@ -891,77 +891,15 @@ local mob = cam:CreateButton({
 	end,
 })
 
-	--[[	local Button = cam:CreateButton({
-			Name = "Cabeção - Medio",
-			Callback = function()
 
-
-				Rayfield:Notify({
-					Title = "Aviso",
-					Content = "Todos Jogadores Tão Cabeçudo, LA ELE!",
-					Duration = 6.5,
-					Image = 4483362458,
-				})
-
-				-- Função para deletar todas as NotifyGui
-				local function deletarNotifyGui()
-					local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-					for _, gui in ipairs(playerGui:GetChildren()) do
-						if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-							gui:Destroy() -- Deleta a NotifyGui
-						end
-					end
-				end
-
-				for _, npc in ipairs(workspace:GetChildren()) do
-					local humanoid = npc:FindFirstChildOfClass("Humanoid")
-					if humanoid and npc ~= game.Players.LocalPlayer.Character then
-						local head = npc:FindFirstChild("Head")
-						if head and head:IsA("Part") then
-							head.CanCollide = false
-							head.Size = Vector3.new(6, 6, 6)
-							head.Transparency = .8
-						end
-					end
-				end
-
-			end,
-		})
-
-		local Button = cam:CreateButton({
-			Name = "Cabeção - Grande",
-			Callback = function()
-
-
-				Rayfield:Notify({
-					Title = "Aviso",
-					Content = "Todos Jogadores Tão Cabeçudo, LA ELE!",
-					Duration = 6.5,
-					Image = 4483362458,
-				})
-
-				-- Função para deletar todas as NotifyGui
-				local function deletarNotifyGui()
-					local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-					for _, gui in ipairs(playerGui:GetChildren()) do
-						if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-							gui:Destroy() -- Deleta a NotifyGui
-						end
-					end
-				end
-
-				for _, npc in ipairs(workspace:GetChildren()) do
-					local humanoid = npc:FindFirstChildOfClass("Humanoid")
-					if humanoid and npc ~= game.Players.LocalPlayer.Character then
-						local head = npc:FindFirstChild("Head")
-						if head and head:IsA("Part") then
-							head.CanCollide = false
-							head.Size = Vector3.new(10, 10, 10)
-							head.Transparency = .8
-						end
-					end
-				end
-
-			end,
-		})
-	]]
+local Dropdown = cam:CreateDropdown({
+	Name = "Player List",
+	Options = {"Teste 1","Teste 2"},
+	CurrentOption = {""},
+	MultipleOptions = false,
+	Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Options)
+		-- The function that takes place when the selected option is changed
+		-- The variable (Options) is a table of strings for the current selected options
+	end,
+})
