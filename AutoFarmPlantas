@@ -178,7 +178,7 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 				task.delay(15, function()
 					totalPromptsActivated = totalPromptsActivated + 1 
 				end)
-				task.wait(10)
+				task.wait(14.5)
 			end
 
 			isActivating = false
