@@ -173,8 +173,8 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 			-- Só conta se não foi interrompido
 			if isActivating and prompt.Enabled == false then
 
-				task.wait(.1)
-				Tp(Vector3.new(11987, 45, 12761))
+				task.wait(.05)
+				Tp(Vector3.new(11314, 55, 13717))
 				task.wait(15)
 				totalPromptsActivated = totalPromptsActivated + 1 
 			end
@@ -235,6 +235,18 @@ task.spawn(function()
 		task.wait()
 	end
 end)
+
+while true do
+	local character = player.Character
+	if character then
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		if humanoid and humanoid.Health < 35 then
+			player:Kick("")
+			break
+		end
+	end
+	task.wait()
+end
 
 -- Loop principal com delay de 0.5 segundos entre os teleportes
 RunService.RenderStepped:Connect(function()
