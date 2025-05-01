@@ -2,7 +2,7 @@
 
 	-- Criando a Janela da Interface
 	local Window = Rayfield:CreateWindow({
-		Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUGS🔥",
+		Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUGS + NEW OPTION 🔥",
 		LoadingTitle = "BIEL BS",
 		LoadingSubtitle = "By BIEL BS",
 		ConfigurationSaving = {
@@ -463,6 +463,71 @@
 			end
 		end,
 	})
+	
+local Button = rev:CreateButton({
+	Name = "Fugir - 50",
+	Callback = function()
+		local function deletarNotifyGui()
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			for _, gui in ipairs(playerGui:GetChildren()) do
+				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
+					gui:Destroy()
+				end
+			end
+		end
+
+		local TextChatService = game:GetService("TextChatService")
+		local Players = game:GetService("Players")
+		local LocalPlayer = Players.LocalPlayer
+
+		local function tp()
+			local TweenService = game:GetService("TweenService")
+			local player = game.Players.LocalPlayer
+			local character = player.Character or player.CharacterAdded:Wait()
+			local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+			-- Destino desejado
+			local destino = humanoidRootPart.CFrame - Vector3.new(0, -10, 0)
+
+			-- Velocidade desejada
+			local VELOCIDADE = 1500  -- studs por segundo
+
+			-- Calcular distância e duração
+			local distancia = (destino - humanoidRootPart.Position).Magnitude
+			local duracao = distancia / VELOCIDADE
+
+			-- Criar TweenInfo
+			local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+			local goal = {Position = destino}
+
+			-- Ancorar antes de mover
+			humanoidRootPart.Anchored = true
+
+			-- Criar e tocar o tween
+			local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
+			tween:Play()
+
+			-- Desancorar quando terminar
+			tween.Completed:Connect(function()
+				humanoidRootPart.Anchored = false
+			end)
+		end
+
+		while true do
+			-- pequeno delay para não sobrecarregar
+
+			local character = LocalPlayer.Character
+			if character then
+				local humanoid = character:FindFirstChildOfClass("Humanoid")
+				if humanoid and humanoid.Health < 35 then
+					tp()
+					break -- para o loop após rejoin
+				end
+			end
+			task.wait()
+		end
+	end,
+})
 
 	local Button = rev:CreateButton({
 		Name = "Anti-AFK (20 Minutos)",
