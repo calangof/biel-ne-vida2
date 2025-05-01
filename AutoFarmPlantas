@@ -101,7 +101,7 @@ function toggleSystem()
 		if not tweenF then
 			Tp(Vector3.new(11987, 45, 12761))
 		end
-		
+
 		pauseStart = tick()
 		button.Text = "PAUSADO | Clique Para Continuar"
 	end
@@ -151,7 +151,7 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 		-- Teleporta
 		Tp(part.Position + Vector3.new(0, 3, 0))
 		repeat task.wait() until tweenF == false
-			
+
 
 		-- Aguarda teleporte estabilizar
 		task.wait(0.1)
@@ -172,9 +172,9 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 
 			-- Só conta se não foi interrompido
 			if isActivating and prompt.Enabled == false then
-				
+
 				task.wait(.1)
-				humanoidRootPart.CFrame = part.CFrame - Vector3.new(0, 10, 0)
+				Tp(Vector3.new(11987, 45, 12761))
 				task.wait(15)
 				totalPromptsActivated = totalPromptsActivated + 1 
 			end
@@ -245,9 +245,9 @@ RunService.RenderStepped:Connect(function()
 	local prompt = getNearestPrompt()
 	if prompt then
 		if not humanoidRootPart.Anchored then
-		isActivating = true
-		prompt.HoldDuration = 0
-	--	lastTeleportTime = tick()
+			isActivating = true
+			prompt.HoldDuration = 0
+			--	lastTeleportTime = tick()
 			teleportAndActivatePrompt(prompt)
 		end
 	else
