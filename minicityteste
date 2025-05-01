@@ -2,11 +2,11 @@
 
 	-- Criando a Janela da Interface
 	local Window = Rayfield:CreateWindow({
-		Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUGS + NEW OPTION 🔥",
+		Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUGS + NEW SYSTEM🔥",
 		LoadingTitle = "BIEL BS",
 		LoadingSubtitle = "By BIEL BS",
 		ConfigurationSaving = {
-			Enabled = true,
+			Enabled = false,
 			FileName = "Save1"
 		},
 		KeySystem = false,
