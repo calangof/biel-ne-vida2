@@ -227,7 +227,7 @@ local Button = rev:CreateButton({
 		deletarNotifyGui()
 
 
-		local itens = {"C4","Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento","Lockpick", "AR-15", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio", "Glock 17"}
+		local itens = {"AR-15", "Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "Hi Power", "Natalina", "Tratamento", "C4"}
 
 		local args = {
 			[1] = "mudaInv",
@@ -995,7 +995,7 @@ local mob = cam:CreateButton({
 							humanoidRootPart.Anchored = false
 							task.wait(.1)
 							sendRevistarMessage()
-							
+
 						else
 							humanoidRootPart.Position = targetHRP.Position
 						end
@@ -1034,7 +1034,7 @@ local mob = cam:CreateButton({
 				if #alvosPendentes > 0 then
 					local alvo = table.remove(alvosPendentes, 1)
 					tp(alvo)
-					
+
 				end
 			end
 		end)
