@@ -926,8 +926,7 @@ local mob = cam:CreateButton({
 					task.wait(0.2)
 					sendRevistarMessage()
 					task.delay(3, function()
-						
-						targetPlayer.Character:FindFirstChildOfClass("Humanoid"):FindFirstChild("creator"):Destroy()
+						table.remove(alvosPendentes, 1)
 					end)
 				end)
 			end
@@ -960,7 +959,7 @@ local mob = cam:CreateButton({
 			while true do
 				task.wait()
 				if #alvosPendentes > 0 then
-					local alvo = table.remove(alvosPendentes, 1)
+					local alvo = alvosPendentes[1]
 					tp(alvo)
 				end
 			end
