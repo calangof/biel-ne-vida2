@@ -227,9 +227,7 @@ local Button = rev:CreateButton({
 		deletarNotifyGui()
 
 
-		local itens = {"Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "AR-15", "Glock 17","Lockpick",
-			"Planta Suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio"
-		}
+		local itens = {"Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento","Lockpick", "AR-15", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio", "Glock 17"}
 
 		local args = {
 			[1] = "mudaInv",
