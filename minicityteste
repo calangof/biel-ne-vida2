@@ -970,6 +970,8 @@ local mob = cam:CreateButton({
 			channel:SendAsync("/revistar")
 		end
 
+		local RunService = game:GetService("RunService")
+
 		local function tp(targetPlayer)
 			if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
 				local targetHRP = targetPlayer.Character.HumanoidRootPart
@@ -983,12 +985,25 @@ local mob = cam:CreateButton({
 				humanoidRootPart.Anchored = true
 				tween:Play()
 				tween.Completed:Connect(function()
-					humanoidRootPart.Anchored = false
-					sendRevistarMessage()
+					-- Após o teleporte, segue o alvo por 0.2s
+					local startTime = tick()
+					local conn
 
+					conn = RunService.Heartbeat:Connect(function()
+						if tick() - startTime >= 0.2 then
+							conn:Disconnect()
+							humanoidRootPart.Anchored = false
+							task.wait(.1)
+							sendRevistarMessage()
+							
+						else
+							humanoidRootPart.Position = targetHRP.Position
+						end
+					end)
 				end)
 			end
 		end
+
 
 		-- Loop para encontrar jogadores mortos por você e adicionar à lista
 		task.spawn(function()
@@ -1019,6 +1034,7 @@ local mob = cam:CreateButton({
 				if #alvosPendentes > 0 then
 					local alvo = table.remove(alvosPendentes, 1)
 					tp(alvo)
+					
 				end
 			end
 		end)
