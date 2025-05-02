@@ -970,7 +970,7 @@ local mob = cam:CreateButton({
 			channel:SendAsync("/revistar")
 		end
 
-		local RunService = game:GetService("RunService")
+		
 
 		local function tp(targetPlayer)
 			if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -985,21 +985,12 @@ local mob = cam:CreateButton({
 				humanoidRootPart.Anchored = true
 				tween:Play()
 				tween.Completed:Connect(function()
-					-- Após o teleporte, segue o alvo por 0.2s
-					local startTime = tick()
-					local conn
+				
+							
+					humanoidRootPart.Anchored = false
+					task.wait(.1)
+					sendRevistarMessage()
 
-					conn = RunService.Heartbeat:Connect(function()
-						if tick() - startTime >= 0.2 then
-							conn:Disconnect()
-							humanoidRootPart.Anchored = false
-							task.wait(.1)
-							sendRevistarMessage()
-
-						else
-							humanoidRootPart.Position = targetHRP.Position
-						end
-					end)
 				end)
 			end
 		end
@@ -1033,6 +1024,7 @@ local mob = cam:CreateButton({
 				task.wait()
 				if #alvosPendentes > 0 then
 					local alvo = table.remove(alvosPendentes, 1)
+					task.wait(.1)
 					tp(alvo)
 
 				end
