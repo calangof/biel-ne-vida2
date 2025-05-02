@@ -905,7 +905,7 @@ local mob = cam:CreateButton({
 		local alvosPendentes = {}
 
 		local function sendRevistarMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXSystem")
 			channel:SendAsync("/revistar")
 		end
 
@@ -923,15 +923,8 @@ local mob = cam:CreateButton({
 				tween:Play()
 				tween.Completed:Connect(function()
 					humanoidRootPart.Anchored = false
-					task.delay(.1,function()
-
-						sendRevistarMessage()
-					end)
-					task.delay(1, function()
-						if #alvosPendentes > 0 then
-							table.remove(alvosPendentes, 1)
-						end
-					end)
+					sendRevistarMessage()
+					
 				end)
 			end
 		end
@@ -963,7 +956,7 @@ local mob = cam:CreateButton({
 			while true do
 				task.wait()
 				if #alvosPendentes > 0 then
-					local alvo = alvosPendentes[1]
+					local alvo = table.remove(alvosPendentes, 1)
 					tp(alvo)
 				end
 			end
