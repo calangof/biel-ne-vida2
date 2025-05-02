@@ -925,6 +925,10 @@ local mob = cam:CreateButton({
 					humanoidRootPart.Anchored = false
 					task.wait(0.2)
 					sendRevistarMessage()
+					task.delay(3, function()
+						
+						targetPlayer.Character:FindFirstChildOfClass("Humanoid"):FindFirstChild("creator"):Destroy()
+					end)
 				end)
 			end
 		end
@@ -942,8 +946,7 @@ local mob = cam:CreateButton({
 								local creator = hum:FindFirstChild("creator")
 								if creator and creator.Value == localPlayer then
 									table.insert(alvosPendentes, p)
-									task.wait(1)
-									creator:Destroy()
+									
 								end
 							end
 						end
