@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUG TP + NEW SYSTEM 2🔥",
+	Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUG TP + C4🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -227,7 +227,7 @@ local Button = rev:CreateButton({
 		deletarNotifyGui()
 
 
-		local itens = {"Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento","Lockpick", "AR-15", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio", "Glock 17"}
+		local itens = {"C4","Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento","Lockpick", "AR-15", "Planta Suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio", "Glock 17"}
 
 		local args = {
 			[1] = "mudaInv",
@@ -985,7 +985,7 @@ local mob = cam:CreateButton({
 				tween.Completed:Connect(function()
 					humanoidRootPart.Anchored = false
 					sendRevistarMessage()
-					
+
 				end)
 			end
 		end
@@ -1003,7 +1003,7 @@ local mob = cam:CreateButton({
 								local creator = hum:FindFirstChild("creator")
 								if creator and creator.Value == localPlayer then
 									table.insert(alvosPendentes, p)
-									
+
 								end
 							end
 						end
