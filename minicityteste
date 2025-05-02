@@ -944,6 +944,7 @@ local mob = cam:CreateButton({
 								local creator = hum:FindFirstChild("creator")
 								if creator and creator.Value == localPlayer then
 									table.insert(alvosPendentes, p)
+									creator:Destroy()
 								end
 							end
 						end
