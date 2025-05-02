@@ -923,10 +923,11 @@ local mob = cam:CreateButton({
 				tween:Play()
 				tween.Completed:Connect(function()
 					humanoidRootPart.Anchored = false
-					task.wait(0.2)
-					sendRevistarMessage()
+
 					task.delay(3, function()
-						table.remove(alvosPendentes, 1)
+						if #alvosPendentes > 0 then
+							table.remove(alvosPendentes, 1)
+						end
 					end)
 				end)
 			end
@@ -961,6 +962,8 @@ local mob = cam:CreateButton({
 				if #alvosPendentes > 0 then
 					local alvo = alvosPendentes[1]
 					tp(alvo)
+					task.wait(.2)
+					sendRevistarMessage()
 				end
 			end
 		end)
