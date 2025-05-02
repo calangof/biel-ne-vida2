@@ -893,6 +893,70 @@ local mob = cam:CreateButton({
 	end,
 })
 
+local mob = cam:CreateButton({
+	Name = "TP Em Quem Mato",
+	Callback = function()
+		local Players = game:GetService("Players")
+		local TweenService = game:GetService("TweenService")
+		local TextChatService = game:GetService("TextChatService")
+
+		local localPlayer = Players.LocalPlayer
+		local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+		local function sendRevistarMessage()
+			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+			channel:SendAsync("/revistar")
+		end
+
+		local function tp(targetPlayer)
+			if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+				local targetHRP = targetPlayer.Character.HumanoidRootPart
+				local destino = targetHRP.Position + Vector3.new(0, 10, 0)
+				local VELOCIDADE = 1500
+				local distancia = (destino - humanoidRootPart.Position).Magnitude
+				local duracao = distancia / VELOCIDADE
+
+				local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear)
+				local tween = TweenService:Create(humanoidRootPart, tweenInfo, {Position = destino})
+				humanoidRootPart.Anchored = true
+				tween:Play()
+				tween.Completed:Connect(function()
+					humanoidRootPart.Anchored = false
+					task.wait(.2)
+					sendRevistarMessage()
+				end)
+			end
+		end
+
+		
+
+		-- Loop para verificar jogadores mortos por você
+		task.spawn(function()
+			while true do
+				task.wait(0.5)
+				for _, p in ipairs(Players:GetPlayers()) do
+					if p ~= localPlayer then
+						local char = p.Character
+						if char then
+							local hum = char:FindFirstChild("Humanoid")
+							if hum and hum.Health <= 0 then
+								local creator = hum:FindFirstChild("creator")
+								if creator and creator.Value == localPlayer then
+									tp(p)
+									
+									return
+								end
+							end
+						end
+					end
+				end
+			end
+		end)
+	end,
+})
+
+
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
