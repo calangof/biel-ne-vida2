@@ -227,7 +227,7 @@ local Button = rev:CreateButton({
 		deletarNotifyGui()
 
 
-		local itens = {"Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "AR-15", "Lockpick",
+		local itens = {"Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "iPhone 14", "Hi Power", "Natalina", "Tratamento", "AR-15", "Glock 17","Lockpick",
 			"Planta Suja", "Planta Limpa", "Plástico Pronto", "Plastico Vazio"
 		}
 
@@ -904,6 +904,8 @@ local mob = cam:CreateButton({
 		local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
 		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
+		local alvosPendentes = {}
+
 		local function sendRevistarMessage()
 			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
 			channel:SendAsync("/revistar")
@@ -912,7 +914,7 @@ local mob = cam:CreateButton({
 		local function tp(targetPlayer)
 			if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
 				local targetHRP = targetPlayer.Character.HumanoidRootPart
-				local destino = targetHRP.Position + Vector3.new(0, 10, 0)
+				local destino = targetHRP.Position
 				local VELOCIDADE = 1500
 				local distancia = (destino - humanoidRootPart.Position).Magnitude
 				local duracao = distancia / VELOCIDADE
@@ -923,29 +925,25 @@ local mob = cam:CreateButton({
 				tween:Play()
 				tween.Completed:Connect(function()
 					humanoidRootPart.Anchored = false
-					task.wait(.2)
+					task.wait(0.2)
 					sendRevistarMessage()
 				end)
 			end
 		end
 
-		
-
-		-- Loop para verificar jogadores mortos por você
+		-- Loop para encontrar jogadores mortos por você e adicionar à lista
 		task.spawn(function()
 			while true do
 				task.wait(0.5)
 				for _, p in ipairs(Players:GetPlayers()) do
-					if p ~= localPlayer then
+					if p ~= localPlayer and not table.find(alvosPendentes, p) then
 						local char = p.Character
 						if char then
 							local hum = char:FindFirstChild("Humanoid")
 							if hum and hum.Health <= 0 then
 								local creator = hum:FindFirstChild("creator")
 								if creator and creator.Value == localPlayer then
-									tp(p)
-									
-									return
+									table.insert(alvosPendentes, p)
 								end
 							end
 						end
@@ -953,8 +951,20 @@ local mob = cam:CreateButton({
 				end
 			end
 		end)
+
+		-- Loop para tratar os alvos pendentes
+		task.spawn(function()
+			while true do
+				task.wait(0.2)
+				if #alvosPendentes > 0 then
+					local alvo = table.remove(alvosPendentes, 1)
+					tp(alvo)
+				end
+			end
+		end)
 	end,
 })
+
 
 
 
