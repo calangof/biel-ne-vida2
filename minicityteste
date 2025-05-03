@@ -3,8 +3,8 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V3.4- ARRUMADO🔥",
-	LoadingTitle = "MINI CITY MENU - NEW",
+	Name = "🔥Menu Mini City BIEL BS | V3.4 - ARRUMADO 2🔥",
+	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
 		Enabled = false,
@@ -22,7 +22,7 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
 	Title = "MENU - MINI CITY LOADED",
-	Content = "Owner: @bielbs09_22\nProgrammer: ???\nLast Update: 25/04/2025",
+	Content = "Owner: @bielbs09_22\n Programmer: ???\nLast Update: 25/04/2025",
 	Duration = 6.5,
 	Image = 4483362458,
 })
@@ -210,7 +210,7 @@ local Button = rev:CreateButton({
 	Callback = function()
 		Rayfield:Notify({
 			Title = "Aviso",
-			Content = "Auto Puxar Itens Ativado, Pegara Comida!",
+			Content = "Auto Puxar Itens Ativado, Pegará Comida e Outros!",
 			Duration = 6.5,
 			Image = 4483362458,
 		})
@@ -219,48 +219,41 @@ local Button = rev:CreateButton({
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 			for _, gui in ipairs(playerGui:GetChildren()) do
 				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy() -- Deleta a NotifyGui		
+					gui:Destroy()
 				end
 			end
 		end
 
 		deletarNotifyGui()
 
-
-		local itens = {"AR-15", "Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "Hi Power", "Natalina", "Tratamento", "C4"}
-
-		local args = {
-			[1] = "mudaInv",
-			[2] = "2",
-			[4] = "1"
+		local itens = {
+			"AR-15", "Agua", "Hamburguer", "Drink", "Pizza", "Escudo",
+			"AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3",
+			"Hi Power", "Natalina", "Tratamento", "C4"
 		}
 
-		local localPlayer = game.Players.LocalPlayer
-		local playerName = localPlayer and localPlayer.Name or "Desconhecido"
+		local InvRequest = game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest")
+		local slot = 1
 
-		while true do
-			-- Deletar todas as NotifyGui antes de pegar os itens
-			--deletarNotifyGui()
+		for _, item in ipairs(itens) do
+			if slot > 16 then break end
 
-			-- Pegar itens
-			for i, item in ipairs(itens) do
-				if i <= 16 then  -- Só tenta alocar até 16 slots
-					args[3] = item  -- Atualiza o item para o valor da vez
-					args[2] = tostring(i)
-					args[4] = 1
+			task.spawn(function()
+				local success, result = pcall(function()
+					return InvRequest:InvokeServer("mudaInv", tostring(slot), item, "")
+				end)
 
-					-- Usar task.spawn() para execução sem delay
-					task.spawn(function()
-						-- Envia a requisição para o servidor
-						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
-					end)
+				if success and result == "deubomkk" then
+					print("Item puxado:", item)
+					slot += 1
 				end
-			end
+			end)
 
-			task.wait(.05)  -- Espera um frame para evitar lag
+			task.wait() -- delay controlado entre cada tentativa para evitar overload
 		end
 	end,
 })
+
 
 
 local Button = rev:CreateButton({
