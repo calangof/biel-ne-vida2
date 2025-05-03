@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V3.2 - ATUALIZA CARAI + C4🔥",
+	Name = "🔥Menu Mini City BIEL BS | V3.2 - TESTE🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -221,7 +221,7 @@ local Button = rev:CreateButton({
 			end
 		end
 
-		deletarNotifyGui()
+		--deletarNotifyGui()
 
 
 		local itens = {"AR-15", "Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "Hi Power", "Natalina", "Tratamento", "C4"}
@@ -229,6 +229,7 @@ local Button = rev:CreateButton({
 		local args = {
 			[1] = "mudaInv",
 			[2] = "2",
+			[3] = "",
 			[4] = ""
 		}
 
@@ -243,7 +244,8 @@ local Button = rev:CreateButton({
 			for i, item in ipairs(itens) do
 				if i <= 16 then  -- Só tenta alocar até 16 slots
 					args[3] = item  -- Atualiza o item para o valor da vez
-					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
+					args[2] = tostring(i)
+					args[4] = ""
 
 					-- Usar task.spawn() para execução sem delay
 					task.spawn(function()
