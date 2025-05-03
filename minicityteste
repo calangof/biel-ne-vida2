@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V3.2 - FIXED BUG TP + C4🔥",
+	Name = "🔥Menu Mini City BIEL BS | V3.2 - OP + C4🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -55,7 +55,7 @@ local Button = rev:CreateButton({
 		local args = {
 			[1] = "mudaInv",
 			[2] = "2",
-			[4] = "1"
+			[4] = ""
 		}
 
 		local localPlayer = game.Players.LocalPlayer
@@ -1109,18 +1109,18 @@ local mob = cam:CreateButton({
 local Button = cam:CreateButton({
 	Name = "teste",
 	Callback = function()
-		--[[Rayfield:Notify({
+		Rayfield:Notify({
 			Title = "Aviso",
 			Content = "Auto Puxar Itens Ativado, Pegara Comida!",
 			Duration = 6.5,
 			Image = 4483362458,
-		})]]
+		})
 
 		local function deletarNotifyGui()
 			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 			for _, gui in ipairs(playerGui:GetChildren()) do
 				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
+					gui:Destroy() -- Deleta a NotifyGui		
 				end
 			end
 		end
@@ -1132,29 +1132,29 @@ local Button = cam:CreateButton({
 
 		local args = {
 			[1] = "mudaInv",
-			[2] = "1",
-			[3] = "1",
-			[4] = "1"
+			[2] = "2",
+			[4] = ""
 		}
 
-		local localPlayer = game.Players.LocalPlayer
-
 		while true do
-			
-			task.spawn(function()
-				for i, item in ipairs(itens) do
-					if i <= 16 then
-						args[2] = tostring(i)
-						args[3] = item
-						args[4] = ""
+			-- Deletar todas as NotifyGui antes de pegar os itens
+			--deletarNotifyGui()
 
+			-- Pegar itens
+			for i, item in ipairs(itens) do
+				if i <= 16 then  -- Só tenta alocar até 16 slots
+					args[3] = item  -- Atualiza o item para o valor da vez
+					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
+
+					-- Usar task.spawn() para execução sem delay
+					task.spawn(function()
+						-- Envia a requisição para o servidor
 						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
-					end
+					end)
 				end
-			end)
-			
+			end
 
-			task.wait(.05) 
+			task.wait(.05)  -- Espera um frame para evitar lag
 		end
 	end,
 })
