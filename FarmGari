@@ -1,0 +1,199 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local humanoid = character:WaitForChild("Humanoid")
+
+local promptRange = math.huge
+local isActivating = false
+local isRunning = false
+local started = false
+local isInDanger = false
+
+local startTime = 0
+local pausedTime = 0
+local pauseStart = 0
+local totalPromptsActivated = 0
+local lastTeleportTime = 0
+local originalPosition = nil
+local lastHealth = humanoid.Health
+
+local tweenF = false
+
+local function Tp(pos, speed)
+	tweenF = true
+	local TweenService = game:GetService("TweenService")
+	local destino = pos
+	local VELOCIDADE = speed or 300
+	local distancia = (destino - humanoidRootPart.Position).Magnitude
+	local duracao = distancia / VELOCIDADE
+	local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+	local goal = {Position = destino}
+	humanoidRootPart.Anchored = true
+	local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
+	tween:Play()
+	tween.Completed:Connect(function()
+		tweenF = false
+		humanoidRootPart.Anchored = false
+	end)
+end
+
+local function setupTimerGui()
+	if not player.PlayerGui:FindFirstChild("TimeC") then
+		local guiT = Instance.new("ScreenGui")
+		guiT.Name = "TimeC"
+		guiT.ResetOnSpawn = false
+		guiT.Parent = player.PlayerGui
+
+		local t = Instance.new("TextButton")
+		t.Name = "Tempo"
+		t.Text = "Clique Aqui Para Começar"
+		t.Size = UDim2.new(1, 0, 0, 25)
+		t.Position = UDim2.new(0, 0, 0, 0)
+		t.BackgroundTransparency = 1
+		t.TextColor3 = Color3.fromRGB(255, 255, 255)
+		t.TextStrokeTransparency = 0.5
+		t.Font = Enum.Font.SourceSansBold
+		t.TextSize = 20
+		t.Parent = guiT
+
+		t.MouseButton1Click:Connect(function()
+			if not started then
+				started = true
+				isRunning = true
+				startTime = tick()
+				t.Text = "Tempo: 00:00:00 | Tps: 0 | Clique Para Pausar"
+			else
+				toggleSystem()
+			end
+		end)
+	end
+end
+
+function toggleSystem()
+	if isInDanger then return end
+	isRunning = not isRunning
+	local button = player.PlayerGui.TimeC.Tempo
+	if isRunning then
+		pausedTime += tick() - pauseStart
+		button.Text = "Retomando..."
+	else
+		if not tweenF then
+			Tp(Vector3.new(-291, 5, 333))
+		end
+		pauseStart = tick()
+		button.Text = "PAUSADO | Clique Para Continuar"
+	end
+end
+
+local function updateTimerGui()
+	local gui = player.PlayerGui:FindFirstChild("TimeC")
+	if gui then
+		local label = gui:FindFirstChild("Tempo")
+		if label and started then
+			if isInDanger then
+				label.Text = "EM RISCO! Aguarde 10s..."
+			elseif isRunning then
+				local elapsed = math.floor(tick() - startTime - pausedTime)
+				local h = math.floor(elapsed / 3600)
+				local m = math.floor((elapsed % 3600) / 60)
+				local s = elapsed % 60
+				label.Text = string.format("Tempo: %02d:%02d:%02d | Plantas Sujas: %d | Clique Para Pausar", h, m, s, totalPromptsActivated)
+			end
+		end
+	end
+end
+
+local function getNearestPrompt()
+	local nearestPrompt = nil
+	for _, prompt in workspace:GetDescendants() do
+		if prompt:IsA("ProximityPrompt") and prompt.Enabled and prompt.ActionText == "" and prompt.Parent.Name == "LEXOS" then
+			nearestPrompt = prompt
+			break 
+		end
+	end
+	return nearestPrompt
+end
+
+local function teleportAndActivatePrompt(prompt: ProximityPrompt)
+	local part = prompt.Parent:IsA("BasePart") and prompt.Parent or prompt.Parent:FindFirstChildWhichIsA("BasePart")
+	if part then
+		part.CanCollide = false
+		isActivating = true
+		lastTeleportTime = tick()
+		Tp(part.Position + Vector3.new(0, 0, 0), 5000)
+		repeat task.wait() until tweenF == false
+		task.wait(0.05)
+		prompt:InputHoldBegin()
+		task.delay(prompt.HoldDuration + 0.2, function()
+			if not isRunning or isInDanger then
+				prompt:InputHoldEnd()
+				isActivating = false
+				return
+			end
+			prompt:InputHoldEnd()
+			if isActivating and prompt.Enabled == false then
+				Tp(Vector3.new(-291, 5, 333), 1500)
+				totalPromptsActivated = totalPromptsActivated + 1 
+				task.wait(4)
+			end
+			isActivating = false
+		end)
+	end
+end
+
+local function enterRiskState()
+	if isInDanger and isRunning then return end
+	isInDanger = true
+	isRunning = false
+	originalPosition = humanoidRootPart.CFrame
+	player:Kick("")
+	local button = player.PlayerGui.TimeC and player.PlayerGui.TimeC:FindFirstChild("Tempo")
+	if button then
+		button.Text = "EM RISCO! Aguarde 10s..."
+	end
+	humanoidRootPart.CFrame = humanoidRootPart.CFrame + Vector3.new(0, 150, 0)
+	task.wait(.1)
+	humanoidRootPart.Anchored = true
+	task.delay(10, function()
+		humanoidRootPart.CFrame = originalPosition
+		humanoidRootPart.Anchored = false
+		isInDanger = false
+		isRunning = true
+		if button then
+			button.Text = "Tempo Retomado | Clique Para Pausar"
+		end
+	end)
+end
+
+humanoid.HealthChanged:Connect(function(currentHealth)
+	if 70 < lastHealth then
+	end
+end)
+
+setupTimerGui()
+
+task.spawn(function()
+	while true do
+		updateTimerGui()
+		task.wait()
+	end
+end)
+
+RunService.RenderStepped:Connect(function()
+	if not started or not isRunning or isActivating or isInDanger then return end
+	if tick() - lastTeleportTime < 0.1 then return end
+	local prompt = getNearestPrompt()
+	if prompt then
+		if not humanoidRootPart.Anchored then
+			isActivating = true
+			prompt.HoldDuration = 0
+			teleportAndActivatePrompt(prompt)
+		end
+	else
+		if tweenF then return end
+		Tp(Vector3.new(-291, 5, 333))
+	end
+end)
