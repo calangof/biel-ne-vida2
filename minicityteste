@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V3.2 - TESTE🔥",
+	Name = "🔥Menu Mini City BIEL BS | V3.2 - TESTE 2🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -39,7 +39,7 @@ local Paragraph = rev:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feit
 local Section = rev:CreateSection("NECESSÁRIO")
 
 
-local Button = rev:CreateButton({
+--[[local Button = rev:CreateButton({
 	Name = "Puxa Itens - Com Comida",
 	Callback = function()
 		Rayfield:Notify({
@@ -55,18 +55,21 @@ local Button = rev:CreateButton({
 		local args = {
 			[1] = "mudaInv",
 			[2] = "2",
-			[4] = ""
+			[4] = "1"
 		}
 
 		local localPlayer = game.Players.LocalPlayer
 		local playerName = localPlayer and localPlayer.Name or "Desconhecido"
 
 		while true do
+			-- Deletar todas as NotifyGui antes de pegar os itens
+			--deletarNotifyGui()
 
+			-- Pegar itens
 			for i, item in ipairs(itens) do
-				if i <= 16 then
-					args[3] = item
-					args[2] = tostring(i)
+				if i <= 16 then  -- Só tenta alocar até 16 slots
+					args[3] = item  -- Atualiza o item para o valor da vez
+					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
 
 					-- Usar task.spawn() para execução sem delay
 					task.spawn(function()
@@ -141,7 +144,7 @@ local Button = rev:CreateButton({
 		end
 	end,
 })
-
+]]
 local Button = rev:CreateButton({
 	Name = "Puxa Itens - Apenas Armas",
 	Callback = function()
@@ -221,7 +224,7 @@ local Button = rev:CreateButton({
 			end
 		end
 
-		--deletarNotifyGui()
+		deletarNotifyGui()
 
 
 		local itens = {"AR-15", "Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "Hi Power", "Natalina", "Tratamento", "C4"}
@@ -229,8 +232,7 @@ local Button = rev:CreateButton({
 		local args = {
 			[1] = "mudaInv",
 			[2] = "2",
-			[3] = "",
-			[4] = ""
+			[4] = "1"
 		}
 
 		local localPlayer = game.Players.LocalPlayer
@@ -245,7 +247,7 @@ local Button = rev:CreateButton({
 				if i <= 16 then  -- Só tenta alocar até 16 slots
 					args[3] = item  -- Atualiza o item para o valor da vez
 					args[2] = tostring(i)
-					args[4] = ""
+					args[4] = math.random(1, 100)
 
 					-- Usar task.spawn() para execução sem delay
 					task.spawn(function()
@@ -969,7 +971,7 @@ local mob = cam:CreateButton({
 			channel:SendAsync("/revistar")
 		end
 
-
+		
 
 		local function tp(targetPlayer)
 			if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -984,8 +986,8 @@ local mob = cam:CreateButton({
 				humanoidRootPart.Anchored = true
 				tween:Play()
 				tween.Completed:Connect(function()
-
-
+				
+							
 					humanoidRootPart.Anchored = false
 					task.wait(.1)
 					sendRevistarMessage()
@@ -1102,58 +1104,5 @@ local mob = cam:CreateButton({
 		end
 		Dropdown:Refresh(playerNames)
 		Dropdown:Set({""})
-	end,
-})
-
-local Button = cam:CreateButton({
-	Name = "teste",
-	Callback = function()
-		Rayfield:Notify({
-			Title = "Aviso",
-			Content = "Auto Puxar Itens Ativado, Pegara Comida!",
-			Duration = 6.5,
-			Image = 4483362458,
-		})
-
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy() -- Deleta a NotifyGui		
-				end
-			end
-		end
-
-		deletarNotifyGui()
-
-
-		local itens = {"AR-15", "Agua", "Hamburguer", "Drink", "Pizza", "Escudo", "AK47", "Uzi", "PARAFAL", "Faca", "IA2", "G3", "Hi Power", "Natalina", "Tratamento", "C4"}
-
-		local args = {
-			[1] = "mudaInv",
-			[2] = "2",
-			[4] = ""
-		}
-
-		while true do
-			-- Deletar todas as NotifyGui antes de pegar os itens
-			--deletarNotifyGui()
-
-			-- Pegar itens
-			for i, item in ipairs(itens) do
-				if i <= 16 then  -- Só tenta alocar até 16 slots
-					args[3] = item  -- Atualiza o item para o valor da vez
-					args[2] = tostring(i)  -- Atribui o slot dinamicamente (1, 2, 3, ..., 16)
-
-					-- Usar task.spawn() para execução sem delay
-					task.spawn(function()
-						-- Envia a requisição para o servidor
-						game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer(unpack(args))
-					end)
-				end
-			end
-
-			task.wait(.05)  -- Espera um frame para evitar lag
-		end
 	end,
 })
