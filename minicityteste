@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V3.2 - ARRUMADO🔥",
+	Name = "🔥Menu Mini City BIEL BS | V3.2 - ARRUMADO + Cooldown In Tp🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -965,15 +965,18 @@ local mob = cam:CreateButton({
 		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
 		local alvosPendentes = {}
+		local alvosProcessados = {}
+		local cooldownAtivo = false
 
 		local function sendRevistarMessage()
 			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXSystem")
 			channel:SendAsync("/revistar")
 		end
 
-		
-
 		local function tp(targetPlayer)
+			if cooldownAtivo then return end
+			cooldownAtivo = true
+
 			if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
 				local targetHRP = targetPlayer.Character.HumanoidRootPart
 				local destino = targetHRP.Position
@@ -986,23 +989,25 @@ local mob = cam:CreateButton({
 				humanoidRootPart.Anchored = true
 				tween:Play()
 				tween.Completed:Connect(function()
-				
-							
 					humanoidRootPart.Anchored = false
-					task.wait(.1)
+					task.wait(0.2)
 					sendRevistarMessage()
-
+					-- Ativa o cooldown por 2 segundos (ajuste conforme necessário)
+					task.delay(.5, function()
+						cooldownAtivo = false
+					end)
 				end)
+			else
+				cooldownAtivo = false
 			end
 		end
 
-
-		-- Loop para encontrar jogadores mortos por você e adicionar à lista
+		-- Loop para encontrar jogadores mortos por você
 		task.spawn(function()
 			while true do
-				task.wait()
+				task.wait(1) -- reduz o número de verificações por segundo
 				for _, p in ipairs(Players:GetPlayers()) do
-					if p ~= localPlayer and not table.find(alvosPendentes, p) then
+					if p ~= localPlayer and not alvosProcessados[p] then
 						local char = p.Character
 						if char then
 							local hum = char:FindFirstChild("Humanoid")
@@ -1010,7 +1015,7 @@ local mob = cam:CreateButton({
 								local creator = hum:FindFirstChild("creator")
 								if creator and creator.Value == localPlayer then
 									table.insert(alvosPendentes, p)
-
+									alvosProcessados[p] = true
 								end
 							end
 						end
@@ -1022,12 +1027,10 @@ local mob = cam:CreateButton({
 		-- Loop para tratar os alvos pendentes
 		task.spawn(function()
 			while true do
-				task.wait()
-				if #alvosPendentes > 0 then
+				task.wait(0.5)
+				if #alvosPendentes > 0 and not cooldownAtivo then
 					local alvo = table.remove(alvosPendentes, 1)
-					task.wait(.1)
 					tp(alvo)
-
 				end
 			end
 		end)
@@ -1037,21 +1040,9 @@ local mob = cam:CreateButton({
 
 
 
+
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
-
-
-local mob = cam:CreateButton({
-	Name = "Atualizar Lista",
-	Callback = function()
-		local playerNames = {}
-		for _, player in ipairs(Players:GetPlayers()) do
-			table.insert(playerNames, player.Name)
-		end
-		Dropdown:Refresh(playerNames)
-		Dropdown:Set({""})
-	end,
-})
 
 
 local Dropdown = cam:CreateDropdown({
@@ -1108,3 +1099,14 @@ function tp(targetPlayer)
 	end)
 end
 
+local mob = cam:CreateButton({
+	Name = "Atualizar Lista",
+	Callback = function()
+		local playerNames = {}
+		for _, player in ipairs(Players:GetPlayers()) do
+			table.insert(playerNames, player.Name)
+		end
+		Dropdown:Refresh(playerNames)
+		Dropdown:Set({""})
+	end,
+})
