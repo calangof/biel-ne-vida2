@@ -1098,3 +1098,22 @@ local Toggle = Misc:CreateToggle({
 		getgenv().CorrerAgachadoAtivado = Value
 	end,
 })
+
+local Dropdown = Misc:CreateDropdown({
+	Name = "Menu Tema",
+	Options = {"Default","AmberGlow","Amethyst","Bloom","DarkBlue","Green","Light","Ocean","Serenity"},
+	CurrentOption = {"Ocean"},
+	MultipleOptions = false,
+	Flag = "TemaMenu",
+	Callback = function(Options)
+		Window.ModifyTheme(Options[1])
+	end,
+})
+
+
+local mob = Misc:CreateButton({
+	Name = "Atualizar Menu",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/calangof/biel-ne-vida2/refs/heads/main/BielV2"))()
+	end,
+})
