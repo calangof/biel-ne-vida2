@@ -1,11 +1,13 @@
 
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/calangof/biel-ne-vida2/refs/heads/main/MenuCreate'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "💠Menu Mini City BIEL BS | V3.5 - Cooldown In Tp + Speed Test💠",
-	LoadingTitle = "MENU MINI CITY 💨",
+	
+	Name = "💠Menu Mini City BIEL BS | Manter Dia ADD + Speed 200 + Novo Menu💠",
+	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
+	Theme = "Amethyst",
 	ConfigurationSaving = {
 		Enabled = false,
 		FileName = "Save1"
@@ -22,7 +24,7 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
 	Title = "MENU - MINI CITY LOADED",
-	Content = "Owner: @bielbs09_22\nProgrammer: ???\nLast Update: 04/05/2025",
+	Content = "Owner: @bielbs09_22\n Programmer: ???\nLast Update: 25/04/2025",
 	Duration = 6.5,
 	Image = 4483362458,
 })
@@ -447,145 +449,6 @@ local Button = rev:CreateButton({
 					end
 				end
 			end
-		end
-	end,
-})
-
-local Button = rev:CreateButton({
-	Name = "Auto CL - 50",
-	Callback = function()
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
-				end
-			end
-		end
-
-		local TextChatService = game:GetService("TextChatService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-
-		local function sendRejoinMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/rejoin")
-		end
-
-		while true do
-			-- pequeno delay para não sobrecarregar
-
-			local character = LocalPlayer.Character
-			if character then
-				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 50 then
-					LocalPlayer:Kick("BANIDO!")
-					break -- para o loop após rejoin
-				end
-			end
-			task.wait()
-		end
-	end,
-})
-
-local Button = rev:CreateButton({
-	Name = "Auto CL - 35",
-	Callback = function()
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
-				end
-			end
-		end
-
-		local TextChatService = game:GetService("TextChatService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-
-		local function sendRejoinMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/rejoin")
-		end
-
-		while true do
-			-- pequeno delay para não sobrecarregar
-
-			local character = LocalPlayer.Character
-			if character then
-				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 35 then
-					LocalPlayer:Kick("BANIDO!")
-					break -- para o loop após rejoin
-				end
-			end
-			task.wait()
-		end
-	end,
-})
-
-local Button = rev:CreateButton({
-	Name = "Fugir - 50",
-	Callback = function()
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
-				end
-			end
-		end
-
-		local TextChatService = game:GetService("TextChatService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-
-		local function tp()
-			local TweenService = game:GetService("TweenService")
-			local player = game.Players.LocalPlayer
-			local character = player.Character or player.CharacterAdded:Wait()
-			local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-			-- Destino desejado
-			local destino = humanoidRootPart.CFrame - Vector3.new(0, 10, 0)
-
-			-- Velocidade desejada
-			local VELOCIDADE = 1500  -- studs por segundo
-
-			-- Calcular distância e duração
-			local distancia = (destino - humanoidRootPart.Position).Magnitude
-			local duracao = distancia / VELOCIDADE
-
-			-- Criar TweenInfo
-			local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-			local goal = {Position = destino}
-
-			-- Ancorar antes de mover
-			humanoidRootPart.Anchored = true
-
-			-- Criar e tocar o tween
-			local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
-			tween:Play()
-
-			-- Desancorar quando terminar
-			tween.Completed:Connect(function()
-				humanoidRootPart.Anchored = false
-			end)
-		end
-
-		while true do
-			-- pequeno delay para não sobrecarregar
-
-			local character = LocalPlayer.Character
-			if character then
-				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 35 then
-					tp()
-					break -- para o loop após rejoin
-				end
-			end
-			task.wait()
 		end
 	end,
 })
@@ -1111,28 +974,178 @@ local mob = cam:CreateButton({
 	end,
 })
 
-local mob = cam:CreateButton({
-	Name = "Correr",
-	Callback = function()
-		
-		local Players = game:GetService("Players")
-		local TweenService = game:GetService("TweenService")
-		local TextChatService = game:GetService("TextChatService")
+local ClSystem = Window:CreateTab("CL")
 
-		local localPlayer = Players.LocalPlayer
-		local char = localPlayer.Character
-		
-		local hum = char:FindFirstChildOfClass("Humanoid")
-		
+local Paragraph = ClSystem:CreateParagraph({Title = "CL", Content = "Area Dos CL"})
+local Section = ClSystem:CreateSection("NECESSÁRIO")
+
+if getgenv == nil then
+	error("getgenv não está definido neste ambiente.")
+end
+
+getgenv().KickOnLowHealth = false
+getgenv().HealthThreshold = 30
+
+local function monitorHealth()
+	local player = game.Players.LocalPlayer
+	local character = player.Character
+	if character and character:FindFirstChild("Humanoid") then
+		local humanoid = character.Humanoid
+		humanoid.HealthChanged:Connect(function(health)
+			if health <= getgenv().HealthThreshold and getgenv().KickOnLowHealth then
+				player:Kick("Auto cl pq tua vida tava abaixo de " .. getgenv().HealthThreshold)
+			end
+		end)
+	end
+end
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+	monitorHealth()
+end)
+
+if game.Players.LocalPlayer.Character then
+	monitorHealth()
+end
+
+
+local Slider = ClSystem:CreateSlider({
+	Name = "CL Config",
+	Range = {0, 100},
+	Increment = 10,
+	Suffix = "Vida",
+	CurrentValue = 30,
+	Flag = "CLConfig",
+	Callback = function(Value)
+		getgenv().HealthThreshold = Value
+	end,
+})
+
+local Toggle = ClSystem:CreateToggle({
+	Name = "Auto CL",
+	CurrentValue = false,
+	Flag = "AutoCLC", 
+	Callback = function(Value)
+		getgenv().KickOnLowHealth = Value
+	end,
+})
+
+local Misc = Window:CreateTab("Misc")
+
+local Paragraph = Misc:CreateParagraph({Title = "Misc", Content = "Area Dos Treco"})
+local Section = Misc:CreateSection("NECESSÁRIO")
+
+if getgenv == nil then
+	error("getgenv não está definido neste ambiente.")
+end
+
+getgenv().CorrerAgachadoAtivado = false
+getgenv().CorrerAgachado = 100
+getgenv().CarregadoCorrer = false
+
+local function LoadCorrer()
+	if getgenv().CarregadoCorrer then return end
+	getgenv().CarregadoCorrer = true
+
+	local localPlayer = game.Players.LocalPlayer
+	local function updateSpeed()
 		while true do
-			
-			task.spawn(function()
-				if hum and localPlayer:GetAttribute("agachado") and localPlayer:GetAttribute("agachado") == true then
-					hum.WalkSpeed = 100
+			if getgenv().CorrerAgachadoAtivado and localPlayer and localPlayer.Character then
+				local humanoid = localPlayer.Character:FindFirstChildOfClass("Humanoid")
+				if humanoid and localPlayer:GetAttribute("agachado") == true then
+					humanoid.WalkSpeed = getgenv().CorrerAgachado
 				end
-			end)
-			task.wait(.05)
+			end
+			task.wait(0.05)
+		end
+	end
+
+	task.spawn(updateSpeed)
+end
+
+local Slider = Misc:CreateSlider({
+	Name = "Speed",
+	Range = {50, 200},
+	Increment = 10,
+	Suffix = "Velocidade",
+	CurrentValue = 100,
+	Flag = "SpeedC",
+	Callback = function(Value)
+		getgenv().CorrerAgachado = Value
+	end,
+})
+
+local Toggle = Misc:CreateToggle({
+	Name = "Correr Rápido",
+	CurrentValue = false,
+	Flag = "CorreFast", 
+	Callback = function(Value)
+		getgenv().CorrerAgachadoAtivado = Value
+		LoadCorrer()
+	end,
+})
+
+local Dropdown = Misc:CreateDropdown({
+	Name = "Menu Tema",
+	Options = {"Default","AmberGlow","Amethyst","Bloom","DarkBlue","Green","Light","Ocean","Serenity"},
+	CurrentOption = {"Ocean"},
+	MultipleOptions = false,
+	Flag = "TemaMenu",
+	Callback = function(Options)
+		Window.ModifyTheme(Options[1])
+	end,
+})
+
+local ServerS = Misc:CreateSection("SERVER")
+
+local mob = Misc:CreateButton({
+	Name = "Entre No Menor Server",
+	Callback = function()
+		local success, err = pcall(function()
+			local module = loadstring(game:HttpGet("https://raw.githubusercontent.com/raw-scriptpastebin/FE/main/Server_Hop_Settings"))()
+			module:Teleport(game.PlaceId)
+		end)
+
+		if not success then
+			warn("Erro ao trocar de servidor: " .. tostring(err))
+		else
+			print("Servidor trocado com sucesso!")
+		end
+	end,
+})
+local OutrosS = Misc:CreateSection("OUTROS")
+
+getgenv().SempreDia = false
+getgenv().CarregadoDia = false
+
+local function manterDia()
+	if getgenv().CarregadoDia then return end
+	getgenv().CarregadoDia = true
+	local Lighting = game:GetService("Lighting")
+	while true do
+		
+		if getgenv().SempreDia == true then
+			Lighting.ClockTime = 14
 		end
 		
+		task.wait()
+	end
+end
+
+
+local Toggle = Misc:CreateToggle({
+	Name = "Sempre Dia",
+	CurrentValue = false,
+	Flag = "DaySet", 
+	Callback = function(Value)
+		getgenv().SempreDia = Value
+
+		manterDia()
+	end,
+})
+
+local mob = Misc:CreateButton({
+	Name = "Atualizar Menu",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/calangof/biel-ne-vida2/refs/heads/main/BielV2"))()
 	end,
 })
