@@ -20,7 +20,7 @@ local Window = Rayfield:CreateWindow({
 
 })
 
-Window.ModifyTheme('Ocean')
+Window.ModifyTheme('Amethyst')
 
 Rayfield:Notify({
 	Title = "MENU - MINI CITY LOADED",
@@ -1089,7 +1089,7 @@ local Slider = Misc:CreateSlider({
 	Name = "Speed",
 	Range = {50, 200},
 	Increment = 10,
-	Suffix = "Vida",
+	Suffix = "Velocidade",
 	CurrentValue = 100,
 	Flag = "SpeedC",
 	Callback = function(Value)
