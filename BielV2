@@ -3,6 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
+	
 	Name = "💠Menu Mini City BIEL BS | Cooldown In Tp + Speed Test💠",
 	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
@@ -21,6 +22,7 @@ local Window = Rayfield:CreateWindow({
 })
 
 Window.ModifyTheme('Amethyst')
+
 
 Rayfield:Notify({
 	Title = "MENU - MINI CITY LOADED",
@@ -981,23 +983,6 @@ local mob = cam:CreateButton({
 	end,
 })
 
-local mob = cam:CreateButton({
-	Name = "Correr",
-	Callback = function()
-		
-		local Players = game:GetService("Players")
-		local TweenService = game:GetService("TweenService")
-		local TextChatService = game:GetService("TextChatService")
-
-		local localPlayer = Players.LocalPlayer
-		local char = localPlayer.Character
-		
-		local hum = char:FindFirstChildOfClass("Humanoid")
-		
-		
-		
-	end,
-})
 local ClSystem = Window:CreateTab("CL")
 
 local Paragraph = ClSystem:CreateParagraph({Title = "CL", Content = "Area Dos CL"})
@@ -1064,25 +1049,26 @@ end
 
 getgenv().CorrerAgachadoAtivado = false
 getgenv().CorrerAgachado = 100
-
 getgenv().CarregadoCorrer = false
 
 local function LoadCorrer()
+	if getgenv().CarregadoCorrer then return end
 	getgenv().CarregadoCorrer = true
-	if getgenv().CarregadoCorrer == true then
-		return
-	end
+
 	local localPlayer = game.Players.LocalPlayer
-	local character = localPlayer.Character
-	while true do
-		
-		task.spawn(function()
-			if getgenv().CorrerAgachadoAtivado == true and character:FindFirstChildOfClass("Humanoid") and localPlayer:GetAttribute("agachado") and localPlayer:GetAttribute("agachado") == true then
-				character:FindFirstChildOfClass("Humanoid").WalkSpeed = getgenv().CorrerAgachado
+	local function updateSpeed()
+		while true do
+			if getgenv().CorrerAgachadoAtivado and localPlayer and localPlayer.Character then
+				local humanoid = localPlayer.Character:FindFirstChildOfClass("Humanoid")
+				if humanoid and localPlayer:GetAttribute("agachado") == true then
+					humanoid.WalkSpeed = getgenv().CorrerAgachado
+				end
 			end
-		end)
-		task.wait(.05)
+			task.wait(0.05)
+		end
 	end
+
+	task.spawn(updateSpeed)
 end
 
 local Slider = Misc:CreateSlider({
@@ -1098,7 +1084,7 @@ local Slider = Misc:CreateSlider({
 })
 
 local Toggle = Misc:CreateToggle({
-	Name = "Correr Rapido",
+	Name = "Correr Rápido",
 	CurrentValue = false,
 	Flag = "CorreFast", 
 	Callback = function(Value)
