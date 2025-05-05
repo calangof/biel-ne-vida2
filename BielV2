@@ -1116,9 +1116,11 @@ local mob = Misc:CreateButton({
 local OutrosS = Misc:CreateSection("OUTROS")
 
 getgenv().SempreDia = false
-
+getgenv().CarregadoDia = false
 
 local function manterDia()
+	if getgenv().CarregadoDia then return end
+	getgenv().CarregadoDia = true
 	local Lighting = game:GetService("Lighting")
 	while true do
 		
@@ -1130,7 +1132,6 @@ local function manterDia()
 	end
 end
 
-manterDia()
 
 local Toggle = Misc:CreateToggle({
 	Name = "Sempre Dia",
@@ -1138,7 +1139,8 @@ local Toggle = Misc:CreateToggle({
 	Flag = "DaySet", 
 	Callback = function(Value)
 		getgenv().CorrerAgachadoAtivado = Value
-		LoadCorrer()
+
+		manterDia()
 	end,
 })
 
