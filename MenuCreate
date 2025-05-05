@@ -1154,95 +1154,104 @@ local Farm = Window:CreateTab("Farm Peça")
 
 local Section = Farm:CreateSection("FARM PEÇA DE ARMA - Está Bugado")
 
+-- Botão para salvar posição atual do jogador
 local mob = Farm:CreateButton({
 	Name = "Salvar Posição",
 	Callback = function()
 		local player = game.Players.LocalPlayer
 		local character = player.Character
-		if character then
-			local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-			if humanoidRootPart then
-				_G.SavedPosition = humanoidRootPart.Position
-			end
+		local root = character and character:FindFirstChild("HumanoidRootPart")
+		if root then
+			_G.SavedPosition = root.Position
+			warn("Posição salva:", _G.SavedPosition)
 		end
 	end,
 })
 
+-- Função para acionar todos os ProximityPrompts da missão
+local function fireAllProximityPrompts()
+	local objetos = workspace:FindFirstChild("MapaGeral")
+	if objetos then
+		local favela = objetos:FindFirstChild("FavelaV2")
+		local objetivos = favela and favela:FindFirstChild("objetosMissao")
+		if objetivos then
+			for _, prompt in ipairs(objetivos:GetDescendants()) do
+				if prompt:IsA("ProximityPrompt") then
+					prompt.HoldDuration = 0
+					prompt:InputHoldBegin()
+					prompt:InputHoldEnd()
+				end
+			end
+		end
+	end
+end
+
+-- Função para encontrar o ProximityPrompt do jogador
+local function findPlayerProximityPrompt()
+	local playerName = game.Players.LocalPlayer.Name
+	local objetos = workspace:FindFirstChild("MapaGeral")
+	if objetos then
+		local favela = objetos:FindFirstChild("FavelaV2")
+		local objetivos = favela and favela:FindFirstChild("objetosMissao")
+		if objetivos then
+			for _, prompt in ipairs(objetivos:GetDescendants()) do
+				if prompt:IsA("ProximityPrompt") and prompt.Name == playerName then
+					return prompt
+				end
+			end
+		end
+	end
+	return nil
+end
+
+-- Controle do farm
+local farmAtivo = false
+
+-- Toggle para ativar/desativar farm
 local Toggle = Farm:CreateToggle({
 	Name = "Começar Farmar",
 	CurrentValue = false,
-	Flag = "FarmPeca", 
+	Flag = "FarmPeca",
 	Callback = function(Value)
+		farmAtivo = Value
 		if Value then
-			local function fireAllProximityPrompts()
-				local objetosMissao = workspace:FindFirstChild("MapaGeral")
-				if objetosMissao then
-					objetosMissao = objetosMissao:FindFirstChild("FavelaV2")
-					if objetosMissao then
-						objetosMissao = objetosMissao:FindFirstChild("objetosMissao")
-						if objetosMissao then
-							for _, prompt in ipairs(objetosMissao:GetDescendants()) do
-								if prompt:IsA("ProximityPrompt") then
-									prompt.HoldDuration = 0
-									prompt:InputHoldBegin()
-									prompt:InputHoldEnd()
-								end
-							end
-						end
+			task.spawn(function()
+				while farmAtivo do
+					if not _G.SavedPosition then
+						warn("Posição não salva!")
+						break
 					end
-				end
-			end
 
-			local function findPlayerProximityPrompt()
-				local playerName = game.Players.LocalPlayer.Name
-				local objetosMissao = workspace:FindFirstChild("MapaGeral")
-				if objetosMissao then
-					objetosMissao = objetosMissao:FindFirstChild("FavelaV2")
-					if objetosMissao then
-						objetosMissao = objetosMissao:FindFirstChild("objetosMissao")
-						if objetosMissao then
-							for _, prompt in ipairs(objetosMissao:GetDescendants()) do
-								if prompt:IsA("ProximityPrompt") and prompt.Name == playerName then
-									return prompt
-								end
-							end
-						end
+					local player = game.Players.LocalPlayer
+					local character = player.Character or player.CharacterAdded:Wait()
+					local root = character:FindFirstChild("HumanoidRootPart")
+					if not root then
+						break
 					end
+
+					fireAllProximityPrompts()
+					root.CFrame = CFrame.new(_G.SavedPosition)
+
+					task.wait(0.35)
+
+					local remote = game:GetService("ReplicatedStorage")
+						:WaitForChild("RemoteNovos")
+						:WaitForChild("trabalhos")
+
+					remote:FireServer({"missaoPECAS"})
+
+					local playerPrompt = findPlayerProximityPrompt()
+					if playerPrompt and playerPrompt.Parent then
+						root.CFrame = CFrame.new(playerPrompt.Parent.Position)
+					end
+
+					task.wait(0.2)
 				end
-				return nil
-			end
-
-			while Value do
-				if not _G.SavedPosition then
-					break
-				end
-
-				local player = game.Players.LocalPlayer
-				local character = player.Character
-				if not character or not character:FindFirstChild("HumanoidRootPart") then
-					break
-				end
-
-				fireAllProximityPrompts()
-				character.HumanoidRootPart.CFrame = CFrame.new(_G.SavedPosition)
-
-				task.wait(0.35)
-
-				local args = {
-					[1] = "missaoPECAS"
-				}
-				game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("trabalhos"):FireServer({"missaoPECAS"})
-
-				local playerPrompt = findPlayerProximityPrompt()
-				if playerPrompt and playerPrompt.Parent then
-					character.HumanoidRootPart.CFrame = CFrame.new(playerPrompt.Parent.Position)
-				end
-
-				task.wait(0.2)
-			end
+			end)
 		end
 	end,
 })
+
 
 local Section = Farm:CreateSection("FARM ENTREGADOR DE GÁS")
 
