@@ -1115,6 +1115,33 @@ local mob = Misc:CreateButton({
 })
 local OutrosS = Misc:CreateSection("OUTROS")
 
+getgenv().SempreDia = false
+
+
+local function manterDia()
+	local Lighting = game:GetService("Lighting")
+	while true do
+		
+		if getgenv().SempreDia == true then
+			Lighting.ClockTime = 14
+		end
+		
+		task.wait()
+	end
+end
+
+manterDia()
+
+local Toggle = Misc:CreateToggle({
+	Name = "Sempre Dia",
+	CurrentValue = false,
+	Flag = "DaySet", 
+	Callback = function(Value)
+		getgenv().CorrerAgachadoAtivado = Value
+		LoadCorrer()
+	end,
+})
+
 local mob = Misc:CreateButton({
 	Name = "Atualizar Menu",
 	Callback = function()
