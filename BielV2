@@ -1065,11 +1065,11 @@ end
 getgenv().CorrerAgachadoAtivado = false
 getgenv().CorrerAgachado = 100
 
-local localPlayer = game.Players.LocalPlayer
-local character = localPlayer.Character
+
 
 while true do
-
+	local localPlayer = game.Players.LocalPlayer
+	local character = localPlayer.Character
 	task.spawn(function()
 		if getgenv().CorrerAgachadoAtivado == true and character:FindFirstChildOfClass("Humanoid") and localPlayer:GetAttribute("agachado") and localPlayer:GetAttribute("agachado") == true then
 			character:FindFirstChildOfClass("Humanoid").WalkSpeed = getgenv().CorrerAgachado
