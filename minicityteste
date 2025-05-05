@@ -22,7 +22,7 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
 	Title = "MENU - MINI CITY LOADED",
-	Content = "Owner: @bielbs09_22\n Programmer: ???\nLast Update: 25/04/2025",
+	Content = "Owner: @bielbs09_22\nProgrammer: ???\nLast Update: 04/05/2025",
 	Duration = 6.5,
 	Image = 4483362458,
 })
