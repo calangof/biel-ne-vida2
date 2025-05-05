@@ -27,6 +27,13 @@ Rayfield:Notify({
 	Image = 4483362458,
 })
 
+Rayfield:Notify({
+	Title = "MENU - MINI CITY LOADED",
+	Content = "Owner: @bielbs09_22\n Programmer: ???\nLast Update: 25/04/2025",
+	Duration = 6.5,
+	Image = 4483362458,
+})
+
 local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 for _, gui in ipairs(playerGui:GetChildren()) do
 	if gui:IsA("ScreenGui") then
@@ -1037,7 +1044,6 @@ local Slider = ClSystem:CreateSlider({
 
 local Toggle = ClSystem:CreateToggle({
 	Name = "Auto CL",
-	Description = "Saia do jogo automaticamente quanto tiver com pouca vida.", 
 	CurrentValue = false,
 	Flag = "AutoCLC", 
 	Callback = function(Value)
@@ -1070,7 +1076,7 @@ while true do
 	task.wait(.05)
 end
 
-local Slider = ClSystem:CreateSlider({
+local Slider = Misc:CreateSlider({
 	Name = "Speed",
 	Range = {50, 200},
 	Increment = 10,
@@ -1082,9 +1088,8 @@ local Slider = ClSystem:CreateSlider({
 	end,
 })
 
-local Toggle = ClSystem:CreateToggle({
+local Toggle = Misc:CreateToggle({
 	Name = "Correr Rapido",
-	Description = "Corra rapido quanto estiver agachado.", 
 	CurrentValue = false,
 	Flag = "CorreFast", 
 	Callback = function(Value)
