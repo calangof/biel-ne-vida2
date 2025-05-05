@@ -1118,6 +1118,24 @@ local Dropdown = Misc:CreateDropdown({
 	end,
 })
 
+local ServerS = Misc:CreateSection("SERVER")
+
+local mob = Misc:CreateButton({
+	Name = "Entre No Menor Server",
+	Callback = function()
+		local success, err = pcall(function()
+			local module = loadstring(game:HttpGet("https://raw.githubusercontent.com/raw-scriptpastebin/FE/main/Server_Hop_Settings"))()
+			module:Teleport(game.PlaceId)
+		end)
+
+		if not success then
+			warn("Erro ao trocar de servidor: " .. tostring(err))
+		else
+			print("Servidor trocado com sucesso!")
+		end
+	end,
+})
+local OutrosS = Misc:CreateSection("OUTROS")
 
 local mob = Misc:CreateButton({
 	Name = "Atualizar Menu",
