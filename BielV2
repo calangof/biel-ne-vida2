@@ -985,15 +985,7 @@ local mob = cam:CreateButton({
 		
 		local hum = char:FindFirstChildOfClass("Humanoid")
 		
-		while true do
-			
-			task.spawn(function()
-				if hum and localPlayer:GetAttribute("agachado") and localPlayer:GetAttribute("agachado") == true then
-					hum.WalkSpeed = 100
-				end
-			end)
-			task.wait(.05)
-		end
+		
 		
 	end,
 })
@@ -1050,5 +1042,52 @@ local Toggle = ClSystem:CreateToggle({
 	Flag = "AutoCLC", 
 	Callback = function(Value)
 		getgenv().KickOnLowHealth = Value
+	end,
+})
+
+local Misc = Window:CreateTab("Misc")
+
+local Paragraph = Misc:CreateParagraph({Title = "Misc", Content = "Area Dos Treco"})
+local Section = Misc:CreateSection("NECESSÁRIO")
+
+if getgenv == nil then
+	error("getgenv não está definido neste ambiente.")
+end
+
+getgenv().CorrerAgachadoAtivado = false
+getgenv().CorrerAgachado = 100
+
+local localPlayer = game.Players.LocalPlayer
+local character = localPlayer.Character
+
+while true do
+
+	task.spawn(function()
+		if getgenv().CorrerAgachadoAtivado == true and character:FindFirstChildOfClass("Humanoid") and localPlayer:GetAttribute("agachado") and localPlayer:GetAttribute("agachado") == true then
+			character:FindFirstChildOfClass("Humanoid").WalkSpeed = getgenv().CorrerAgachado
+		end
+	end)
+	task.wait(.05)
+end
+
+local Slider = ClSystem:CreateSlider({
+	Name = "Speed",
+	Range = {50, 200},
+	Increment = 10,
+	Suffix = "Vida",
+	CurrentValue = 100,
+	Flag = "SpeedC",
+	Callback = function(Value)
+		getgenv().CorrerAgachado = Value
+	end,
+})
+
+local Toggle = ClSystem:CreateToggle({
+	Name = "Correr Rapido",
+	Description = "Corra rapido quanto estiver agachado.", 
+	CurrentValue = false,
+	Flag = "CorreFast", 
+	Callback = function(Value)
+		getgenv().CorrerAgachadoAtivado = Value
 	end,
 })
