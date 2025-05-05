@@ -452,145 +452,6 @@ local Button = rev:CreateButton({
 })
 
 local Button = rev:CreateButton({
-	Name = "Auto CL - 50",
-	Callback = function()
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
-				end
-			end
-		end
-
-		local TextChatService = game:GetService("TextChatService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-
-		local function sendRejoinMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/rejoin")
-		end
-
-		while true do
-			-- pequeno delay para não sobrecarregar
-
-			local character = LocalPlayer.Character
-			if character then
-				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 50 then
-					LocalPlayer:Kick("BANIDO!")
-					break -- para o loop após rejoin
-				end
-			end
-			task.wait()
-		end
-	end,
-})
-
-local Button = rev:CreateButton({
-	Name = "Auto CL - 35",
-	Callback = function()
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
-				end
-			end
-		end
-
-		local TextChatService = game:GetService("TextChatService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-
-		local function sendRejoinMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/rejoin")
-		end
-
-		while true do
-			-- pequeno delay para não sobrecarregar
-
-			local character = LocalPlayer.Character
-			if character then
-				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 35 then
-					LocalPlayer:Kick("BANIDO!")
-					break -- para o loop após rejoin
-				end
-			end
-			task.wait()
-		end
-	end,
-})
-
-local Button = rev:CreateButton({
-	Name = "Fugir - 50",
-	Callback = function()
-		local function deletarNotifyGui()
-			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-			for _, gui in ipairs(playerGui:GetChildren()) do
-				if gui.Name == "NotifyGui" and gui:IsA("ScreenGui") then
-					gui:Destroy()
-				end
-			end
-		end
-
-		local TextChatService = game:GetService("TextChatService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-
-		local function tp()
-			local TweenService = game:GetService("TweenService")
-			local player = game.Players.LocalPlayer
-			local character = player.Character or player.CharacterAdded:Wait()
-			local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-			-- Destino desejado
-			local destino = humanoidRootPart.CFrame - Vector3.new(0, 10, 0)
-
-			-- Velocidade desejada
-			local VELOCIDADE = 1500  -- studs por segundo
-
-			-- Calcular distância e duração
-			local distancia = (destino - humanoidRootPart.Position).Magnitude
-			local duracao = distancia / VELOCIDADE
-
-			-- Criar TweenInfo
-			local tweenInfo = TweenInfo.new(duracao, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-			local goal = {Position = destino}
-
-			-- Ancorar antes de mover
-			humanoidRootPart.Anchored = true
-
-			-- Criar e tocar o tween
-			local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
-			tween:Play()
-
-			-- Desancorar quando terminar
-			tween.Completed:Connect(function()
-				humanoidRootPart.Anchored = false
-			end)
-		end
-
-		while true do
-			-- pequeno delay para não sobrecarregar
-
-			local character = LocalPlayer.Character
-			if character then
-				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				if humanoid and humanoid.Health < 35 then
-					tp()
-					break -- para o loop após rejoin
-				end
-			end
-			task.wait()
-		end
-	end,
-})
-
-local Button = rev:CreateButton({
 	Name = "Anti-AFK (20 Minutos)",
 	Callback = function()
 		local function deletarNotifyGui()
@@ -1138,8 +999,8 @@ local mob = cam:CreateButton({
 })
 local ClSystem = Window:CreateTab("CL")
 
-local Paragraph = cam:CreateParagraph({Title = "CL", Content = "Area Dos CL"})
-local Section = cam:CreateSection("NECESSÁRIO")
+local Paragraph = ClSystem:CreateParagraph({Title = "CL", Content = "Area Dos CL"})
+local Section = ClSystem:CreateSection("NECESSÁRIO")
 
 if getgenv == nil then
 	error("getgenv não está definido neste ambiente.")
@@ -1184,6 +1045,7 @@ local Slider = ClSystem:CreateSlider({
 
 local Toggle = ClSystem:CreateToggle({
 	Name = "Auto CL",
+	Description = "Saia do jogo automaticamente quanto tiver com pouca vida.", 
 	CurrentValue = false,
 	Flag = "AutoCLC", 
 	Callback = function(Value)
