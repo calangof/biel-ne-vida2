@@ -3,8 +3,8 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "💠Menu Mini City BIEL BS | V3.5 - Cooldown In Tp + Speed Test💠",
-	LoadingTitle = "MENU MINI CITY 💨",
+	Name = "💠Menu Mini City BIEL BS | Cooldown In Tp + Speed Test💠",
+	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
 		Enabled = false,
