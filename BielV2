@@ -20,6 +20,8 @@ local Window = Rayfield:CreateWindow({
 
 })
 
+Window.ModifyTheme('Ocean')
+
 Rayfield:Notify({
 	Title = "MENU - MINI CITY LOADED",
 	Content = "Owner: @bielbs09_22\nProgrammer: ???\nLast Update: 04/05/2025",
