@@ -4,7 +4,7 @@ local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/cala
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
 	
-	Name = "💠Menu Mini City BIEL BS | Manter Dia ADD + Farm Gás💠",
+	Name = "💠Menu Mini City BIEL BS | Manter Sempre Dia + Farm Gás V1.1💠",
 	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
 	Theme = "Amethyst",
@@ -1316,6 +1316,6 @@ local Toggle = Farm:CreateToggle({
 	Flag = "DaySet", 
 	Callback = function(Value)
 		getgenv().EntregarGasFarm = Value
-
+		StartFarm()
 	end,
 })
