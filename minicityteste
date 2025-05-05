@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	Name = "🔥Menu Mini City BIEL BS | V3.2 - ARRUMADO + Cooldown In Tp🔥",
+	Name = "🔥Menu Mini City BIEL BS | V3.2 - Speed Test + Cooldown In Tp🔥",
 	LoadingTitle = "BIEL BS",
 	LoadingSubtitle = "By BIEL BS",
 	ConfigurationSaving = {
@@ -1131,7 +1131,7 @@ local mob = cam:CreateButton({
 					hum.WalkSpeed = 100
 				end
 			end)
-			
+			task.wait(.05)
 		end
 		
 	end,
