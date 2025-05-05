@@ -1110,3 +1110,29 @@ local mob = cam:CreateButton({
 		Dropdown:Set({""})
 	end,
 })
+
+local mob = cam:CreateButton({
+	Name = "Correr",
+	Callback = function()
+		
+		local Players = game:GetService("Players")
+		local TweenService = game:GetService("TweenService")
+		local TextChatService = game:GetService("TextChatService")
+
+		local localPlayer = Players.LocalPlayer
+		local char = localPlayer.Character
+		
+		local hum = char:FindFirstChildOfClass("Humanoid")
+		
+		while true do
+			
+			task.spawn(function()
+				if hum and localPlayer:GetAttribute("agachado") and localPlayer:GetAttribute("agachado") == true then
+					hum.WalkSpeed = 100
+				end
+			end)
+			
+		end
+		
+	end,
+})
