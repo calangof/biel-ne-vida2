@@ -4,7 +4,7 @@ local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/cala
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
 	
-	Name = "💠Menu Mini City BIEL BS | Manter Dia ADD + Speed 200 + Novo Menu💠",
+	Name = "💠Menu Mini City BIEL BS | Manter Dia ADD + Speed 200💠",
 	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
 	Theme = "Amethyst",
@@ -1147,5 +1147,99 @@ local mob = Misc:CreateButton({
 	Name = "Atualizar Menu",
 	Callback = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/calangof/biel-ne-vida2/refs/heads/main/BielV2"))()
+	end,
+})
+
+local Farm = Window:CreateTab("Farm Peça")
+
+local Section = Misc:CreateSection("FARM PEÇA DE ARMA")
+
+local mob = Farm:CreateButton({
+	Name = "Salvar Posição",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character
+		if character then
+			local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+			if humanoidRootPart then
+				_G.SavedPosition = humanoidRootPart.Position
+			end
+		end
+	end,
+})
+
+local Toggle = Farm:CreateToggle({
+	Name = "Começar Farmar",
+	CurrentValue = false,
+	Flag = "FarmPeca", 
+	Callback = function(Value)
+		if Value then
+			local function fireAllProximityPrompts()
+				local objetosMissao = workspace:FindFirstChild("MapaGeral")
+				if objetosMissao then
+					objetosMissao = objetosMissao:FindFirstChild("FavelaV2")
+					if objetosMissao then
+						objetosMissao = objetosMissao:FindFirstChild("objetosMissao")
+						if objetosMissao then
+							for _, prompt in ipairs(objetosMissao:GetDescendants()) do
+								if prompt:IsA("ProximityPrompt") then
+									prompt.HoldDuration = 0
+									prompt:InputHoldBegin()
+									prompt:InputHoldEnd()
+								end
+							end
+						end
+					end
+				end
+			end
+
+			local function findPlayerProximityPrompt()
+				local playerName = game.Players.LocalPlayer.Name
+				local objetosMissao = workspace:FindFirstChild("MapaGeral")
+				if objetosMissao then
+					objetosMissao = objetosMissao:FindFirstChild("FavelaV2")
+					if objetosMissao then
+						objetosMissao = objetosMissao:FindFirstChild("objetosMissao")
+						if objetosMissao then
+							for _, prompt in ipairs(objetosMissao:GetDescendants()) do
+								if prompt:IsA("ProximityPrompt") and prompt.Name == playerName then
+									return prompt
+								end
+							end
+						end
+					end
+				end
+				return nil
+			end
+
+			while Value do
+				if not _G.SavedPosition then
+					break
+				end
+
+				local player = game.Players.LocalPlayer
+				local character = player.Character
+				if not character or not character:FindFirstChild("HumanoidRootPart") then
+					break
+				end
+
+				fireAllProximityPrompts()
+				character.HumanoidRootPart.CFrame = CFrame.new(_G.SavedPosition)
+
+				task.wait(0.35)
+
+				local args = {
+					[1] = "missaoPECAS"
+				}
+				game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("trabalhos"):FireServer(unpack(args))
+
+				local playerPrompt = findPlayerProximityPrompt()
+				if playerPrompt and playerPrompt.Parent then
+					character.HumanoidRootPart.CFrame = CFrame.new(playerPrompt.Parent.Position)
+				end
+
+				task.wait(0.2)
+			end
+		end
 	end,
 })
