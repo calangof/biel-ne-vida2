@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/cala
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	
+
 	Name = "💠Menu Mini City BIEL BS | Manter Sempre Dia + Farm Gás V1.1💠",
 	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
@@ -1029,124 +1029,36 @@ local Toggle = ClSystem:CreateToggle({
 	end,
 })
 
-local Misc = Window:CreateTab("Misc")
 
-local Paragraph = Misc:CreateParagraph({Title = "Misc", Content = "Area Dos Treco"})
-local Section = Misc:CreateSection("NECESSÁRIO")
 
-if getgenv == nil then
-	error("getgenv não está definido neste ambiente.")
-end
+local LockPickW = Window:CreateTab("LockPick")
 
-getgenv().CorrerAgachadoAtivado = false
-getgenv().CorrerAgachado = 100
-getgenv().CarregadoCorrer = false
+local Section = LockPickW:CreateSection("DEIXE TODAS AS LOCKPICK FACIL - ATIVE ANTES DE USAR A LOCKPICK")
 
-local function LoadCorrer()
-	if getgenv().CarregadoCorrer then return end
-	getgenv().CarregadoCorrer = true
+getgenv().lockPickFacil = false
 
-	local localPlayer = game.Players.LocalPlayer
-	local function updateSpeed()
-		while true do
-			if getgenv().CorrerAgachadoAtivado and localPlayer and localPlayer.Character then
-				local humanoid = localPlayer.Character:FindFirstChildOfClass("Humanoid")
-				if humanoid and localPlayer:GetAttribute("agachado") == true then
-					humanoid.WalkSpeed = getgenv().CorrerAgachado
-				end
-			end
-			task.wait(0.05)
+local function LoadLock()
+	game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(add)
+		if not getgenv().lockPickFacil then return end
+		if add.Name == "LockpickTentativa" then
+			local screenGui = add
+			local area:Frame = add:WaitForChild("Frame"):WaitForChild("progresso"):WaitForChild("areaCerteira")
+			area.Size = UDim2.new(1,0,1,0)
 		end
-	end
-
-	task.spawn(updateSpeed)
+	end)
 end
 
-local Slider = Misc:CreateSlider({
-	Name = "Speed",
-	Range = {50, 200},
-	Increment = 10,
-	Suffix = "Velocidade",
-	CurrentValue = 100,
-	Flag = "SpeedC",
-	Callback = function(Value)
-		getgenv().CorrerAgachado = Value
-	end,
-})
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+	LoadLock()
+end)
 
-local Toggle = Misc:CreateToggle({
-	Name = "Correr Rápido",
+local Toggle = LockPickW:CreateToggle({
+	Name = "Lockpick Facil",
 	CurrentValue = false,
-	Flag = "CorreFast", 
+	Flag = "FacilLock", 
 	Callback = function(Value)
-		getgenv().CorrerAgachadoAtivado = Value
-		LoadCorrer()
-	end,
-})
-
-local Dropdown = Misc:CreateDropdown({
-	Name = "Menu Tema",
-	Options = {"Default","AmberGlow","Amethyst","Bloom","DarkBlue","Green","Light","Ocean","Serenity"},
-	CurrentOption = {"Ocean"},
-	MultipleOptions = false,
-	Flag = "TemaMenu",
-	Callback = function(Options)
-		Window.ModifyTheme(Options[1])
-	end,
-})
-
-local ServerS = Misc:CreateSection("SERVER")
-
-local mob = Misc:CreateButton({
-	Name = "Entre No Menor Server",
-	Callback = function()
-		local success, err = pcall(function()
-			local module = loadstring(game:HttpGet("https://raw.githubusercontent.com/raw-scriptpastebin/FE/main/Server_Hop_Settings"))()
-			module:Teleport(game.PlaceId)
-		end)
-
-		if not success then
-			warn("Erro ao trocar de servidor: " .. tostring(err))
-		else
-			print("Servidor trocado com sucesso!")
-		end
-	end,
-})
-local OutrosS = Misc:CreateSection("OUTROS")
-
-getgenv().SempreDia = false
-getgenv().CarregadoDia = false
-
-local function manterDia()
-	if getgenv().CarregadoDia then return end
-	getgenv().CarregadoDia = true
-	local Lighting = game:GetService("Lighting")
-	while true do
+		getgenv().lockPickFacil = Value
 		
-		if getgenv().SempreDia == true then
-			Lighting.ClockTime = 14
-		end
-		
-		task.wait()
-	end
-end
-
-
-local Toggle = Misc:CreateToggle({
-	Name = "Sempre Dia",
-	CurrentValue = false,
-	Flag = "DaySet", 
-	Callback = function(Value)
-		getgenv().SempreDia = Value
-
-		manterDia()
-	end,
-})
-
-local mob = Misc:CreateButton({
-	Name = "Atualizar Menu",
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/calangof/biel-ne-vida2/refs/heads/main/BielV2"))()
 	end,
 })
 
@@ -1277,33 +1189,33 @@ local function StartFarm()
 	local hum = char:FindFirstChildOfClass("Humanoid")
 
 	while true do
-		
+
 		task.wait()
 		if getgenv().EntregarGasFarm and playerLocal.Team.Name == "Entregador de Gás" then
-		if playerLocal.Inv:FindFirstChild("Botijão de Gás") and not playerLocal.Character:FindFirstChild("Botijão de Gás") then
-			ePegar = true
-			local prompt:ProximityPrompt = getNearestPrompt("Pegar Botijão")
-			prompt.HoldDuration = 0
+			if playerLocal.Inv:FindFirstChild("Botijão de Gás") and not playerLocal.Character:FindFirstChild("Botijão de Gás") then
+				ePegar = true
+				local prompt:ProximityPrompt = getNearestPrompt("Pegar Botijão")
+				prompt.HoldDuration = 0
 
-			char.HumanoidRootPart.CFrame = prompt.Parent.CFrame
+				char.HumanoidRootPart.CFrame = prompt.Parent.CFrame
 
-			prompt:InputHoldBegin()
-			prompt:InputHoldEnd()
+				prompt:InputHoldBegin()
+				prompt:InputHoldEnd()
 
 
-			game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer("janemseimais", "Botijão de Gás")
-			hum:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("Botijão de Gás"))
-		elseif playerLocal.Character:FindFirstChild("Botijão de Gás") then
-			warn("Ja pode entragar esse kacete fdp")
-			ePegar = false
+				game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer("janemseimais", "Botijão de Gás")
+				hum:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("Botijão de Gás"))
+			elseif playerLocal.Character:FindFirstChild("Botijão de Gás") then
+				warn("Ja pode entragar esse kacete fdp")
+				ePegar = false
 
-			local prompt:ProximityPrompt = getNearestPrompt("Entregar Botijão")
-			prompt.HoldDuration = 0
+				local prompt:ProximityPrompt = getNearestPrompt("Entregar Botijão")
+				prompt.HoldDuration = 0
 
-			char.HumanoidRootPart.CFrame = prompt.Parent.CFrame
+				char.HumanoidRootPart.CFrame = prompt.Parent.CFrame
 
-			prompt:InputHoldBegin()
-			prompt:InputHoldEnd()
+				prompt:InputHoldBegin()
+				prompt:InputHoldEnd()
 			end
 		end
 	end
@@ -1317,5 +1229,127 @@ local Toggle = Farm:CreateToggle({
 	Callback = function(Value)
 		getgenv().EntregarGasFarm = Value
 		StartFarm()
+	end,
+})
+
+
+local Misc = Window:CreateTab("Misc")
+
+local Paragraph = Misc:CreateParagraph({Title = "Misc", Content = "Area Dos Treco"})
+local Section = Misc:CreateSection("NECESSÁRIO")
+
+if getgenv == nil then
+	error("getgenv não está definido neste ambiente.")
+end
+
+getgenv().CorrerAgachadoAtivado = false
+getgenv().CorrerAgachado = 100
+getgenv().CarregadoCorrer = false
+
+local function LoadCorrer()
+	if getgenv().CarregadoCorrer then return end
+	getgenv().CarregadoCorrer = true
+
+	local localPlayer = game.Players.LocalPlayer
+	local function updateSpeed()
+		while true do
+			if getgenv().CorrerAgachadoAtivado and localPlayer and localPlayer.Character then
+				local humanoid = localPlayer.Character:FindFirstChildOfClass("Humanoid")
+				if humanoid and localPlayer:GetAttribute("agachado") == true then
+					humanoid.WalkSpeed = getgenv().CorrerAgachado
+				end
+			end
+			task.wait(0.05)
+		end
+	end
+
+	task.spawn(updateSpeed)
+end
+
+local Slider = Misc:CreateSlider({
+	Name = "Speed",
+	Range = {50, 200},
+	Increment = 10,
+	Suffix = "Velocidade",
+	CurrentValue = 100,
+	Flag = "SpeedC",
+	Callback = function(Value)
+		getgenv().CorrerAgachado = Value
+	end,
+})
+
+local Toggle = Misc:CreateToggle({
+	Name = "Correr Rápido",
+	CurrentValue = false,
+	Flag = "CorreFast", 
+	Callback = function(Value)
+		getgenv().CorrerAgachadoAtivado = Value
+		LoadCorrer()
+	end,
+})
+
+local Dropdown = Misc:CreateDropdown({
+	Name = "Menu Tema",
+	Options = {"Default","AmberGlow","Amethyst","Bloom","DarkBlue","Green","Light","Ocean","Serenity"},
+	CurrentOption = {"Ocean"},
+	MultipleOptions = false,
+	Flag = "TemaMenu",
+	Callback = function(Options)
+		Window.ModifyTheme(Options[1])
+	end,
+})
+
+local ServerS = Misc:CreateSection("SERVER")
+
+local mob = Misc:CreateButton({
+	Name = "Entre No Menor Server",
+	Callback = function()
+		local success, err = pcall(function()
+			local module = loadstring(game:HttpGet("https://raw.githubusercontent.com/raw-scriptpastebin/FE/main/Server_Hop_Settings"))()
+			module:Teleport(game.PlaceId)
+		end)
+
+		if not success then
+			warn("Erro ao trocar de servidor: " .. tostring(err))
+		else
+			print("Servidor trocado com sucesso!")
+		end
+	end,
+})
+local OutrosS = Misc:CreateSection("OUTROS")
+
+getgenv().SempreDia = false
+getgenv().CarregadoDia = false
+
+local function manterDia()
+	if getgenv().CarregadoDia then return end
+	getgenv().CarregadoDia = true
+	local Lighting = game:GetService("Lighting")
+	while true do
+
+		if getgenv().SempreDia == true then
+			Lighting.ClockTime = 14
+		end
+
+		task.wait()
+	end
+end
+
+
+local Toggle = Misc:CreateToggle({
+	Name = "Sempre Dia",
+	CurrentValue = false,
+	Flag = "DaySet", 
+	Callback = function(Value)
+		getgenv().SempreDia = Value
+
+		manterDia()
+	end,
+})
+
+local mob = Misc:CreateButton({
+	Name = "Atualizar Menu",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/calangof/biel-ne-vida2/refs/heads/main/BielV2"))()
 	end,
 })
