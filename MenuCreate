@@ -71,7 +71,7 @@ end
 local requestsDisabled = true --getgenv and getgenv().DISABLE_RAYFIELD_REQUESTS
 local InterfaceBuild = '3K3W'
 local Release = "Build 1.672"
-local RayfieldFolder = "Rayfield"
+local RayfieldFolder = "Calango"
 local ConfigurationFolder = RayfieldFolder.."/Configurations"
 local ConfigurationExtension = ".rfld"
 local settingsTable = {
@@ -207,7 +207,7 @@ if not requestsDisabled then
 				end)
 				if success and reporter then
 					pcall(function()
-						reporter.report("Rayfield", Release, InterfaceBuild)
+						reporter.report("Calango", Release, InterfaceBuild)
 					end)
 				else
 					warn("Failed to load or execute the reporter. \nPlease notify Rayfield developers at sirius.menu/discord.")
