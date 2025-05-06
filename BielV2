@@ -3,8 +3,8 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
-	
-	Name = "💠Menu Mini City BIEL BS | Manter Dia ADD + Speed 200💠",
+
+	Name = "💠Menu Mini City BIEL BS | Fixed Furto Carro + LockPick + Safe Arma💠",
 	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
 	Theme = "Amethyst",
@@ -424,8 +424,7 @@ local Button = rev:CreateButton({
 		end
 
 		local function sendRevistarMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/revistar")
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/revistar")
 		end
 
 		-- Loop principal
@@ -534,8 +533,7 @@ local ww = rev:CreateToggle({
 		local LocalPlayer = Players.LocalPlayer
 
 		local function sendMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/revistar")
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/revistar")
 		end
 
 		game.UserInputService.InputBegan:Connect(function(input, gameProcessed)
@@ -558,8 +556,7 @@ local mob = rev:CreateButton({
 
 		-- Função para enviar a mensagem /revistar morto
 		local function sendRevistarMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXSystem")
-			channel:SendAsync("/revistar")
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/revistar")
 		end
 
 		-- Cria a interface
@@ -637,6 +634,92 @@ local mob = rev:CreateButton({
 		RevistarButton.Parent = Frame
 	end,
 })
+
+local mob = rev:CreateButton({
+	Name = "Roubar (MOBILE)",
+	Callback = function()
+		local TextChatService = game:GetService("TextChatService")
+
+		-- Função para enviar a mensagem /revistar morto
+		local function sendRevistarMessage()
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/roubar")
+		end
+
+		-- Cria a interface
+		local ScreenGui = Instance.new("ScreenGui")
+		local Frame = Instance.new("CanvasGroup")
+		local CloseButton = Instance.new("TextButton")
+		local RevistarButton = Instance.new("TextButton")
+		local Ui1 = Instance.new("UIStroke")
+		local Ui2 = Instance.new("UIStroke")
+		local Title = Instance.new("TextLabel")
+
+		ScreenGui.Name = "RobaUI"
+		ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+
+		Ui2.Color = Color3.fromRGB(30, 30, 30)
+		Ui2.Parent = Frame
+		Ui2.LineJoinMode = Enum.LineJoinMode.Miter
+		Ui2.Thickness = 2
+
+		Ui1.Color = Color3.fromRGB(30, 30, 30)
+		Ui1.Parent = RevistarButton
+		Ui1.LineJoinMode = Enum.LineJoinMode.Miter
+		Ui1.Thickness = 2
+		Ui1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+		-- Estilo do Frame
+		Frame.Size = UDim2.new(0, 300, 0, 100)
+		Frame.Position = UDim2.new(0.5, -150, 0.5, -75)
+		Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		Frame.BorderSizePixel = 0
+		Frame.BackgroundTransparency = 0.6
+		Frame.Active = true
+		Frame.Draggable = true
+
+		-- Título
+		Title.Size = UDim2.new(1, 0, 0, 30)
+		Title.Position = UDim2.new(0, 0, 0, 0)
+		Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		Title.Text = "BIEL BS"
+		Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Title.Font = Enum.Font.MontserratBold
+		Title.TextSize = 18
+
+		-- Botão Fechar
+		CloseButton.Size = UDim2.new(0, 30, 0, 30)
+		CloseButton.Position = UDim2.new(1, -30, 0, 0)
+		CloseButton.BackgroundTransparency = 1
+		CloseButton.Text = "–"
+		CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+		CloseButton.Font = Enum.Font.MontserratBold
+		CloseButton.TextSize = 25
+		CloseButton.MouseButton1Click:Connect(function()
+			ScreenGui:Destroy()
+		end)
+
+		-- Botão Revistar
+		RevistarButton.Size = UDim2.new(0.8, 0, 0.4, 0)
+		RevistarButton.Position = UDim2.new(0.1, 0, 0.75, -30)
+		RevistarButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		RevistarButton.Text = "ROUBAR"
+		RevistarButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+		RevistarButton.Font = Enum.Font.MontserratBold
+		RevistarButton.BackgroundTransparency = 0.6
+		RevistarButton.TextSize = 20
+		RevistarButton.AutoButtonColor = true
+		RevistarButton.MouseButton1Click:Connect(function()
+			sendRevistarMessage()
+		end)
+
+		-- Adiciona os elementos ao frame
+		Frame.Parent = ScreenGui
+		Title.Parent = Frame
+		CloseButton.Parent = Frame
+		RevistarButton.Parent = Frame
+	end,
+})
 local Section = rev:CreateSection("Info")
 rev:CreateParagraph({
 	Title = "Descrição",
@@ -649,7 +732,7 @@ local Paragraph = cam:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feit
 local Section = cam:CreateSection("NECESSÁRIO")
 
 local Button = cam:CreateButton({
-	Name = "???",
+	Name = "AimBot",
 	Callback = function()
 
 
@@ -832,8 +915,7 @@ local mob = cam:CreateButton({
 		local cooldownAtivo = false
 
 		local function sendRevistarMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXSystem")
-			channel:SendAsync("/revistar")
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/revistar")
 		end
 
 		local function tp(targetPlayer)
@@ -1029,6 +1111,239 @@ local Toggle = ClSystem:CreateToggle({
 	end,
 })
 
+
+
+local LockPickW = Window:CreateTab("LockPick")
+
+local Section = LockPickW:CreateSection("DEIXE TODAS AS LOCKPICK FACIL - ATIVE ANTES DE USAR A LOCKPICK")
+
+getgenv().lockPickFacil = false
+getgenv().lockPickFacilLoad = false
+
+local function LoadLock()
+	if getgenv().lockPickFacilLoad then return end
+	local player = game.Players.LocalPlayer
+
+	getgenv().lockPickFacilLoad = true
+	while true do
+		task.wait(.1)
+		if not getgenv().lockPickFacil then return end
+		if player.PlayerGui:FindFirstChild("LockpickTentativa") then
+			local screenGui = player.PlayerGui:FindFirstChild("LockpickTentativa")
+			local area:Frame = player.PlayerGui:FindFirstChild("LockpickTentativa"):WaitForChild("Frame"):WaitForChild("progresso"):WaitForChild("areaCerteira")
+			area.Size = UDim2.new(1,0,1,0)
+		end
+	end
+end
+
+getgenv().FurtoCarroF = false
+
+game:GetService("ProximityPromptService").PromptTriggered:Connect(function(prompt)
+	if not getgenv().FurtoCarroF then
+		warn("Furtar Carro nao esta ativo")
+		return
+	end
+
+	game:GetService("ProximityPromptService").PromptTriggered:Connect(function(promt)
+		if promt.Name == "DrivePrompt" then
+			local seat = promt.Parent.Parent
+			seat:Sit(game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"))
+		end
+	end)
+
+end)
+
+local Toggle = LockPickW:CreateToggle({
+	Name = "Entrar No Carro Trancado",
+	CurrentValue = false,
+	Flag = "FurtoCarro", 
+	Callback = function(Value)
+		getgenv().FurtoCarroF = Value
+	end,
+})
+
+
+local Toggle = LockPickW:CreateToggle({
+	Name = "Lockpick Facil",
+	CurrentValue = false,
+	Flag = "FacilLock", 
+	Callback = function(Value)
+		getgenv().lockPickFacil = Value
+		LoadLock()
+	end,
+})
+
+local Farm = Window:CreateTab("Farm Peça")
+
+local Section = Farm:CreateSection("FARM PEÇA DE ARMA - Está Bugado")
+
+local mob = Farm:CreateButton({
+	Name = "Salvar Posição",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character
+		if character then
+			local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+			if humanoidRootPart then
+				_G.SavedPosition = humanoidRootPart.Position
+			end
+		end
+	end,
+})
+
+local Toggle = Farm:CreateToggle({
+	Name = "Começar Farmar",
+	CurrentValue = false,
+	Flag = "FarmPeca", 
+	Callback = function(Value)
+		if Value then
+			local function fireAllProximityPrompts()
+				local objetosMissao = workspace:FindFirstChild("MapaGeral")
+				if objetosMissao then
+					objetosMissao = objetosMissao:FindFirstChild("FavelaV2")
+					if objetosMissao then
+						objetosMissao = objetosMissao:FindFirstChild("objetosMissao")
+						if objetosMissao then
+							for _, prompt in ipairs(objetosMissao:GetDescendants()) do
+								if prompt:IsA("ProximityPrompt") then
+									prompt.HoldDuration = 0
+									prompt:InputHoldBegin()
+									prompt:InputHoldEnd()
+								end
+							end
+						end
+					end
+				end
+			end
+
+			local function findPlayerProximityPrompt()
+				local playerName = game.Players.LocalPlayer.Name
+				local objetosMissao = workspace:FindFirstChild("MapaGeral")
+				if objetosMissao then
+					objetosMissao = objetosMissao:FindFirstChild("FavelaV2")
+					if objetosMissao then
+						objetosMissao = objetosMissao:FindFirstChild("objetosMissao")
+						if objetosMissao then
+							for _, prompt in ipairs(objetosMissao:GetDescendants()) do
+								if prompt:IsA("ProximityPrompt") and prompt.Name == playerName then
+									return prompt
+								end
+							end
+						end
+					end
+				end
+				return nil
+			end
+
+			while Value do
+				if not _G.SavedPosition then
+					break
+				end
+
+				local player = game.Players.LocalPlayer
+				local character = player.Character
+				if not character or not character:FindFirstChild("HumanoidRootPart") then
+					break
+				end
+
+				fireAllProximityPrompts()
+				character.HumanoidRootPart.CFrame = CFrame.new(_G.SavedPosition)
+
+				task.wait(0.35)
+
+				local args = {
+					[1] = "missaoPECAS"
+				}
+				game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("trabalhos"):FireServer({"missaoPECAS"})
+
+				local playerPrompt = findPlayerProximityPrompt()
+				if playerPrompt and playerPrompt.Parent then
+					character.HumanoidRootPart.CFrame = CFrame.new(playerPrompt.Parent.Position)
+				end
+
+				task.wait(0.2)
+			end
+		end
+	end,
+})
+
+local Section = Farm:CreateSection("FARM ENTREGADOR DE GÁS")
+
+
+
+
+getgenv().EntregarGasFarm = false
+getgenv().EntregarGas = false
+
+local ePegar = true
+
+local function getNearestPrompt(PromptNameKK)
+	local nearestPrompt = nil
+
+	for _, prompt in workspace:GetDescendants() do
+		if prompt:IsA("ProximityPrompt") and prompt.Enabled and prompt.ActionText == PromptNameKK then
+			nearestPrompt = prompt
+			break
+		end
+	end
+
+	return nearestPrompt
+end
+
+local function StartFarm()
+	if getgenv().EntregarGas == true then return end
+	getgenv().EntregarGas = true
+	local actionPegar = "Pegar Botijão"
+
+	local playerLocal = game.Players.LocalPlayer
+	local char = playerLocal.Character
+	local hum = char:FindFirstChildOfClass("Humanoid")
+
+	while true do
+
+		task.wait()
+		if getgenv().EntregarGasFarm and playerLocal.Team.Name == "Entregador de Gás" then
+			if playerLocal.Inv:FindFirstChild("Botijão de Gás") and not playerLocal.Character:FindFirstChild("Botijão de Gás") then
+				ePegar = true
+				local prompt:ProximityPrompt = getNearestPrompt("Pegar Botijão")
+				prompt.HoldDuration = 0
+
+				char.HumanoidRootPart.CFrame = prompt.Parent.CFrame
+
+				prompt:InputHoldBegin()
+				prompt:InputHoldEnd()
+
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("InvRemotes"):WaitForChild("InvRequest"):InvokeServer("janemseimais", "Botijão de Gás")
+				hum:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("Botijão de Gás"))
+			elseif playerLocal.Character:FindFirstChild("Botijão de Gás") then
+				warn("Ja pode entragar esse kacete fdp")
+				ePegar = false
+
+				local prompt:ProximityPrompt = getNearestPrompt("Entregar Botijão")
+				prompt.HoldDuration = 0
+
+				char.HumanoidRootPart.CFrame = prompt.Parent.CFrame
+
+				prompt:InputHoldBegin()
+				prompt:InputHoldEnd()
+			end
+		end
+	end
+end
+
+
+local Toggle = Farm:CreateToggle({
+	Name = "Farma Gás",
+	CurrentValue = false,
+	Flag = "DaySet", 
+	Callback = function(Value)
+		getgenv().EntregarGasFarm = Value
+		StartFarm()
+	end,
+})
+
+
 local Misc = Window:CreateTab("Misc")
 
 local Paragraph = Misc:CreateParagraph({Title = "Misc", Content = "Area Dos Treco"})
@@ -1122,11 +1437,11 @@ local function manterDia()
 	getgenv().CarregadoDia = true
 	local Lighting = game:GetService("Lighting")
 	while true do
-		
+
 		if getgenv().SempreDia == true then
 			Lighting.ClockTime = 14
 		end
-		
+
 		task.wait()
 	end
 end
@@ -1143,9 +1458,43 @@ local Toggle = Misc:CreateToggle({
 	end,
 })
 
+
+getgenv().PegarArmaSafe = false
+getgenv().CarregadoSafe = false
+
+local function SafeEnabled()
+	if getgenv().CarregadoSafe then return end
+	getgenv().CarregadoSafe = true
+	local Lighting = game:GetService("Lighting")
+	while true do
+
+		if getgenv().PegarArmaSafe == true then
+			if game.Players.LocalPlayer:GetAttribute("SafeImp") then
+				game.Players.LocalPlayer:SetAttribute("SafeImp", false)
+			end
+		end
+
+		task.wait()
+	end
+end
+
+
+local Toggle = Misc:CreateToggle({
+	Name = "Puxar Arma Na Safe",
+	CurrentValue = false,
+	Flag = "SafeGun", 
+	Callback = function(Value)
+		getgenv().PegarArmaSafe = Value
+
+		SafeEnabled()
+	end,
+})
+
+
 local mob = Misc:CreateButton({
 	Name = "Atualizar Menu",
 	Callback = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/calangof/biel-ne-vida2/refs/heads/main/BielV2"))()
 	end,
 })
+
