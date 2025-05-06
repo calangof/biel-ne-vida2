@@ -4,7 +4,7 @@ local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/cala
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
 
-	Name = "💠Menu Mini City BIEL BS | Fixed Furto Carro + LockPick💠",
+	Name = "💠Menu Mini City BIEL BS | Fixed Furto Carro + LockPick + Safe Arma💠",
 	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
 	Theme = "Amethyst",
@@ -424,8 +424,7 @@ local Button = rev:CreateButton({
 		end
 
 		local function sendRevistarMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/revistar")
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/revistar")
 		end
 
 		-- Loop principal
@@ -534,8 +533,7 @@ local ww = rev:CreateToggle({
 		local LocalPlayer = Players.LocalPlayer
 
 		local function sendMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-			channel:SendAsync("/revistar")
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/revistar")
 		end
 
 		game.UserInputService.InputBegan:Connect(function(input, gameProcessed)
@@ -558,8 +556,7 @@ local mob = rev:CreateButton({
 
 		-- Função para enviar a mensagem /revistar morto
 		local function sendRevistarMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXSystem")
-			channel:SendAsync("/revistar")
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/revistar")
 		end
 
 		-- Cria a interface
@@ -832,8 +829,7 @@ local mob = cam:CreateButton({
 		local cooldownAtivo = false
 
 		local function sendRevistarMessage()
-			local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXSystem")
-			channel:SendAsync("/revistar")
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/revistar")
 		end
 
 		local function tp(targetPlayer)
@@ -1061,14 +1057,14 @@ game:GetService("ProximityPromptService").PromptTriggered:Connect(function(promp
 		warn("Furtar Carro nao esta ativo")
 		return
 	end
-	
-	local plr = game.Players.LocalPlayer
-	
-	if prompt.Name == "DrivePrompt" then
-		local seat:VehicleSeat = prompt.Parent
-		seat:Sit(plr.Character:FindFirstChildOfClass("Humanoid"))
-	end
-	
+
+	game:GetService("ProximityPromptService").PromptTriggered:Connect(function(promt)
+		if promt.Name == "DrivePrompt" then
+			local seat = promt.Parent.Parent
+			seat:Sit(game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"))
+		end
+	end)
+
 end)
 
 local Toggle = LockPickW:CreateToggle({
@@ -1377,9 +1373,42 @@ local Toggle = Misc:CreateToggle({
 })
 
 
+getgenv().PegarArmaSafe = false
+getgenv().CarregadoSafe = false
+
+local function SafeEnabled()
+	if getgenv().CarregadoSafe then return end
+	getgenv().CarregadoSafe = true
+	local Lighting = game:GetService("Lighting")
+	while true do
+
+		if getgenv().PegarArmaSafe == true then
+			if game.Players.LocalPlayer:GetAttribute("SafeImp") then
+				game.Players.LocalPlayer:SetAttribute("SafeImp", false)
+			end
+		end
+
+		task.wait()
+	end
+end
+
+
+local Toggle = Misc:CreateToggle({
+	Name = "Puxar Arma Na Safe",
+	CurrentValue = false,
+	Flag = "SafeGun", 
+	Callback = function(Value)
+		getgenv().PegarArmaSafe = Value
+
+		SafeEnabled()
+	end,
+})
+
+
 local mob = Misc:CreateButton({
 	Name = "Atualizar Menu",
 	Callback = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/calangof/biel-ne-vida2/refs/heads/main/BielV2"))()
 	end,
 })
+
