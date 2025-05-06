@@ -1,5 +1,5 @@
 
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/calangof/biel-ne-vida2/refs/heads/main/MenuCreate'))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
@@ -634,6 +634,92 @@ local mob = rev:CreateButton({
 		RevistarButton.Parent = Frame
 	end,
 })
+
+local mob = rev:CreateButton({
+	Name = "Roubar (MOBILE)",
+	Callback = function()
+		local TextChatService = game:GetService("TextChatService")
+
+		-- Função para enviar a mensagem /revistar morto
+		local function sendRevistarMessage()
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("bixobrabo"):FireServer("/roubar")
+		end
+
+		-- Cria a interface
+		local ScreenGui = Instance.new("ScreenGui")
+		local Frame = Instance.new("CanvasGroup")
+		local CloseButton = Instance.new("TextButton")
+		local RevistarButton = Instance.new("TextButton")
+		local Ui1 = Instance.new("UIStroke")
+		local Ui2 = Instance.new("UIStroke")
+		local Title = Instance.new("TextLabel")
+
+		ScreenGui.Name = "RobaUI"
+		ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+
+		Ui2.Color = Color3.fromRGB(30, 30, 30)
+		Ui2.Parent = Frame
+		Ui2.LineJoinMode = Enum.LineJoinMode.Miter
+		Ui2.Thickness = 2
+
+		Ui1.Color = Color3.fromRGB(30, 30, 30)
+		Ui1.Parent = RevistarButton
+		Ui1.LineJoinMode = Enum.LineJoinMode.Miter
+		Ui1.Thickness = 2
+		Ui1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+		-- Estilo do Frame
+		Frame.Size = UDim2.new(0, 300, 0, 100)
+		Frame.Position = UDim2.new(0.5, -150, 0.5, -75)
+		Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		Frame.BorderSizePixel = 0
+		Frame.BackgroundTransparency = 0.6
+		Frame.Active = true
+		Frame.Draggable = true
+
+		-- Título
+		Title.Size = UDim2.new(1, 0, 0, 30)
+		Title.Position = UDim2.new(0, 0, 0, 0)
+		Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		Title.Text = "BIEL BS"
+		Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Title.Font = Enum.Font.MontserratBold
+		Title.TextSize = 18
+
+		-- Botão Fechar
+		CloseButton.Size = UDim2.new(0, 30, 0, 30)
+		CloseButton.Position = UDim2.new(1, -30, 0, 0)
+		CloseButton.BackgroundTransparency = 1
+		CloseButton.Text = "–"
+		CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+		CloseButton.Font = Enum.Font.MontserratBold
+		CloseButton.TextSize = 25
+		CloseButton.MouseButton1Click:Connect(function()
+			ScreenGui:Destroy()
+		end)
+
+		-- Botão Revistar
+		RevistarButton.Size = UDim2.new(0.8, 0, 0.4, 0)
+		RevistarButton.Position = UDim2.new(0.1, 0, 0.75, -30)
+		RevistarButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		RevistarButton.Text = "ROUBAR"
+		RevistarButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+		RevistarButton.Font = Enum.Font.MontserratBold
+		RevistarButton.BackgroundTransparency = 0.6
+		RevistarButton.TextSize = 20
+		RevistarButton.AutoButtonColor = true
+		RevistarButton.MouseButton1Click:Connect(function()
+			sendRevistarMessage()
+		end)
+
+		-- Adiciona os elementos ao frame
+		Frame.Parent = ScreenGui
+		Title.Parent = Frame
+		CloseButton.Parent = Frame
+		RevistarButton.Parent = Frame
+	end,
+})
 local Section = rev:CreateSection("Info")
 rev:CreateParagraph({
 	Title = "Descrição",
@@ -646,7 +732,7 @@ local Paragraph = cam:CreateParagraph({Title = "BIEL BS ON TOP", Content = "Feit
 local Section = cam:CreateSection("NECESSÁRIO")
 
 local Button = cam:CreateButton({
-	Name = "???",
+	Name = "AimBot",
 	Callback = function()
 
 
