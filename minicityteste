@@ -1036,8 +1036,11 @@ local LockPickW = Window:CreateTab("LockPick")
 local Section = LockPickW:CreateSection("DEIXE TODAS AS LOCKPICK FACIL - ATIVE ANTES DE USAR A LOCKPICK")
 
 getgenv().lockPickFacil = false
+getgenv().lockPickFacilLoad = false
 
 local function LoadLock()
+	if getgenv().lockPickFacilLoad then return end
+	getgenv().lockPickFacilLoad = true
 	game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(add)
 		if not getgenv().lockPickFacil then return end
 		if add.Name == "LockpickTentativa" then
@@ -1048,9 +1051,6 @@ local function LoadLock()
 	end)
 end
 
-game.Players.LocalPlayer.CharacterAdded:Connect(function()
-	LoadLock()
-end)
 
 local Toggle = LockPickW:CreateToggle({
 	Name = "Lockpick Facil",
@@ -1058,7 +1058,7 @@ local Toggle = LockPickW:CreateToggle({
 	Flag = "FacilLock", 
 	Callback = function(Value)
 		getgenv().lockPickFacil = Value
-		
+		LoadLock()
 	end,
 })
 
