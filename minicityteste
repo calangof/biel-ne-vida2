@@ -4,7 +4,7 @@ local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/cala
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
 
-	Name = "💠Menu Mini City BIEL BS | Manter Sempre Dia + LockPick💠",
+	Name = "💠Menu Mini City BIEL BS | Furto Carro + LockPick💠",
 	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
 	Theme = "Amethyst",
@@ -1041,7 +1041,7 @@ getgenv().lockPickFacilLoad = false
 local function LoadLock()
 	if getgenv().lockPickFacilLoad then return end
 	local player = game.Players.LocalPlayer
-	
+
 	getgenv().lockPickFacilLoad = true
 	while true do
 		task.wait(.1)
@@ -1053,6 +1053,32 @@ local function LoadLock()
 		end
 	end
 end
+
+getgenv().FurtoCarroF = false
+
+game:GetService("ProximityPromptService").PromptTriggered:Connect(function(prompt)
+	if getgenv().FurtoCarroF then
+		warn("Furtar Carro nao esta ativo")
+		return
+	end
+	
+	local plr = game.Players.LocalPlayer
+	
+	if prompt.Name == "DrivePrompt" then
+		local seat:VehicleSeat = prompt.Parent
+		seat:Sit(plr.Character:FindFirstChildOfClass("Humanoid"))
+	end
+	
+end)
+
+local Toggle = LockPickW:CreateToggle({
+	Name = "Entrar No Carro Trancado",
+	CurrentValue = false,
+	Flag = "FurtoCarro", 
+	Callback = function(Value)
+		getgenv().FurtoCarroF = Value
+	end,
+})
 
 
 local Toggle = LockPickW:CreateToggle({
@@ -1349,6 +1375,7 @@ local Toggle = Misc:CreateToggle({
 		manterDia()
 	end,
 })
+
 
 local mob = Misc:CreateButton({
 	Name = "Atualizar Menu",
