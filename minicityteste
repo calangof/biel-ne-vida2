@@ -4,7 +4,7 @@ local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/cala
 -- Criando a Janela da Interface
 local Window = Rayfield:CreateWindow({
 
-	Name = "💠Menu Mini City BIEL BS | Manter Sempre Dia + Farm Gás V1.1💠",
+	Name = "💠Menu Mini City BIEL BS | Manter Sempre Dia + LockPick💠",
 	LoadingTitle = "MENU MINI CITY | V2 BETA 💨",
 	LoadingSubtitle = "By BIEL BS",
 	Theme = "Amethyst",
@@ -1040,15 +1040,18 @@ getgenv().lockPickFacilLoad = false
 
 local function LoadLock()
 	if getgenv().lockPickFacilLoad then return end
+	local player = game.Players.LocalPlayer
+	
 	getgenv().lockPickFacilLoad = true
-	game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(add)
+	while true do
+		task.wait(.1)
 		if not getgenv().lockPickFacil then return end
-		if add.Name == "LockpickTentativa" then
-			local screenGui = add
-			local area:Frame = add:WaitForChild("Frame"):WaitForChild("progresso"):WaitForChild("areaCerteira")
+		if player.PlayerGui:FindFirstChild("LockpickTentativa") then
+			local screenGui = player.PlayerGui:FindFirstChild("LockpickTentativa")
+			local area:Frame = player.PlayerGui:FindFirstChild("LockpickTentativa"):WaitForChild("Frame"):WaitForChild("progresso"):WaitForChild("areaCerteira")
 			area.Size = UDim2.new(1,0,1,0)
 		end
-	end)
+	end
 end
 
 
