@@ -137,8 +137,11 @@ local function teleportAndActivatePrompt(prompt: ProximityPrompt)
 			if isActivating and prompt.Enabled == false then
 				Tp(Vector3.new(-291, 5, 333), 1500)
 				totalPromptsActivated = totalPromptsActivated + 1 
-				game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("trabalhos"):FireServer("GARIZADA")
-				task.wait(4)
+				if totalPromptsActivated == 10 then
+					totalPromptsActivated = 0
+					game:GetService("ReplicatedStorage"):WaitForChild("RemoteNovos"):WaitForChild("trabalhos"):FireServer("GARIZADA")
+				end
+				task.wait(3)
 			end
 			isActivating = false
 		end)
