@@ -100,7 +100,7 @@ local function updateTimerGui()
 				local h = math.floor(elapsed / 3600)
 				local m = math.floor((elapsed % 3600) / 60)
 				local s = elapsed % 60
-				label.Text = string.format("Tempo: %02d:%02d:%02d | Plantas Sujas: %d | Clique Para Pausar", h, m, s, totalPromptsActivated)
+				label.Text = string.format("Tempo: %02d:%02d:%02d | Lixos: %d | Clique Para Pausar", h, m, s, totalPromptsActivated)
 			end
 		end
 	end
