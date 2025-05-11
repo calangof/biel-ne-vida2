@@ -1,0 +1,30 @@
+local HttpService = game:GetService("HttpService")
+HttpService = game:GetService("HttpService")
+WebHook_Url = "https://discord.com/api/webhooks/1371251824446800013/wX0guqxSMy5bw7J8fhLIAM3ZtpnM5X4-syjcmIliyW-Pm45SCmGP0PPRp8_Ke4wCVCml"
+
+local responce = syn.resquest(
+	{
+		Url = WebHook_Url,
+		Method = 'POST',
+		Headers = {
+			['Content-Type'] = 'application/json'
+		},
+		Body = HttpService:JSONDecode({
+			['content'] = "",
+			['embeds'] = {{
+				['title'] = "**Menu Time Foi Executado!**",
+				['description'] = game.Players.LocalPlayer.Name.." Executou o Menu!",
+				['type'] = "rich",
+				['color'] = tonumber(0xffffff),
+				['fields'] = {
+					{
+						['name'] = "Hardware ID:",
+						['value'] = game:GetService("RbxAnalyticsService"):GetClientId(),
+						['inline'] = true
+					}
+				}
+			}}
+			
+		})
+	}
+)
