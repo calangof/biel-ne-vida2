@@ -2,7 +2,7 @@ local HttpService = game:GetService("HttpService")
 HttpService = game:GetService("HttpService")
 WebHook_Url = "https://discord.com/api/webhooks/1371251824446800013/wX0guqxSMy5bw7J8fhLIAM3ZtpnM5X4-syjcmIliyW-Pm45SCmGP0PPRp8_Ke4wCVCml"
 
-local responce = syn.resquest(
+local responce = syn.request(
 	{
 		Url = WebHook_Url,
 		Method = 'POST',
